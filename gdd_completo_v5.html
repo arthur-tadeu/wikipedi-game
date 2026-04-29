@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>One Piece — Game Design Document</title>
+</head>
+<body>
+<style>
+:root {
+  --color-background-primary: #1e1e1e;
+  --color-background-secondary: #2a2a2a;
+  --color-background-tertiary: #181818;
+  --color-border-secondary: #3e3e42;
+  --color-border-tertiary: #3a3a3a;
+  --color-text-primary: #e0e0e0;
+  --color-text-secondary: #cccccc;
+  --color-text-tertiary: #999999;
+  --border-radius-md: 6px;
+  --border-radius-lg: 8px;
+  --font-sans: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+body {
+  background-color: var(--color-background-primary);
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+.w{padding:1.5rem 2rem; max-width: 900px; margin: 0 auto; font-size:13px}
+.tabs{display:flex;gap:8px;margin-bottom:1.5rem;flex-wrap:wrap}
+.tab{padding:8px 16px;font-size:13px;border-radius:var(--border-radius-md);border:1px solid var(--color-border-secondary);background:var(--color-background-primary);color:var(--color-text-secondary);cursor:pointer;transition:all .15s}
+.tab.active{background:var(--color-background-secondary);color:#fff;font-weight:600;border-color:#555}
+.panel{display:none}.panel.active{display:block}
+.card{background:var(--color-background-secondary);border-radius:var(--border-radius-lg);padding:16px;margin-bottom:14px; border: 1px solid var(--color-border-tertiary); box-shadow: 0 4px 6px rgba(0,0,0,0.2);}
+.card2{background:var(--color-background-secondary);border:1px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:14px;margin-bottom:12px}
+.sec{font-size:11px;font-weight:600;color:var(--color-text-tertiary);text-transform:uppercase;letter-spacing:.5px;margin:12px 0 6px}
+.badge{font-size:11px;padding:3px 8px;border-radius:12px;white-space:nowrap; font-weight: 600; background: #fff; border: 1px solid #ccc; display: inline-block;}
+.b-gray{color:#555}
+.b-blue{color:#0C447C}
+.b-coral{color:#A13D1C}
+.b-purple{color:#3C3489}
+.b-teal{color:#0B755F}
+.b-w{color:#8A4E08}
+.b-e{color:#A62A2A}
+.b-green{color:#3A780F}
+.row{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+.rl{width:90px;color:var(--color-text-tertiary);flex-shrink:0;font-size:12px}
+.bwrap{flex:1;background:var(--color-background-tertiary);border-radius:4px;height:18px;overflow:hidden; border: 1px solid #111;}
+.bar{height:100%;border-radius:4px;display:flex;align-items:center;padding-left:8px;font-size:11px;font-weight:600;min-width:24px;}
+.rv{width:40px;text-align:right;color:var(--color-text-secondary);font-size:12px;flex-shrink:0; font-weight: 500;}
+.tbl{width:100%;border-collapse:collapse;font-size:13px}
+.tbl th{text-align:left;padding:8px 10px;font-size:12px;color:var(--color-text-secondary);border-bottom:1px solid var(--color-border-secondary);font-weight:600; background: rgba(0,0,0,0.2)}
+.tbl td{padding:8px 10px;border-bottom:1px solid var(--color-border-tertiary);color:var(--color-text-primary);vertical-align:top}
+.tbl tr:last-child td{border-bottom:none}
+.obs{background:rgba(255, 170, 0, 0.1);border-left:3px solid #ffaa00;border-radius:0 6px 6px 0;padding:10px 12px;font-size:12px;color:#ffcc66;margin:10px 0}
+.info{background:rgba(0, 153, 255, 0.1);border-left:3px solid #0099ff;border-radius:0 6px 6px 0;padding:10px 12px;font-size:12px;color:#66c2ff;margin:10px 0}
+.ctrl{display:flex;flex-direction: column;gap:12px;margin-bottom:1.5rem;}
+.ctrl-row{display:flex; flex-direction:column; gap:6px;}
+.ctrl-label{font-size:12px;color:var(--color-text-secondary);}
+select{font-size:14px;padding:8px 12px;border-radius:var(--border-radius-md);border:1px solid var(--color-border-secondary);background:var(--color-background-tertiary);color:var(--color-text-primary); cursor:pointer; width: 100%; font-weight: 500;}
+.up-row{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--color-border-tertiary);align-items:flex-start}
+.up-row:last-child{border-bottom:none}
+.up-num{width:26px;height:26px;border-radius:50%;background:var(--color-background-tertiary);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:var(--color-text-primary);flex-shrink:0; margin-top: 2px;}
+.up-body{flex:1}
+.up-title{font-size:13px;font-weight:600;color:var(--color-text-primary)}
+.stat-chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+</style>
+
+<div class="w">
+<div class="tabs">
+  <button class="tab active" onclick="showTab('sim')">Simulador</button>
+  <button class="tab" onclick="showTab('td')">Tower Defense</button>
+  <button class="tab" onclick="showTab('raids')">Raids</button>
+  <button class="tab" onclick="showTab('npcs')">NPCs &amp; Bosses</button>
+  <button class="tab" onclick="showTab('asc')">Ascensão</button>
+  <button class="tab" onclick="showTab('eco')">Economia</button>
+  <button class="tab" onclick="showTab('roll')">⭐ Roll</button>
+  <button class="tab" onclick="showTab('prog')">Progressão</button>
+</div>
+
+<!-- SIMULADOR -->
+<div id="tab-sim" class="panel active">
+<div class="ctrl">
+  <div class="ctrl-row">
+    <label class="ctrl-label" for="slv">Nível:</label>
+    <select id="slv" onchange="renderSim()">
+      <option value="1">Lv 1</option>
+      <option value="5">Lv 5</option>
+      <option value="10">Lv 10</option>
+    </select>
+  </div>
+  <div class="ctrl-row">
+    <label class="ctrl-label" for="sph">Fase:</label>
+    <select id="sph" onchange="renderSim()">
+      <option value="base">Base</option>
+      <option value="raid">Ascensão</option>
+    </select>
+  </div>
+  <div class="ctrl-row">
+    <label class="ctrl-label" for="sshiny">Variante:</label>
+    <select id="sshiny" onchange="renderSim()">
+      <option value="normal">Normal</option>
+      <option value="shiny">Shiny (+50% Dano)</option>
+    </select>
+  </div>
+</div>
+<div id="sim-body"></div>
+</div>
+
+<!-- TOWER DEFENSE -->
+<div id="tab-td" class="panel">
+<div class="ctrl">
+  <div class="ctrl-row">
+    <label class="ctrl-label" for="tdchar">Personagem:</label>
+    <select id="tdchar" onchange="renderTD()">
+      <option value="0">Nami</option><option value="1">Koby</option><option value="2">Usopp</option>
+      <option value="3">Buggy</option><option value="4">Zoro</option><option value="5">Luffy</option><option value="6">Shanks</option>
+    </select>
+  </div>
+</div>
+<div id="td-body"></div>
+</div>
+
+<!-- RAIDS -->
+<div id="tab-raids" class="panel">
+<div id="raids-body"></div>
+</div>
+
+<!-- NPCS -->
+<div id="tab-npcs" class="panel">
+<div id="npcs-body"></div>
+</div>
+
+<!-- ASCENSÃO -->
+<div id="tab-asc" class="panel">
+<div id="asc-body"></div>
+</div>
+
+<!-- ECONOMIA -->
+<div id="tab-eco" class="panel">
+<div id="eco-body"></div>
+</div>
+
+<!-- ROLL -->
+<div id="tab-roll" class="panel">
+<div id="roll-body"></div>
+</div>
+
+<!-- PROGRESSÃO -->
+<div id="tab-prog" class="panel">
+<div class="ctrl">
+  <div class="ctrl-row">
+    <label class="ctrl-label" for="prar">Raridade:</label>
+    <select id="prar" onchange="renderProg()">
+      <option value="0">Common (1x)</option>
+      <option value="1">Raro (1.5x)</option>
+      <option value="2">Épico (2.25x)</option>
+      <option value="3">Lendário (3.37x)</option>
+      <option value="4">Mítico (5.06x)</option>
+      <option value="5">Secreto (7.59x)</option>
+    </select>
+  </div>
+</div>
+<div id="prog-body"></div>
+</div>
+</div>
+
+<script>
+// ===================== DADOS =====================
+const SIM = [
+  { name:'Nami',  rar:'Common',  rc:'b-gray',  arch:'Farmer/Air',   ac:'b-teal',
+    col:'#85B7EB',ct:'#0C447C',
+    base:{dmg:3,mult:3.5,hits:10},raid:{dmg:5,mult:4,hits:8},
+    growType:'exp', growBase:0.3, growRaid:0.3,
+    note:'Crescimento exponencial — fraca, mas escala. Leva vários minutos para matar um boss, mesmo no Lv10.' },
+  { name:'Koby',  rar:'Common',  rc:'b-gray',  arch:'Suporte/Canhão',ac:'b-blue',
+    col:'#B5D4F4',ct:'#0C447C',
+    base:{dmg:5,mult:2,hits:5},raid:{dmg:8,mult:3,hits:4},
+    growType:'exp', growBase:0.3, growRaid:0.3,
+    note:'Canhão no simulador. No TD, vira suporte de buff.' },
+  { name:'Usopp', rar:'Raro',    rc:'b-blue',  arch:'Assassino',    ac:'b-e',
+    col:'#9FE1CB',ct:'#085041',
+    base:{dmg:1,mult:16,hits:3},raid:{dmg:1.5,mult:18,hits:3},
+    growType:'exp', growBase:0.5, growRaid:0.5,
+    note:'Dano base mínimo. Ult absurda. 3 hits = ulta rápido, mas causa pouco dano sem ultar.' },
+  { name:'Buggy', rar:'Épico',   rc:'b-coral', arch:'DPS Estável',  ac:'b-w',
+    col:'#F5C4B3',ct:'#712B13',
+    base:{dmg:8,mult:4.5,hits:10},raid:{dmg:12,mult:5,hits:8},
+    growType:'exp', growBase:0.8, growRaid:1.2,
+    note:'DPS constante. Hits para ultar aumentaram para 10 — ult mais rara, mas mais impactante.' },
+  { name:'Zoro',  rar:'Lendário',rc:'b-w',     arch:'Solo Bleed',   ac:'b-coral',
+    col:'#EF9F27',ct:'#633806',
+    base:{dmg:14,mult:3.5,hits:4},raid:{dmg:20,mult:5,hits:4},
+    growType:'exp', growBase:1.0, growRaid:2.0,
+    note:'Bleed contínuo. Ult rápida (4 hits). Sem ult no TD.' },
+  { name:'Luffy', rar:'Mítico',  rc:'b-purple',arch:'Canhão Pesado', ac:'b-purple',
+    col:'#CECBF6',ct:'#3C3489',
+    base:{dmg:18,mult:12,hits:22},raid:{dmg:21,mult:15,hits:22},
+    growType:'exp', growBase:1.8, growRaid:2.1,
+    note:'22 hits para ultar — muito difícil. Quando ulta, devastação total.' },
+  { name:'Shanks',rar:'Secreto', rc:'b-e',     arch:'O Mais Forte', ac:'b-e',
+    col:'#F0997B',ct:'#712B13',
+    base:{dmg:25,mult:10,hits:8},raid:{dmg:50,mult:20,hits:14},
+    growType:'exp', growBase:2.5, growRaid:5.0,
+    note:'Bleed + Stun. Pós-raid monstruoso, mas 14 hits o equilibram.' },
+];
+
+function dmgLv(c,phase,lv){
+  const s=phase==='raid'?c.raid:c.base;
+  const g=phase==='raid'?c.growRaid:c.growBase;
+  // exponencial suave: base + g*(lv-1)^1.15
+  return +(s.dmg + g*Math.pow(lv-1,1.15||1)).toFixed(2);
+}
+function ultLv(c,phase,lv){ return +(dmgLv(c,phase,lv)*(phase==='raid'?c.raid.mult:c.base.mult)).toFixed(1); }
+
+function renderSim(){
+  const lv=parseInt(document.getElementById('slv').value);
+  const phase=document.getElementById('sph').value;
+  const isShiny=document.getElementById('sshiny') ? document.getElementById('sshiny').value === 'shiny' : false;
+  const maxD=dmgLv(SIM[6],phase,lv) * (isShiny ? 1.5 : 1), maxU=ultLv(SIM[6],phase,lv) * (isShiny ? 1.5 : 1);
+  let html='';
+  SIM.forEach(c=>{
+    let d=dmgLv(c,phase,lv), u=ultLv(c,phase,lv);
+    if(isShiny) { d *= 1.5; u *= 1.5; }
+    const s=phase==='raid'?c.raid:c.base;
+    const dw=Math.min(97,(d/maxD)*100), uw=Math.min(97,(u/maxU)*100);
+    
+    // Formatação para no máximo 1 casa decimal
+    const dStr = Number(d.toFixed(1));
+    const uStr = Number(u.toFixed(1));
+
+    html+=`<div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:4px">
+        <span style="font-size:15px;font-weight:700;color:var(--color-text-primary)">${c.name} <span style="font-weight:500;font-size:12px;color:var(--color-text-tertiary)">${c.rar}</span></span>
+        <div style="display:flex;gap:6px;flex-wrap:wrap"><span class="badge ${c.rc}">${c.rar}</span><span class="badge ${c.ac}">${c.arch}</span></div>
+      </div>
+      <div class="row"><span class="rl">Dano base</span><div class="bwrap"><div class="bar" style="width:${dw}%;background:${c.col};color:${c.ct}">${dStr}</div></div><span class="rv">${dStr}</span></div>
+      <div class="row"><span class="rl">Dano ult</span><div class="bwrap"><div class="bar" style="width:${uw}%;background:#EF9F27;color:#633806">${uStr}</div></div><span class="rv">${uStr}</span></div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:8px;font-size:12px;color:var(--color-text-tertiary)">
+        <span>Hits ult: <b style="color:var(--color-text-primary)">${s.hits}</b></span>
+        <span>Mult: <b style="color:var(--color-text-primary)">${s.mult}x</b></span>
+        <span>Crescimento: <b style="color:var(--color-text-primary)">exp +${phase==='raid'?c.growRaid:c.growBase}/nível</b></span>
+      </div>
+      <div style="font-size:12px;color:var(--color-text-tertiary);margin-top:12px;border-top:1px solid var(--color-border-tertiary);padding-top:10px">${c.note}</div>
+    </div>`;
+  });
+  document.getElementById('sim-body').innerHTML=html;
+}
+
+// ===================== TOWER DEFENSE =====================
+const TD = [
+  { name:'Nami', rar:'Common', rc:'b-gray', ac:'b-teal', arch:'Farmer / Aérea+Terrestre',
+    col:'#85B7EB', qt:8, max_up:3,
+    ups:[
+      { n:0, range:15, cd:1,   dmg:50,  price:300, priceLabel:'colocar', efeito:'—', atk:'Área / Bastão', farm:60  },
+      { n:1, range:17, cd:1,   dmg:70,  price:450, priceLabel:'upar',    efeito:'—', atk:'Área / Bastão', farm:80  },
+      { n:2, range:20, cd:2,   dmg:100, price:800, priceLabel:'upar',    efeito:'—', atk:'Área / Bastão', farm:110 },
+      { n:3, range:15, cd:1.5, dmg:120, price:1200,priceLabel:'upar',    efeito:'—', atk:'Jogar moedas + Bastão Baseball', farm:150 },
+    ],
+    note:'Única fonte de gold extra. Coloque sempre o máximo (8). Ataca aéreos e terrestres.' },
+  { name:'Koby', rar:'Common', rc:'b-gray', ac:'b-blue', arch:'Suporte / Terrestre',
+    col:'#B5D4F4', qt:5, max_up:3,
+    ups:[
+      { n:0, range:20, cd:5,   dmg:40, price:600,  priceLabel:'colocar', efeito:'Buff aliados +3~5%',  atk:'Cone / Vassoura' },
+      { n:1, range:20, cd:4,   dmg:60, price:850,  priceLabel:'upar',    efeito:'Buff aliados +5~8%',  atk:'Cone / Vassoura' },
+      { n:2, range:22, cd:4.5, dmg:85, price:1100, priceLabel:'upar',    efeito:'Buff aliados +8~12%', atk:'Cone / Vassoura' },
+      { n:3, range:25, cd:3.5, dmg:90, price:1500, priceLabel:'upar',    efeito:'Buff aliados +12~15%',atk:'Cone / Vassoura' },
+    ],
+    note:'Buff escala com o nível do Koby. Lv10 up3 = +15% de dano para todos os aliados próximos.' },
+  { name:'Usopp', rar:'Raro', rc:'b-blue', ac:'b-e', arch:'Assassino / Aérea+Terrestre',
+    col:'#9FE1CB', qt:8, max_up:3,
+    ups:[
+      // efeitoMult = soma dos ticks de % do efeito (ex: 3 ticks × 25% = 0.75)
+      { n:0, range:35, cd:1, dmg:110, price:500,  priceLabel:'colocar', efeitoMult:0.75, efeito:'Bleed: 3 ticks de 25% do dano base (1s cada, 3s total)', atk:'Single / Estrelas ninja' },
+      { n:1, range:40, cd:2, dmg:150, price:750,  priceLabel:'upar',    efeitoMult:1.20, efeito:'Burn: 3 ticks de 40% do dano base (1s cada, 4s total)', atk:'Área / Saquinho explosivo' },
+      { n:2, range:50, cd:3, dmg:350, price:1000, priceLabel:'upar',    efeitoMult:0,    efeito:'Slow: -X% velocidade, 10s (não acumulativo, sem tick de dano)', atk:'Single / Bolinha branca' },
+      { n:3, range:60, cd:2, dmg:120, price:1700, priceLabel:'upar',    efeitoMult:1.20, efeito:'Bleed 30% (2 ticks 1.5s) + Burn 30% (2 ticks 1.5s) + Slow normal', atk:'Área / Garrafa' },
+    ],
+    note:'Range 60 no up3 — maior do jogo. Dano cai no up3, mas os 3 efeitos simultâneos compensam muito.' },
+  { name:'Buggy', rar:'Épico', rc:'b-coral', ac:'b-w', arch:'DPS Estável / Terrestre',
+    col:'#F5C4B3', qt:6, max_up:3,
+    ups:[
+      { n:0, range:30, cd:3,   dmg:150, price:600,  priceLabel:'colocar', efeito:'Bleed: 3 ticks de 30% dano base (1s cada, 3s total)', atk:'Reto / Lançar mão com faca' },
+      { n:1, range:35, cd:4,   dmg:120, price:1000, priceLabel:'upar',    efeito:'Bleed: 4 ticks de 40% dano base (1s cada, 4s total)', atk:'Reto / Lançar mão com faca' },
+      { n:2, range:40, cd:5,   dmg:120, price:1400, priceLabel:'upar',    efeito:'Bleed: 5 ticks de 30% dano base (1s cada, 5s total)', atk:'Reto / Lançar mão com faca' },
+      { n:3, range:10, cd:1.5, dmg:190, price:2200, priceLabel:'upar',    efeito:'Bleed: 2 ticks de 50% dano base (1s cada, 2s total)', atk:'Cone / Barrage com faca' },
+    ],
+    note:'Up3 troca range por cadência. Range 10, mas CD 1.5s — ideal para chokepoints.' },
+  { name:'Zoro', rar:'Lendário', rc:'b-w', ac:'b-coral', arch:'Solo Bleed / Terrestre',
+    col:'#EF9F27', qt:4, max_up:4,
+    ups:[
+      { n:0, range:20, cd:2,   dmg:110, price:750,  priceLabel:'colocar', efeito:'Bleed: 1 tick de 100% dano base (1s)', atk:'Cone / 2 espadas diagonal' },
+      { n:1, range:25, cd:2.5, dmg:150, price:1000, priceLabel:'upar',    efeito:'Bleed: 1 tick de 100% dano base (1s)', atk:'Cone / 2 espadas diagonal' },
+      { n:2, range:25, cd:2,   dmg:150, price:1800, priceLabel:'upar',    efeito:'Bleed: 2 ticks de 100% dano base (1s cada, 2s total)', atk:'Cone / 2 espadas diagonal' },
+      { n:3, range:28, cd:2.5, dmg:165, price:2200, priceLabel:'upar',    efeito:'Bleed: 2 ticks de 100% dano base (1s cada, 2s total)', atk:'Cone / 2 espadas diagonal' },
+      { n:4, range:35, cd:3,   dmg:200, price:3200, priceLabel:'upar',    efeito:'Bleed: 3 ticks de 100% dano base (1s cada, 3s total)', atk:'Reto / Dash com 3 espadas' },
+    ],
+    note:'Sem ult no TD. O Bleed de 100% do dano é único — no up4, cada hit quase duplica o dano com o tick.' },
+  { name:'Luffy', rar:'Mítico', rc:'b-purple', ac:'b-purple', arch:'Canhão Pesado / Terrestre',
+    col:'#CECBF6', qt:3, max_up:5,
+    ups:[
+      { n:0, range:35, cd:4,   dmg:250, price:500,  priceLabel:'colocar', efeito:'—', atk:'Reto / Gomu Gomu Pistol' },
+      { n:1, range:35, cd:4,   dmg:330, price:1400, priceLabel:'upar',    efeito:'—', atk:'Reto / Gomu Gomu Pistol' },
+      { n:2, range:30, cd:3.5, dmg:500, price:2100, priceLabel:'upar',    efeito:'—', atk:'Área / Esticar perna' },
+      { n:3, range:30, cd:3,   dmg:600, price:2900, priceLabel:'upar',    efeito:'—', atk:'Área / Esticar perna' },
+      { n:4, range:20, cd:2.5, dmg:800, price:3500, priceLabel:'upar',    efeito:'—', atk:'Área / Barragem de socos' },
+      { n:5, range:25, cd:2.5, dmg:950, price:4100, priceLabel:'upar',    efeito:'—', atk:'Área / Barragem de socos' },
+    ],
+    note:'DPS puro. Sem efeito — o dano fala por si. Up5 Lv10 é o maior DPS sustentado entre os míticos.' },
+  { name:'Shanks', rar:'Secreto', rc:'b-e', ac:'b-e', arch:'O Mais Forte / Terrestre',
+    col:'#F0997B', qt:1, max_up:6,
+    ups:[
+      { n:0, range:35, cd:3,  dmg:650,  price:1000,  priceLabel:'colocar', efeito:'Bleed: 1 tick 40% dano base (1s)', atk:'Reto / 2 cortes em X' },
+      { n:1, range:40, cd:3,  dmg:800,  price:2000,  priceLabel:'upar',    efeito:'Bleed: 1 tick 45% dano base (1s)', atk:'Reto / 2 cortes em X' },
+      { n:2, range:45, cd:3.5,dmg:1000, price:3000,  priceLabel:'upar',    efeito:'Bleed: 1 tick 50% dano base (1s)', atk:'Área / Pular e bater espada no chão' },
+      { n:3, range:45, cd:2,  dmg:1000, price:4000,  priceLabel:'upar',    efeito:'Bleed: 2 ticks 50% dano base (1s cada)', atk:'Área / Pular e bater espada no chão' },
+      { n:4, range:50, cd:2.5,dmg:1300, price:5000,  priceLabel:'upar',    efeito:'Bleed: 2 ticks 40% dano base (1s cada)', atk:'Cone / Dash e corte' },
+      { n:5, range:50, cd:3,  dmg:2500, price:6000,  priceLabel:'upar',    efeito:'Bleed removido', atk:'Cone / Dash e corte' },
+      { n:6, range:50, cd:8,  dmg:3100, price:10000, priceLabel:'upar',    efeito:'Haki do Rei (CD 120s): atordoa TODOS 0.5s/nível + slow 50% por 5s+5s/nível', atk:'Full AOE / Haki em raio' },
+    ],
+    note:'Up6 = Haki do Rei. Lv1: 0.5s atordoado + 5s slow. Lv10: 5s atordoado + 50s slow. CD 120s.' },
+];
+
+function renderTD(){
+  const ci=parseInt(document.getElementById('tdchar').value);
+  const c=TD[ci];
+  let html=`<div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;flex-wrap:wrap;gap:4px">
+      <span style="font-size:14px;font-weight:500;color:var(--color-text-primary)">${c.name}</span>
+      <div style="display:flex;gap:4px;flex-wrap:wrap">
+        <span class="badge ${c.rc}">${c.rar}</span>
+        <span class="badge ${c.ac}">${c.arch}</span>
+        <span class="badge b-blue">Máx ${c.qt} no mapa</span>
+        <span class="badge b-purple">${c.max_up+1} upgrades</span>
+      </div>
+    </div>
+    <div style="font-size:11px;color:var(--color-text-tertiary)">${c.note}</div>
+  </div>`;
+
+  c.ups.forEach(u=>{
+    const dps=Number((u.dmg/u.cd).toFixed(1));
+    // DPS efetivo: considera dano dos ticks de bleed/burn
+    const dmgEfetivo = u.efeitoMult ? u.dmg * (1 + u.efeitoMult) : null;
+    const dpsEfetivo = dmgEfetivo ? Number((dmgEfetivo/u.cd).toFixed(1)) : null;
+    html+=`<div class="card2">
+      <div class="up-row" style="border:none;padding:0">
+        <div class="up-num" style="background:${c.col};color:${u.n===c.max_up?'#fff':c.col};filter:brightness(${u.n===c.max_up?0.7:1.2})">${u.n}</div>
+        <div class="up-body">
+          <div class="up-title">Upgrade ${u.n} <span style="font-weight:400;font-size:11px;color:var(--color-text-tertiary)">— ${u.price} gold (${u.priceLabel})</span></div>
+          <div class="stat-chips">
+            <span class="badge b-blue">Range ${u.range}</span>
+            <span class="badge b-gray">CD ${u.cd}s</span>
+            <span class="badge b-w">Dano ${u.dmg}</span>
+            <span class="badge b-green">DPS ${dps}</span>
+            ${dpsEfetivo ? `<span class="badge b-coral" title="Inclui dano dos ticks de efeito">DPS Efetivo ${dpsEfetivo} ⚡</span>` : ''}
+            ${u.farm?`<span class="badge b-teal">Farm ${u.farm}$/wave</span>`:''}
+          </div>
+          <div style="font-size:11px;color:var(--color-text-tertiary);margin-top:5px"><b style="color:var(--color-text-secondary)">Efeito:</b> ${u.efeito}</div>
+          <div style="font-size:11px;color:var(--color-text-tertiary);margin-top:2px"><b style="color:var(--color-text-secondary)">Animação:</b> ${u.atk}</div>
+          ${dpsEfetivo ? `<div style="font-size:11px;color:#A13D1C;margin-top:4px;font-style:italic">Dano efetivo/hit: ${Number(dmgEfetivo.toFixed(1))} (base ${u.dmg} + ${Math.round(u.efeitoMult*100)}% de efeito)</div>` : ''}
+        </div>
+      </div>
+    </div>`;
+  });
+  document.getElementById('td-body').innerHTML=html;
+}
+
+// ===================== RAIDS =====================
+const RAIDS=[
+  { id:1, name:'Raid 1 — Grand Line', players:'2-3 jogadores', waves:15, bossWave:'A cada 5 waves',
+    limit:'Só personagens com efeito especial (bleed/burn/slow)',
+    drops:['Eternal Pose (33%)', 'Capa Marinha (33%)', 'Óculos Atirador (33%)'],
+    dropNote:'Apenas 1 item por run no modo normal. Modo difícil: dobra a vida e fornece 2 itens.',
+    npcHP:12000, bossHP:55000,
+    npcNote:'~3 jogadores full up levam ~2-3 min para derrotar o boss', col:'#E1F5EE', border:'#0F6E56' },
+  { id:2, name:'Raid 2 — Paraíso', players:'3-4 jogadores', waves:20, bossWave:'A cada 5 waves (boss terrestre, NPCs aéreos)',
+    limit:'Apenas personagens aéreos. Aéreos também atacam terrestres.',
+    drops:['Espada Zoro (33%)', 'Chapéu de Palha (33%)', 'Chapéu de Palhaço (33%)'],
+    dropNote:'Boss pode ser derrotado solo. NPCs são todos aéreos.',
+    npcHP:25000, bossHP:100000,
+    npcNote:'Mínimo 3 jogadores para ser viável', col:'#E6F1FB', border:'#185FA5' },
+  { id:3, name:'Raid 3 — Novo Mundo', players:'8 jogadores', waves:25, bossWave:'A cada 5 waves',
+    limit:'-15% nerf em não-míticos. Boss: 20% chance de slow (+100% cooldown por 50s)',
+    drops:['Espada Shanks (15% acumulativo)', 'Chapéu de Palha (25%)'],
+    dropNote:'Sem pity. A mais difícil do jogo.',
+    npcHP:60000, bossHP:250000,
+    npcNote:'8 jogadores se tornam uma necessidade real', col:'#FAEEDA', border:'#854F0B' },
+];
+
+function renderRaids(){
+  let html='';
+  RAIDS.forEach(r=>{
+    html+=`<div class="card2" style="border-color:${r.border}">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:4px;margin-bottom:8px">
+        <span style="font-size:14px;font-weight:500;color:var(--color-text-primary)">${r.name}</span>
+        <div style="display:flex;gap:4px;flex-wrap:wrap">
+          <span class="badge b-e">${r.players}</span>
+          <span class="badge b-gray">${r.waves} waves</span>
+        </div>
+      </div>
+      <div class="sec">Limitador</div>
+      <div style="font-size:12px;color:var(--color-text-secondary);margin-bottom:6px">${r.limit}</div>
+      <div class="sec">Boss a cada</div>
+      <div style="font-size:12px;color:var(--color-text-secondary);margin-bottom:6px">${r.bossWave}</div>
+      <div class="sec">HP dos NPCs comuns</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px">
+        <span class="badge b-w">${r.npcHP.toLocaleString()} HP</span>
+        <span style="font-size:11px;color:var(--color-text-tertiary)">${r.npcNote}</span>
+      </div>
+      <div class="sec">HP do Boss da Raid</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px">
+        <span class="badge b-e">${r.bossHP.toLocaleString()} HP</span>
+      </div>
+      <div class="sec">Drops do Boss</div>
+      <div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:4px">${r.drops.map(d=>`<span class="badge b-green">${d}</span>`).join('')}</div>
+      <div style="font-size:11px;color:var(--color-text-tertiary)">${r.dropNote}</div>
+    </div>`;
+  });
+  document.getElementById('raids-body').innerHTML=html;
+}
+
+// ===================== NPCS =====================
+function renderNpcs(){
+  const npcs=[
+    { name:'NPC Fraco (Marinheiro)', hp:400, gold:20, drops:['Chapéu Marinha 2.5%','Mapa 2.5%','Estilingue 2.5%','Bone Marinha 2.5%'], note:'Drops apenas para ascensão de personagens Comuns e Raros.' },
+    { name:'Alvida (Mini-boss)', hp:8000, gold:80, drops:['Bandana Zoro 2.5%','Jaqueta Luffy 2.5%','Nariz Palhaço 2.5%','Itens comuns/raro 1%'], note:'2 a 3 min com 4 jogadores. Dropa todos os itens dos NPCs fracos com 1% de chance.' },
+    { name:'Kuro (Boss)', hp:20000, gold:320, drops:['Nariz Palhaço 4%','Bandana Zoro 4%','Jaqueta Luffy 4%'], note:'Não dropa itens de NPCs fracos. ~2 a 3 min com 4 jogadores.' },
+    { name:'Boss Secreto', hp:150000, gold:1200, drops:['Capa Shanks 2.5%','Espada Shanks 0.5%'], note:'O mais difícil. Com 4 jogadores, leva de 2 a 3 minutos no mínimo.' },
+  ];
+  let html='';
+  npcs.forEach(n=>{
+    html+=`<div class="card2">
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:4px;margin-bottom:8px">
+        <span style="font-size:13px;font-weight:500;color:var(--color-text-primary)">${n.name}</span>
+        <div style="display:flex;gap:4px">
+          <span class="badge b-e">${n.hp.toLocaleString()} HP</span>
+          <span class="badge b-teal">${n.gold} gold</span>
+        </div>
+      </div>
+      <div class="sec">Drops</div>
+      <div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:6px">${n.drops.map(d=>`<span class="badge b-green">${d}</span>`).join('')}</div>
+      <div style="font-size:11px;color:var(--color-text-tertiary)">${n.note}</div>
+    </div>`;
+  });
+  document.getElementById('npcs-body').innerHTML=html;
+}
+
+// ===================== ASCENSÃO =====================
+const ASC=[
+  { name:'Nami',  rc:'b-gray',  items:['200× Nami','50× Mapa (drop boss)','5× Eternal Pose (Boss Raid 1)'] },
+  { name:'Koby',  rc:'b-gray',  items:['200× Koby','50× Bone Marinha (NPC fraco)','5× Capa Marinha (Boss Raid 1)'] },
+  { name:'Usopp', rc:'b-blue',  items:['150× Usopp','50× Estilingue (NPC fraco)','5× Óculos Atirador (Boss Raid 1)'] },
+  { name:'Buggy', rc:'b-coral', items:['100× Buggy','40× Nariz Palhaço (Alvida 2.5% / Kuro 4%)','3× Chapéu Palhaço (Boss Raid 2)'] },
+  { name:'Zoro',  rc:'b-w',     items:['50× Zoro','35× Bandana Zoro (Alvida/Kuro)','3× Espada Zoro (Boss Raid 2)'] },
+  { name:'Luffy', rc:'b-purple',items:['25× Luffy','15× Jaqueta Luffy (Alvida/Kuro)','3× Chapéu de Palha (Boss Raid 2 ou 3)'] },
+  { name:'Shanks',rc:'b-e',     items:['1× Shanks','10× Luffy (personagem)','20× Capa Shanks (Boss Secreto 2.5%)','1× Espada Shanks (Boss Secreto 0.5%)','3× de cada item das Raids 1 e 2','20× de cada drop de cada boss (Bandana Zoro, Jaqueta Luffy, Nariz Palhaço, Capa Shanks)'],
+    obs:'Requer itens de TODAS as fontes do jogo. Intencional — Shanks deve ser quase impossível de ser ascendido.' },
+];
+function renderAsc(){
+  let html=`<div class="obs" style="margin-bottom:12px">Ao ascender: o personagem cai para Lv1, mudando de skin e animações. O poder pós-raid compensa totalmente.</div>`;
+  ASC.forEach(a=>{
+    html+=`<div class="card2">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+        <span style="font-size:13px;font-weight:500;color:var(--color-text-primary)">${a.name} Ascensão</span>
+        <span class="badge ${a.rc}">${SIM.find(s=>s.name===a.name).rar}</span>
+      </div>
+      <div style="display:flex;gap:5px;flex-wrap:wrap">${a.items.map(i=>`<span class="badge b-w">${i}</span>`).join('')}</div>
+      ${a.obs?`<div class="obs" style="margin-top:8px">${a.obs}</div>`:''}
+    </div>`;
+  });
+  document.getElementById('asc-body').innerHTML=html;
+}
+
+// ===================== ECONOMIA =====================
+function renderEco(){
+  const html=`
+  <div class="card2">
+    <div class="up-title" style="margin-bottom:8px">Fontes de gold</div>
+    <table class="tbl">
+      <thead><tr><th>Fonte</th><th>Valor</th><th>Obs</th></tr></thead>
+      <tbody>
+        <tr><td>Gold fixo por wave</td><td><span class="badge b-teal">400</span></td><td>Garantido toda wave</td></tr>
+        <tr><td>Gold por abate</td><td><span class="badge b-teal">15/kill</span></td><td>Escala com quantidade de NPCs</td></tr>
+        <tr><td>Nami up0 farm</td><td><span class="badge b-teal">60/wave</span></td><td>Por Nami colocada</td></tr>
+        <tr><td>Nami up1 farm</td><td><span class="badge b-teal">80/wave</span></td><td>Por Nami colocada</td></tr>
+        <tr><td>Nami up2 farm</td><td><span class="badge b-teal">110/wave</span></td><td>Por Nami colocada</td></tr>
+        <tr><td>Nami up3 farm</td><td><span class="badge b-teal">150/wave</span></td><td>Por Nami colocada</td></tr>
+        <tr><td>Roll no simulador</td><td><span class="badge b-e">-80 gold</span></td><td>Custo por rolagem</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="card2">
+    <div class="up-title" style="margin-bottom:8px">Simulação — Wave 1 (8 Namis up0, 20 kills)</div>
+    <table class="tbl">
+      <thead><tr><th>Item</th><th>Gold</th></tr></thead>
+      <tbody>
+        <tr><td>Fixo</td><td>400</td></tr>
+        <tr><td>20 kills × 15</td><td>300</td></tr>
+        <tr><td>8 Namis up0 × 60</td><td>480</td></tr>
+        <tr><td style="font-weight:500">Total wave 1</td><td style="font-weight:500;color:var(--color-text-primary)">1.180 gold</td></tr>
+      </tbody>
+    </table>
+    <div class="info" style="margin-top:8px">Com 8 Namis up3 (150/wave cada): +1.200 extra por wave só de farm. O up3 da Nami deve ser caro o suficiente para só ser possível nas waves finais.</div>
+  </div>
+  <div class="card2">
+    <div class="up-title" style="margin-bottom:8px">Limite de unidades no mapa</div>
+    <table class="tbl">
+      <thead><tr><th>Personagem</th><th>Raridade</th><th>Máx</th><th>Custo colocar</th></tr></thead>
+      <tbody>
+        <tr><td>Nami</td><td><span class="badge b-gray">Common</span></td><td>8</td><td>300</td></tr>
+        <tr><td>Koby</td><td><span class="badge b-gray">Common</span></td><td>5</td><td>600</td></tr>
+        <tr><td>Usopp</td><td><span class="badge b-blue">Raro</span></td><td>8</td><td>500</td></tr>
+        <tr><td>Buggy</td><td><span class="badge b-coral">Épico</span></td><td>6</td><td>600</td></tr>
+        <tr><td>Zoro</td><td><span class="badge b-w">Lendário</span></td><td>4</td><td>750</td></tr>
+        <tr><td>Luffy</td><td><span class="badge b-purple">Mítico</span></td><td>3</td><td>500</td></tr>
+        <tr><td>Shanks</td><td><span class="badge b-e">Secreto</span></td><td>1</td><td>1.000</td></tr>
+      </tbody>
+    </table>
+  </div>`;
+  document.getElementById('eco-body').innerHTML=html;
+}
+
+// ===================== ROLL =====================
+function renderRoll(){
+  const raridades=[
+    { nome:'Common',   cor:'b-gray',   chance:'60%'     },
+    { nome:'Raro',     cor:'b-blue',   chance:'25%'     },
+    { nome:'\u00c9pico',    cor:'b-coral',  chance:'10%'     },
+    { nome:'Lend\u00e1rio', cor:'b-w',      chance:'3.5%'    },
+    { nome:'M\u00edtico',   cor:'b-purple', chance:'0.0035%' },
+    { nome:'???',      cor:'b-e',      chance:'???%'    },
+  ];
+  const estrelas=[
+    { n:1, rollsPorMin:30,  rollsPorHora:1800 },
+    { n:2, rollsPorMin:60,  rollsPorHora:3600 },
+    { n:3, rollsPorMin:90,  rollsPorHora:5400 },
+    { n:4, rollsPorMin:120, rollsPorHora:7200 },
+  ];
+  const html=`
+  <div class="card">
+    <div class="up-title" style="margin-bottom:4px">Sistema de Roll</div>
+    <div style="font-size:12px;color:var(--color-text-tertiary);margin-bottom:12px">
+      Cada roll custa <b style="color:var(--color-text-primary)">80 gold</b>. A velocidade de abertura depende do n&uacute;mero de estrelas do jogador.
+      Cada estrela adiciona <b style="color:var(--color-text-primary)">+30 rolls/minuto</b>.
+    </div>
+    <div class="sec">Tabela de Chances</div>
+    <table class="tbl" style="margin-bottom:12px">
+      <thead><tr><th>Raridade</th><th>Chance</th></tr></thead>
+      <tbody>
+        ${raridades.map(r=>`<tr><td><span class="badge ${r.cor}">${r.nome}</span></td><td>${r.chance}</td></tr>`).join('')}
+      </tbody>
+    </table>
+    <div class="obs">Sem pity garantido. Cada roll &eacute; independente. Acumule gold antes de abrir muitos rolls de uma vez.</div>
+  </div>
+  <div class="card">
+    <div class="up-title" style="margin-bottom:4px">Velocidade de Abertura por Estrelas</div>
+    <div style="font-size:12px;color:var(--color-text-tertiary);margin-bottom:12px">
+      O n&uacute;mero de estrelas do jogador define quantos rolls ele pode abrir por minuto.
+      1 estrela = 30 rolls/min &bull; Cada estrela extra soma +30 rolls/min.
+    </div>
+    <table class="tbl">
+      <thead><tr><th>Estrelas</th><th>Rolls/min</th><th>Rolls/hora</th></tr></thead>
+      <tbody>
+        ${estrelas.map(e=>`<tr>
+          <td>${'\u2b50'.repeat(e.n)} <b>${e.n}</b></td>
+          <td><span class="badge b-blue">${e.rollsPorMin}/min</span></td>
+          <td><span class="badge b-gray">${e.rollsPorHora.toLocaleString('pt-BR')}/h</span></td>
+        </tr>`).join('')}
+      </tbody>
+    </table>
+    <div class="info" style="margin-top:10px">
+      Com <b>1 estrela</b>, o jogador abre <b>30 rolls por minuto</b>.
+      Com <b>4 estrelas</b>, abre <b>120 rolls por minuto</b>.
+      Cada estrela adiciona exatamente +30 rolls/min.
+    </div>
+  </div>
+  <div class="card">
+    <div class="up-title" style="margin-bottom:8px">Custo Estimado para Ascens&atilde;o via Roll</div>
+    <table class="tbl">
+      <thead><tr><th>Raridade</th><th>C&oacute;pias necess&aacute;rias</th><th>Chance/roll</th><th>Rolls esperados</th><th>Gold esperado</th></tr></thead>
+      <tbody>
+        <tr><td><span class="badge b-gray">Common</span></td><td>200&times;</td><td>60%</td><td>~334</td><td><span class="badge b-teal">~26.700 gold</span></td></tr>
+        <tr><td><span class="badge b-blue">Raro</span></td><td>150&times;</td><td>25%</td><td>~600</td><td><span class="badge b-blue">~48.000 gold</span></td></tr>
+        <tr><td><span class="badge b-coral">&Eacute;pico</span></td><td>100&times;</td><td>10%</td><td>~1.000</td><td><span class="badge b-coral">~80.000 gold</span></td></tr>
+        <tr><td><span class="badge b-w">Lend&aacute;rio</span></td><td>50&times;</td><td>3.5%</td><td>~1.430</td><td><span class="badge b-w">~114.000 gold</span></td></tr>
+        <tr><td><span class="badge b-purple">M&iacute;tico</span></td><td>25&times;</td><td>0.0035%</td><td>~714.286</td><td><span class="badge b-purple">??? gold</span></td></tr>
+        <tr><td><span class="badge b-e">???</span></td><td>???</td><td>???%</td><td>???</td><td><span class="badge b-e">??? gold</span></td></tr>
+      </tbody>
+    </table>
+    <div class="obs" style="margin-top:8px">Esses valores s&atilde;o m&eacute;dias estat&iacute;sticas. Na pr&aacute;tica, pode ser muito mais r&aacute;pido ou muito mais lento dependendo da sorte.</div>
+  </div>`;
+  document.getElementById('roll-body').innerHTML=html;
+}
+
+function showTab(id){
+  const ids=['sim','td','raids','npcs','asc','eco','roll','prog'];
+  document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',ids[i]===id));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  if(id==='td') renderTD();
+  if(id==='raids') renderRaids();
+  if(id==='npcs') renderNpcs();
+  if(id==='asc') renderAsc();
+  if(id==='eco') renderEco();
+  if(id==='roll') renderRoll();
+  if(id==='prog') renderProg();
+}
+
+function renderProg() {
+  const rarIdx = parseInt(document.getElementById('prar')?.value || 0);
+  const mult = Math.pow(1.5, rarIdx);
+  
+  const baseData = [
+    { trans: 'Lv1 → Lv2', xp: 48 },
+    { trans: 'Lv2 → Lv3', xp: 101 },
+    { trans: 'Lv3 → Lv4', xp: 212 },
+    { trans: 'Lv4 → Lv5', xp: 445 },
+    { trans: 'Lv5 → Lv6', xp: 934 },
+    { trans: 'Lv6 → Lv7', xp: 1960 },
+    { trans: 'Lv7 → Lv8', xp: 4117 },
+    { trans: 'Lv8 → Lv9', xp: 8645 },
+    { trans: 'Lv9 → Lv10', xp: 18155 }
+  ];
+
+  const formatTime = (min) => {
+    if (min < 1) return '0min';
+    if (min < 60) return Math.round(min) + 'min';
+    const h = Math.floor(min / 60);
+    const m = Math.round(min % 60);
+    return m > 0 ? `${h}h ${m}min` : `${h}h`;
+  };
+
+  const rates = [60, 120, 240]; // XP/min for 1, 2, 4 stars
+
+  let html = `<div class="card">
+    <div class="up-title" style="margin-bottom:8px">Tabela de Progressão de Nível</div>
+    <div style="font-size:12px;color:var(--color-text-tertiary);margin-bottom:12px">
+      XP base multiplicado por <b style="color:var(--color-text-primary)">${mult.toFixed(2)}x</b> (raridade).
+      Estimativas: 1⭐=60 XP/min | 2⭐=120 XP/min | 4⭐=240 XP/min.
+    </div>
+    <table class="tbl">
+      <thead>
+        <tr>
+          <th>Transição</th>
+          <th>XP necessário</th>
+          <th>1⭐</th>
+          <th>2⭐</th>
+          <th>4⭐</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${baseData.map(d => {
+          const xp = Math.round(d.xp * mult);
+          return `<tr>
+            <td>${d.trans}</td>
+            <td style="font-weight:600">${xp.toLocaleString()} XP</td>
+            <td><span class="badge b-gray">${formatTime(xp / rates[0])}</span></td>
+            <td><span class="badge b-blue">${formatTime(xp / rates[1])}</span></td>
+            <td><span class="badge b-purple">${formatTime(xp / rates[2])}</span></td>
+          </tr>`;
+        }).join('')}
+      </tbody>
+    </table>
+    <div class="obs" style="margin-top:12px">Cada raridade exige +50% de XP que a anterior. Um Mítico precisa de ~5x mais XP que um Common para o mesmo nível.</div>
+  </div>`;
+  document.getElementById('prog-body').innerHTML = html;
+}
+renderSim();
+</script>
+</body>
+</html>
