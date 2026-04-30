@@ -47,7 +47,7 @@
       box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
     }
 
-    /* NAVBAR */
+    /* NAVBAR REFACTOR */
     nav {
       position: fixed;
       top: 0;
@@ -82,23 +82,64 @@
 
     .nav-links {
       display: flex;
-      gap: 1.5rem;
-      overflow-x: auto;
-      padding: 10px 0;
-      scrollbar-width: none;
+      gap: 2rem;
     }
-    .nav-links::-webkit-scrollbar { display: none; }
+
+    .nav-item {
+      position: relative;
+    }
 
     .nav-link {
       text-decoration: none;
       color: var(--text-dim);
-      font-size: 0.85rem;
-      font-weight: 600;
+      font-size: 0.9rem;
+      font-weight: 700;
       transition: all 0.2s;
-      white-space: nowrap;
+      padding: 10px 0;
+      display: block;
+      cursor: pointer;
     }
-    .nav-link:hover { color: #fff; transform: translateY(-1px); }
+    .nav-link:hover { color: #fff; }
     .nav-link.active { color: var(--primary); }
+
+    .sub-nav {
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%) translateY(10px);
+      background: rgba(10, 10, 10, 0.95);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px;
+      min-width: 160px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      backdrop-filter: blur(10px);
+    }
+
+    .nav-item:hover .sub-nav {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .sub-nav a {
+      text-decoration: none;
+      color: var(--text-dim);
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 8px 12px;
+      border-radius: 4px;
+      transition: all 0.2s;
+    }
+    .sub-nav a:hover {
+      background: rgba(255, 255, 255, 0.05);
+      color: #fff;
+    }
 
     /* HERO */
     .hero {
@@ -132,25 +173,12 @@
       margin-bottom: 2.5rem;
     }
 
-    .scroll-indicator {
-      position: absolute;
-      bottom: 2rem;
-      animation: bounce 2s infinite;
-      color: var(--text-dim);
-      cursor: pointer;
-    }
-
-    @keyframes bounce {
-      0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
-      40% {transform: translateY(-10px);}
-      60% {transform: translateY(-5px);}
-    }
-
     /* SECTIONS */
     section {
-      padding: 80px 1rem;
+      padding: 100px 1rem;
       max-width: 1100px;
       margin: 0 auto;
+      border-bottom: 1px solid rgba(255,255,255,0.03);
     }
 
     .section-header {
@@ -163,11 +191,8 @@
       font-size: 2.5rem;
       font-weight: 800;
       margin-bottom: 0.5rem;
-    }
-
-    .section-header .subtitle {
-      color: var(--text-dim);
-      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: -1px;
     }
 
     /* CARDS */
@@ -187,7 +212,7 @@
       border-color: var(--primary);
     }
 
-    /* BADGES & UI ELEMENTS */
+    /* BADGES & NEW RARITY COLORS */
     .badge {
       font-size: 10px;
       padding: 4px 10px;
@@ -197,13 +222,15 @@
       letter-spacing: 0.5px;
       display: inline-block;
     }
-    .b-gray { background: #1e293b; color: #94a3b8; }
-    .b-blue { background: rgba(37, 99, 235, 0.1); color: #60a5fa; border: 1px solid rgba(37, 99, 235, 0.2); }
-    .b-coral { background: rgba(244, 63, 94, 0.1); color: #fb7185; border: 1px solid rgba(244, 63, 94, 0.2); }
+    .b-gray { background: #334155; color: #94a3b8; } /* Common */
+    .b-blue { background: rgba(37, 99, 235, 0.1); color: #3b82f6; border: 1px solid rgba(37, 99, 235, 0.2); } /* Raro */
+    .b-purple { background: rgba(147, 51, 234, 0.1); color: #a855f7; border: 1px solid rgba(147, 51, 234, 0.2); } /* Épico */
+    .b-yellow { background: rgba(234, 179, 8, 0.1); color: #eab308; border: 1px solid rgba(234, 179, 8, 0.2); } /* Lendário */
+    .b-red { background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.2); } /* Mítico */
+    .b-black { background: #000; color: #fff; border: 1px solid #333; } /* Secreto */
+    
     .b-green { background: rgba(34, 197, 94, 0.1); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.2); }
-    .b-purple { background: rgba(147, 51, 234, 0.1); color: #c084fc; border: 1px solid rgba(147, 51, 234, 0.2); }
-    .b-w { background: rgba(251, 191, 36, 0.1); color: #fbbf24; border: 1px solid rgba(251, 191, 36, 0.2); }
-    .b-e { background: rgba(239, 68, 68, 0.1); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.2); }
+    .b-teal { background: rgba(20, 184, 166, 0.1); color: #2dd4bf; border: 1px solid rgba(20, 184, 166, 0.2); }
 
     /* CONTROLS */
     .ctrl-box {
@@ -241,17 +268,11 @@
     th { text-align: left; padding: 12px; background: rgba(255,255,255,0.02); color: var(--text-dim); font-size: 11px; text-transform: uppercase; }
     td { padding: 12px; border-top: 1px solid var(--border); }
 
-    /* SPECIALS */
-    .obs { padding: 1rem; border-radius: 8px; border-left: 4px solid var(--accent); background: rgba(251, 191, 36, 0.02); color: var(--accent); font-size: 12px; margin: 1rem 0; }
-    .info { padding: 1rem; border-radius: 8px; border-left: 4px solid var(--primary); background: rgba(99, 102, 241, 0.02); color: var(--primary); font-size: 12px; margin: 1rem 0; }
-
     footer { padding: 4rem 2rem; text-align: center; border-top: 1px solid var(--border); color: var(--text-dim); font-size: 0.9rem; }
 
-    /* RESPONSIVE */
     @media (max-width: 768px) {
-      .hero h1 { font-size: 3.5rem; }
-      nav { height: auto; padding: 1rem; }
-      .nav-inner { flex-direction: column; gap: 1rem; }
+      .nav-links { display: none; }
+      .hero h1 { font-size: 3rem; }
     }
   </style>
 </head>
@@ -261,18 +282,33 @@
   <div class="nav-inner">
     <div class="logo">ANIME CHAOS SIMULATOR</div>
     <div class="nav-links">
-      <a href="#hero" class="nav-link">Início</a>
-      <a href="#sim" class="nav-link">Simulador</a>
-      <a href="#td" class="nav-link">Tower Defense</a>
-      <a href="#pets" class="nav-link">Pets</a>
-      <a href="#raids" class="nav-link">Raids</a>
-      <a href="#npcs" class="nav-link">NPCs</a>
-      <a href="#asc" class="nav-link">Ascensão</a>
-      <a href="#eco" class="nav-link">Economia</a>
-      <a href="#roll" class="nav-link">Roll</a>
-      <a href="#prog" class="nav-link">Progresso</a>
-      <a href="#rpg" class="nav-link">RPG</a>
-      <a href="#com" class="nav-link">Comunidade</a>
+      <div class="nav-item">
+        <span class="nav-link">Simulador</span>
+        <div class="sub-nav">
+          <a href="#sim">Estatísticas</a>
+          <a href="#passives">Passivas</a>
+          <a href="#roll">Sistema de Roll</a>
+          <a href="#prog">Tabela de XP</a>
+          <a href="#eco">Economia</a>
+          <a href="#npcs">NPCs & Bosses</a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <span class="nav-link">Tower Defense</span>
+        <div class="sub-nav">
+          <a href="#td">Defesa Principal</a>
+          <a href="#raids">Raids</a>
+          <a href="#asc">Ascensão</a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <span class="nav-link">RPG</span>
+        <div class="sub-nav">
+          <a href="#rpg">Exploração</a>
+          <a href="#pets">Pets</a>
+          <a href="#com">Comunidade</a>
+        </div>
+      </div>
     </div>
   </div>
 </nav>
@@ -280,18 +316,14 @@
 <header id="hero" class="hero">
   <h1>ANIME CHAOS<br>SIMULATOR</h1>
   <p>O simulador definitivo de multiverse anime. Colete heróis, evolua suas habilidades e domine o Tower Defense!</p>
-  <div class="scroll-indicator" onclick="document.getElementById('sim').scrollIntoView()">
-    <div style="font-size: 12px; margin-bottom: 5px;">SCROLL DOWN</div>
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M7 13l5 5 5-5M7 6l5 5 5-5"/></svg>
-  </div>
 </header>
 
 <main>
   <!-- SIMULADOR -->
   <section id="sim">
     <div class="section-header">
-      <h2>Simulador</h2>
-      <p class="subtitle">Estatísticas de combate e progressão de personagens.</p>
+      <h2>Estatísticas</h2>
+      <p class="subtitle">Simulador de combate e progressão.</p>
     </div>
     <div class="ctrl-box glass">
       <div class="ctrl-item">
@@ -316,11 +348,59 @@
     <div id="sim-body" class="card-grid"></div>
   </section>
 
+  <!-- PASSIVAS (NOVO) -->
+  <section id="passives">
+    <div class="section-header">
+      <h2>Sistema de Passivas</h2>
+      <p class="subtitle">Atributos especiais para maximizar seu herói.</p>
+    </div>
+    <div class="card-grid">
+      <div class="card glass">
+        <div style="display:flex;justify-content:space-between;margin-bottom:10px">
+          <h3>Rich (C/R/E)</h3>
+          <span class="badge b-gray">Economia</span>
+        </div>
+        <p style="font-size:12px; color:var(--text-dim)">Especialistas em acumular recursos.</p>
+        <div style="margin-top:15px; display:flex; flex-direction:column; gap:8px">
+          <div style="font-size:11px"><b>Rich 1:</b> +10% de Gold extra.</div>
+          <div style="font-size:11px"><b>Rich 2:</b> +20% de Gold extra.</div>
+          <div style="font-size:11px"><b>Rich 3:</b> +30% de Gold extra.</div>
+        </div>
+      </div>
+      <div class="card glass" style="border-left:4px solid var(--secondary)">
+        <div style="display:flex;justify-content:space-between;margin-bottom:10px">
+          <h3>Assassin</h3>
+          <span class="badge b-red">Dano Bruto</span>
+        </div>
+        <p style="font-size:12px; color:var(--text-dim)">Troca estabilidade por explosão massiva.</p>
+        <div style="margin-top:15px; display:flex; flex-direction:column; gap:5px">
+          <div style="font-size:11px"><b>Dano Base:</b> <span style="color:var(--secondary)">-50% (Metade)</span></div>
+          <div style="font-size:11px"><b>Mult. Ult:</b> <span style="color:var(--accent)">+200%</span></div>
+          <div style="font-size:11px"><b>Atk Speed:</b> <span style="color:var(--primary)">+50%</span></div>
+          <div style="font-size:11px"><b>Hits p/ Ult:</b> <span style="color:var(--secondary)">+5 hits</span></div>
+        </div>
+      </div>
+      <div class="card glass" style="border-left:4px solid var(--accent)">
+        <div style="display:flex;justify-content:space-between;margin-bottom:10px">
+          <h3>Blessing</h3>
+          <span class="badge b-yellow">Divino</span>
+        </div>
+        <p style="font-size:12px; color:var(--text-dim)">A bênção completa dos deuses.</p>
+        <div style="margin-top:15px; display:flex; flex-direction:column; gap:5px">
+          <div style="font-size:11px"><b>Dano Total:</b> <span style="color:var(--accent)">+50%</span></div>
+          <div style="font-size:11px"><b>Movement Speed:</b> <span style="color:var(--accent)">+50%</span></div>
+          <div style="font-size:11px"><b>Atk Speed:</b> <span style="color:var(--accent)">+50%</span></div>
+          <div style="font-size:11px"><b>Hits p/ Ult:</b> <span style="color:var(--primary)">-1 hit</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- TOWER DEFENSE -->
   <section id="td">
     <div class="section-header">
-      <h2>Tower Defense</h2>
-      <p class="subtitle">Estratégias e upgrades em tempo real.</p>
+      <h2>Defesa Principal</h2>
+      <p class="subtitle">Estratégias de posicionamento e upgrade.</p>
     </div>
     <div class="ctrl-box glass">
       <div class="ctrl-item">
@@ -332,23 +412,6 @@
       </div>
     </div>
     <div id="td-body"></div>
-  </section>
-
-  <!-- PETS -->
-  <section id="pets">
-    <div class="section-header">
-      <h2>Pets & Assistência</h2>
-      <p class="subtitle">Aliados poderosos com buffs acumulativos.</p>
-    </div>
-    <div class="ctrl-box glass">
-      <div class="ctrl-item">
-        <label>Nível do Pet</label>
-        <select id="plv" onchange="renderPets()">
-          <option value="1">Lv 1</option><option value="5">Lv 5</option><option value="10">Lv 10</option>
-        </select>
-      </div>
-    </div>
-    <div id="pets-body" class="card-grid"></div>
   </section>
 
   <!-- RAIDS -->
@@ -390,7 +453,7 @@
   <!-- ROLL -->
   <section id="roll">
     <div class="section-header">
-      <h2>Sistema de Roll</h2>
+      <h2>Invocação (Roll)</h2>
       <p class="subtitle">Chances de invocação e custos.</p>
     </div>
     <div id="roll-body"></div>
@@ -399,8 +462,8 @@
   <!-- PROGRESSÃO -->
   <section id="prog">
     <div class="section-header">
-      <h2>Tabela de XP</h2>
-      <p class="subtitle">Curva de progressão por raridade.</p>
+      <h2>Progressão</h2>
+      <p class="subtitle">Curva de XP por raridade.</p>
     </div>
     <div class="ctrl-box glass">
       <div class="ctrl-item">
@@ -414,63 +477,71 @@
     <div id="prog-body"></div>
   </section>
 
-  <!-- RPG (NOVO) -->
+  <!-- RPG -->
   <section id="rpg">
     <div class="section-header">
       <h2>Sistema RPG</h2>
-      <p class="subtitle">Em desenvolvimento: Missões, Inventário e Mundo Aberto.</p>
+      <p class="subtitle">Missões, Inventário e Mundo Aberto.</p>
     </div>
     <div class="card glass" style="text-align: center; padding: 4rem;">
       <div style="font-size: 3rem; margin-bottom: 1rem;">⚔️</div>
-      <h3>BREVE EM BREVE</h3>
-      <p style="color: var(--text-dim); margin-top: 10px;">Uma nova forma de jogar está chegando ao Anime Chaos Simulator.</p>
+      <h3>MODO EXPLORAÇÃO</h3>
+      <p style="color: var(--text-dim); margin-top: 10px;">Em breve: Desbrave o arquipélago em busca de fragmentos secretos.</p>
     </div>
   </section>
 
-  <!-- COMUNIDADE (NOVO) -->
+  <!-- PETS -->
+  <section id="pets">
+    <div class="section-header">
+      <h2>Pets & RPG</h2>
+      <p class="subtitle">Aliados de exploração e bônus passivos.</p>
+    </div>
+    <div class="ctrl-box glass">
+      <div class="ctrl-item">
+        <label>Nível do Pet</label>
+        <select id="plv" onchange="renderPets()">
+          <option value="1">Lv 1</option><option value="5">Lv 5</option><option value="10">Lv 10</option>
+        </select>
+      </div>
+    </div>
+    <div id="pets-body" class="card-grid"></div>
+  </section>
+
+  <!-- COMUNIDADE -->
   <section id="com">
     <div class="section-header">
       <h2>Comunidade</h2>
-      <p class="subtitle">Junte-se a milhares de jogadores.</p>
+      <p class="subtitle">Links oficiais e suporte.</p>
     </div>
     <div class="card-grid">
       <div class="card glass" style="text-align:center">
         <div style="font-size: 2rem; margin-bottom: 1rem;">💬</div>
         <h3>Discord</h3>
-        <p style="font-size:12px; color:var(--text-dim); margin: 10px 0;">Troque estratégias e faça amizades.</p>
-        <span class="badge b-blue">Entrar no Servidor</span>
+        <span class="badge b-blue">Entrar</span>
       </div>
       <div class="card glass" style="text-align:center">
         <div style="font-size: 2rem; margin-bottom: 1rem;">📖</div>
-        <h3>Wiki Oficial</h3>
-        <p style="font-size:12px; color:var(--text-dim); margin: 10px 0;">Dados completos de todos os heróis.</p>
-        <span class="badge b-w">Ver Enciclopédia</span>
-      </div>
-      <div class="card glass" style="text-align:center">
-        <div style="font-size: 2rem; margin-bottom: 1rem;">📢</div>
-        <h3>Twitter / X</h3>
-        <p style="font-size:12px; color:var(--text-dim); margin: 10px 0;">Fique por dentro das atualizações.</p>
-        <span class="badge b-purple">Seguir Devs</span>
+        <h3>Wiki</h3>
+        <span class="badge b-yellow">Acessar</span>
       </div>
     </div>
   </section>
 </main>
 
 <footer>
-  <p>&copy; 2026 Anime Chaos Simulator. Todos os direitos reservados.</p>
-  <p style="font-size: 11px; margin-top: 10px; color: #475569;">Design de Documento de Alta Performance</p>
+  <p>&copy; 2026 Anime Chaos Simulator.</p>
 </footer>
 
 <script>
 // ===================== DADOS SIMULADOR =====================
 const SIM = [
-  { name:'Nami',  rar:'Common',  rc:'b-gray',  arch:'Farmer/Air',   ac:'b-teal', col:'#85B7EB', ct:'#0C447C', base:{dmg:3,mult:3.5,hits:10},raid:{dmg:5,mult:4,hits:8}, growType:'exp', growBase:0.405, growRaid:0.6075 },
-  { name:'Koby',  rar:'Common',  rc:'b-gray',  arch:'Suporte/Canhão',ac:'b-blue', col:'#B5D4F4', ct:'#0C447C', base:{dmg:5,mult:2,hits:5},raid:{dmg:8,mult:3,hits:4}, growType:'exp', growBase:0.405, growRaid:0.6075 },
-  { name:'Usopp', rar:'Raro',    rc:'b-blue',  arch:'Assassino',    ac:'b-e', col:'#9FE1CB', ct:'#085041', base:{dmg:1,mult:16,hits:3},raid:{dmg:1.5,mult:18,hits:3}, growType:'exp', growBase:0.675, growRaid:1.0125 },
-  { name:'Buggy', rar:'Épico',   rc:'b-coral', arch:'DPS Estável',  ac:'b-w', col:'#F5C4B3', ct:'#712B13', base:{dmg:8,mult:4.5,hits:10},raid:{dmg:12,mult:5,hits:8}, growType:'exp', growBase:1.08, growRaid:2.43 },
-  { name:'Zoro',  rar:'Lendário',rc:'b-w',     arch:'Solo Bleed',   ac:'b-coral', col:'#EF9F27', ct:'#633806', base:{dmg:14,mult:3.5,hits:4},raid:{dmg:20,mult:5,hits:4}, growType:'exp', growBase:1.35, growRaid:4.05 },
-  { name:'Luffy', rar:'Mítico',  rc:'b-purple',arch:'Canhão Pesado', ac:'b-purple', col:'#CECBF6', ct:'#3C3489', base:{dmg:18,mult:12,hits:22},raid:{dmg:21,mult:15,hits:22}, growType:'exp', growBase:2.43, growRaid:4.2525 },
-  { name:'Shanks',rar:'Secreto', rc:'b-e',     arch:'O Mais Forte', ac:'b-e', col:'#F0997B', ct:'#712B13', base:{dmg:25,mult:10,hits:8},raid:{dmg:50,mult:20,hits:14}, growType:'exp', growBase:3.375, growRaid:10.125 },
+  { name:'Nami',  rar:'Common',  rc:'b-gray',   arch:'Farmer/Air',   ac:'b-teal', col:'#85B7EB', ct:'#0C447C', base:{dmg:3,mult:3.5,hits:10},raid:{dmg:5,mult:4,hits:8}, growType:'exp', growBase:0.405, growRaid:0.6075 },
+  { name:'Koby',  rar:'Common',  rc:'b-gray',   arch:'Suporte/Canhão',ac:'b-blue', col:'#B5D4F4', ct:'#0C447C', base:{dmg:5,mult:2,hits:5},raid:{dmg:8,mult:3,hits:4}, growType:'exp', growBase:0.405, growRaid:0.6075 },
+  { name:'Usopp', rar:'Raro',    rc:'b-blue',   arch:'Assassino',    ac:'b-red',  col:'#9FE1CB', ct:'#085041', base:{dmg:1,mult:16,hits:3},raid:{dmg:1.5,mult:18,hits:3}, growType:'exp', growBase:0.675, growRaid:1.0125 },
+  { name:'Buggy', rar:'Épico',   rc:'b-purple', arch:'DPS Estável',  ac:'b-yellow',col:'#F5C4B3', ct:'#712B13', base:{dmg:8,mult:4.5,hits:10},raid:{dmg:12,mult:5,hits:8}, growType:'exp', growBase:1.08, growRaid:2.43 },
+  { name:'Zoro',  rar:'Lendário',rc:'b-yellow', arch:'Solo Bleed',   ac:'b-red',  col:'#EF9F27', ct:'#633806', base:{dmg:14,mult:3.5,hits:4},raid:{dmg:20,mult:5,hits:4}, growType:'exp', growBase:1.35, growRaid:4.05 },
+  { name:'Luffy', rar:'Mítico',  rc:'b-red',    arch:'Canhão Pesado', ac:'b-purple',col:'#CECBF6', ct:'#3C3489', base:{dmg:18,mult:12,hits:22},raid:{dmg:21,mult:15,hits:22}, growType:'exp', growBase:2.43, growRaid:4.2525 },
+  { name:'Shanks',rar:'Secreto', rc:'b-black',  arch:'O Mais Forte', ac:'b-red',  col:'#F0997B', ct:'#712B13', base:{dmg:25,mult:10,hits:8},raid:{dmg:50,mult:20,hits:14}, growType:'exp', growBase:3.375, growRaid:10.125 },
 ];
 
 function dmgLv(c,phase,lv){
@@ -489,7 +560,6 @@ function renderSim(){
   SIM.forEach(c=>{
     let d=dmgLv(c,phase,lv), u=ultLv(c,phase,lv);
     if(isShiny) { d *= 1.5; u *= 1.5; }
-    const s=phase==='raid'?c.raid:c.base;
     const dw=(d/maxD)*100, uw=(u/(maxD*10))*100;
     html+=`<div class="card glass">
       <div style="display:flex;justify-content:space-between;margin-bottom:12px">
@@ -499,8 +569,8 @@ function renderSim(){
       <div class="row"><span class="rl">Dano base</span><div class="bwrap"><div class="bar" style="width:${dw}%;background:${c.col};"></div></div><span class="rv">${d.toFixed(1)}</span></div>
       <div class="row"><span class="rl">Dano ult</span><div class="bwrap"><div class="bar" style="width:${uw}%;background:var(--accent);"></div></div><span class="rv">${u.toFixed(1)}</span></div>
       <div style="display:flex; gap:6px; margin-top:12px">
-        <span class="badge b-gray">Mult Base: ${c.base.mult}x</span>
-        <span class="badge b-blue">Mult Raid: ${c.raid.mult}x</span>
+        <span class="badge b-gray">${c.base.mult}x Base</span>
+        <span class="badge b-blue">${c.raid.mult}x Raid</span>
       </div>
     </div>`;
   });
@@ -509,13 +579,13 @@ function renderSim(){
 
 // ===================== TOWER DEFENSE =====================
 const TD = [
-  { name:'Nami', rar:'Common', rc:'b-gray', ac:'b-teal', arch:'Farmer / Air', col:'#85B7EB', qt:8, max_up:3, ups:[ { n:0, range:15, cd:1, dmg:50, price:300, e:'—', farm:60 }, { n:1, range:17, cd:1, dmg:70, price:450, e:'—', farm:80 }, { n:2, range:20, cd:2, dmg:100, price:800, e:'—', farm:110 }, { n:3, range:15, cd:1.5, dmg:120, price:1200, e:'Gold Extra', farm:150 } ] },
-  { name:'Koby', rar:'Common', rc:'b-gray', ac:'b-blue', arch:'Suporte / Ground', col:'#B5D4F4', qt:5, max_up:3, ups:[ { n:0, range:20, cd:5, dmg:40, price:600, e:'Buff +5%' }, { n:1, range:20, cd:4, dmg:60, price:850, e:'Buff +8%' }, { n:2, range:22, cd:4.5, dmg:85, price:1100, e:'Buff +12%' }, { n:3, range:25, cd:3.5, dmg:90, price:1500, e:'Buff +15%' } ] },
-  { name:'Usopp', rar:'Raro', rc:'b-blue', ac:'b-e', arch:'Assassin / Air+Ground', col:'#9FE1CB', qt:8, max_up:3, ups:[ { n:0, range:35, cd:1, dmg:110, price:500, e:'Bleed 25%' }, { n:1, range:40, cd:2, dmg:150, price:750, e:'Burn 40%' }, { n:2, range:50, cd:3, dmg:350, price:1000, e:'Slow' }, { n:3, range:60, cd:2, dmg:120, price:1700, e:'Triple Effect' } ] },
-  { name:'Buggy', rar:'Épico', rc:'b-coral', ac:'b-w', arch:'DPS / Ground', col:'#F5C4B3', qt:6, max_up:3, ups:[ { n:0, range:30, cd:3, dmg:150, price:600, e:'Bleed' }, { n:1, range:35, cd:4, dmg:120, price:1000, e:'Bleed+' }, { n:2, range:40, cd:5, dmg:120, price:1400, e:'Bleed++' }, { n:3, range:10, cd:1.5, dmg:190, price:2200, e:'Cone Barrage' } ] },
-  { name:'Zoro', rar:'Lendário', rc:'b-w', ac:'b-coral', arch:'Solo Bleed', col:'#EF9F27', qt:4, max_up:4, ups:[ { n:0, range:20, cd:2, dmg:110, price:750, e:'Bleed 100%' }, { n:1, range:25, cd:2.5, dmg:150, price:1000, e:'Bleed 100%' }, { n:2, range:25, cd:2, dmg:150, price:1800, e:'Bleed 200%' }, { n:3, range:28, cd:2.5, dmg:165, price:2200, e:'Bleed 200%' }, { n:4, range:35, cd:3, dmg:200, price:3200, e:'3-Sword Dash' } ] },
-  { name:'Luffy', rar:'Mítico', rc:'b-purple', ac:'b-purple', arch:'Heavy Cannon', col:'#CECBF6', qt:3, max_up:5, ups:[ { n:0, range:35, cd:4, dmg:250, price:500, e:'—' }, { n:1, range:35, cd:4, dmg:330, price:1400, e:'—' }, { n:2, range:30, cd:3.5, dmg:500, price:2100, e:'—' }, { n:3, range:30, cd:3, dmg:600, price:2900, e:'—' }, { n:4, range:20, cd:2.5, dmg:800, price:3500, e:'—' }, { n:5, range:25, cd:2.5, dmg:950, price:4100, e:'Pure DPS' } ] },
-  { name:'Shanks', rar:'Secreto', rc:'b-e', ac:'b-e', arch:'The Strongest', col:'#F0997B', qt:1, max_up:6, ups:[ { n:0, range:35, cd:3, dmg:650, price:1000, e:'Bleed' }, { n:1, range:40, cd:3, dmg:800, price:2000, e:'Bleed' }, { n:2, range:45, cd:3.5, dmg:1000, price:3000, e:'Area Smash' }, { n:3, range:45, cd:2, dmg:1000, price:4000, e:'Area Smash' }, { n:4, range:50, cd:2.5, dmg:1300, price:5000, e:'Dash' }, { n:5, range:50, cd:3, dmg:2500, price:6000, e:'Massive Dmg' }, { n:6, range:50, cd:8, dmg:3100, price:10000, e:'Haki do Rei' } ] },
+  { name:'Nami', rar:'Common', rc:'b-gray',   arch:'Farmer / Air', col:'#85B7EB', qt:8, max_up:3, ups:[ { n:0, range:15, cd:1, dmg:50, price:300, e:'—', farm:60 }, { n:1, range:17, cd:1, dmg:70, price:450, e:'—', farm:80 }, { n:2, range:20, cd:2, dmg:100, price:800, e:'—', farm:110 }, { n:3, range:15, cd:1.5, dmg:120, price:1200, e:'Gold Extra', farm:150 } ] },
+  { name:'Koby', rar:'Common', rc:'b-gray',   arch:'Suporte / Ground', col:'#B5D4F4', qt:5, max_up:3, ups:[ { n:0, range:20, cd:5, dmg:40, price:600, e:'Buff +5%' }, { n:1, range:20, cd:4, dmg:60, price:850, e:'Buff +8%' }, { n:2, range:22, cd:4.5, dmg:85, price:1100, e:'Buff +12%' }, { n:3, range:25, cd:3.5, dmg:90, price:1500, e:'Buff +15%' } ] },
+  { name:'Usopp', rar:'Raro',   rc:'b-blue',   arch:'Assassin / Air+Ground', col:'#9FE1CB', qt:8, max_up:3, ups:[ { n:0, range:35, cd:1, dmg:110, price:500, e:'Bleed 25%' }, { n:1, range:40, cd:2, dmg:150, price:750, e:'Burn 40%' }, { n:2, range:50, cd:3, dmg:350, price:1000, e:'Slow' }, { n:3, range:60, cd:2, dmg:120, price:1700, e:'Triple Effect' } ] },
+  { name:'Buggy', rar:'Épico',  rc:'b-purple', arch:'DPS / Ground', col:'#F5C4B3', qt:6, max_up:3, ups:[ { n:0, range:30, cd:3, dmg:150, price:600, e:'Bleed' }, { n:1, range:35, cd:4, dmg:120, price:1000, e:'Bleed+' }, { n:2, range:40, cd:5, dmg:120, price:1400, e:'Bleed++' }, { n:3, range:10, cd:1.5, dmg:190, price:2200, e:'Cone Barrage' } ] },
+  { name:'Zoro',  rar:'Lendário',rc:'b-yellow', arch:'Solo Bleed', col:'#EF9F27', qt:4, max_up:4, ups:[ { n:0, range:20, cd:2, dmg:110, price:750, e:'Bleed 100%' }, { n:1, range:25, cd:2.5, dmg:150, price:1000, e:'Bleed 100%' }, { n:2, range:25, cd:2, dmg:150, price:1800, e:'Bleed 200%' }, { n:3, range:28, cd:2.5, dmg:165, price:2200, e:'Bleed 200%' }, { n:4, range:35, cd:3, dmg:200, price:3200, e:'3-Sword Dash' } ] },
+  { name:'Luffy', rar:'Mítico', rc:'b-red',    arch:'Heavy Cannon', col:'#CECBF6', qt:3, max_up:5, ups:[ { n:0, range:35, cd:4, dmg:250, price:500, e:'—' }, { n:1, range:35, cd:4, dmg:330, price:1400, e:'—' }, { n:2, range:30, cd:3.5, dmg:500, price:2100, e:'—' }, { n:3, range:30, cd:3, dmg:600, price:2900, e:'—' }, { n:4, range:20, cd:2.5, dmg:800, price:3500, e:'—' }, { n:5, range:25, cd:2.5, dmg:950, price:4100, e:'Pure DPS' } ] },
+  { name:'Shanks',rar:'Secreto', rc:'b-black',  arch:'The Strongest', col:'#F0997B', qt:1, max_up:6, ups:[ { n:0, range:35, cd:3, dmg:650, price:1000, e:'Bleed' }, { n:1, range:40, cd:3, dmg:800, price:2000, e:'Bleed' }, { n:2, range:45, cd:3.5, dmg:1000, price:3000, e:'Area Smash' }, { n:3, range:45, cd:2, dmg:1000, price:4000, e:'Area Smash' }, { n:4, range:50, cd:2.5, dmg:1300, price:5000, e:'Dash' }, { n:5, range:50, cd:3, dmg:2500, price:6000, e:'Massive Dmg' }, { n:6, range:50, cd:8, dmg:3100, price:10000, e:'Haki do Rei' } ] },
 ];
 
 function renderTD(){
@@ -579,7 +649,7 @@ function renderPets() {
       <div class="sec" style="font-size:9px; margin-top:0">Ascensão (Progressão Lv)</div>
       <div style="display:flex;gap:5px;flex-wrap:wrap">
         ${Object.entries(p.asc).map(([k,v])=>(v/10*lv).toFixed(2)+'% '+k).map(v=>`<span class="badge b-teal">${v}</span>`).join('')}
-        ${p.asc_pass ? Object.entries(p.asc_pass).map(([k,v])=>(v/10*lv).toFixed(2)+'% '+k).map(v=>`<span class="badge b-w">${v} (P)</span>`).join('') : ''}
+        ${p.asc_pass ? Object.entries(p.asc_pass).map(([k,v])=>(v/10*lv).toFixed(2)+'% '+k).map(v=>`<span class="badge b-yellow">${v} (P)</span>`).join('') : ''}
       </div>
     </div>`;
   });
@@ -599,9 +669,9 @@ function renderRaids(){
     html+=`<div class="card glass">
       <h3 style="font-size:14px; margin-bottom:10px">${r.n}</h3>
       <div style="display:flex; gap:5px; flex-wrap:wrap; margin-bottom:10px">
-        <span class="badge b-coral">${r.p}</span>
+        <span class="badge b-red">${r.p}</span>
         <span class="badge b-gray">${r.w} Waves</span>
-        <span class="badge b-e">${r.hp.toLocaleString()} HP</span>
+        <span class="badge b-black">${r.hp.toLocaleString()} HP</span>
       </div>
       <div class="sec" style="font-size:9px">Drops</div>
       <div style="display:flex;gap:5px;flex-wrap:wrap">${r.drops.map(d=>`<span class="badge b-green">${d}</span>`).join('')}</div>
@@ -623,10 +693,10 @@ function renderNpcs(){
     html+=`<div class="card glass">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px">
         <span style="font-weight:700">${n.n}</span>
-        <span class="badge b-e">${n.hp.toLocaleString()} HP</span>
+        <span class="badge b-red">${n.hp.toLocaleString()} HP</span>
       </div>
       <div style="font-size:11px; color:var(--text-dim); margin-bottom:8px">Drops: ${n.d}</div>
-      <span class="badge b-w">$${n.g} Gold</span>
+      <span class="badge b-yellow">$${n.g} Gold</span>
     </div>`;
   });
   document.getElementById('npcs-body').innerHTML=html;
@@ -661,8 +731,8 @@ function renderEco(){
         <tbody>
           <tr><td>Fixo/Wave</td><td><span class="badge b-green">400</span></td><td>Base</td></tr>
           <tr><td>Kill</td><td><span class="badge b-green">15</span></td><td>Per NPC</td></tr>
-          <tr><td>Nami Farm</td><td><span class="badge b-w">60~150</span></td><td>Per Wave</td></tr>
-          <tr><td>Roll Cost</td><td><span class="badge b-e">80</span></td><td>Per Roll</td></tr>
+          <tr><td>Nami Farm</td><td><span class="badge b-yellow">60~150</span></td><td>Per Wave</td></tr>
+          <tr><td>Roll Cost</td><td><span class="badge b-red">80</span></td><td>Per Roll</td></tr>
         </tbody>
       </table>
     </div>
@@ -711,21 +781,27 @@ function init() {
   renderProg();
 }
 
-// Navbar Active Link on Scroll
 window.addEventListener('scroll', () => {
   let current = "";
   const sections = document.querySelectorAll("section, header");
   sections.forEach((section) => {
     const sectionTop = section.offsetTop;
-    if (pageYOffset >= sectionTop - 100) {
+    if (pageYOffset >= sectionTop - 150) {
       current = section.getAttribute("id");
     }
   });
 
   document.querySelectorAll(".nav-link").forEach((link) => {
     link.classList.remove("active");
-    if (link.getAttribute("href").includes(current)) {
-      link.classList.add("active");
+    // Special handling for nested links
+    const parentItem = link.closest('.nav-item');
+    if (parentItem) {
+      const subLinks = parentItem.querySelectorAll('.sub-nav a');
+      subLinks.forEach(sl => {
+        if (sl.getAttribute('href').includes(current)) {
+          link.classList.add("active");
+        }
+      });
     }
   });
 });
