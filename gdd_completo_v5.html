@@ -2,68 +2,37 @@
 <html lang="pt-BR" data-theme="dark">
 <head>
   <meta charset="UTF-8">
-  <title>Anime Chaos Simulator — GDD Completo (Oficial)</title>
+  <title>Anime Chaos Simulator — GDD & Simulador de Testes</title>
   <style>
     :root { --primary: #6366f1; --bg: #000; --text: #fff; --border: rgba(255,255,255,0.1); }
     [data-theme="light"] { --bg: #f8fafc; --text: #000; --border: rgba(0,0,0,0.1); }
     body { background: var(--bg); color: var(--text); font-family: sans-serif; padding: 2rem; line-height: 1.6; max-width: 1200px; margin: 0 auto; }
     .card { border: 1px solid var(--border); padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem; background: rgba(255,255,255,0.02); }
-    h1, h2, h3 { text-transform: uppercase; letter-spacing: -1px; }
-    .badge { font-size: 10px; padding: 2px 8px; border-radius: 10px; text-transform: uppercase; font-weight: bold; margin-right: 5px; }
-    .b-gray { background: #334155; } .b-blue { background: #3b82f6; } .b-purple { background: #a855f7; }
-    .b-yellow { background: #eab308; color: #000; } .b-red { background: #ef4444; } .b-black { background: #000; border: 1px solid #333; }
-    ul { list-style: square; padding-left: 20px; font-size: 14px; color: #94a3b8; }
-    [data-theme="light"] ul { color: #475569; }
+    h1, h2 { text-transform: uppercase; }
+    ul { list-style: square; padding-left: 20px; color: #94a3b8; }
   </style>
 </head>
 <body>
-  <h1>Documentação de Balanceamento</h1>
+  <h1>Documentação Oficial — Ferramenta de Testes</h1>
 
   <section>
-    <h2>1. Personagens & Crescimento (+35% / +50%)</h2>
+    <h2>Simulador de Passivas (Lógica)</h2>
     <div class="card">
-      <p><b>Global Growth:</b> Dano Base aumentado em 35%. Na fase de Ascensão, o ganho de dano por nível recebe +50% adicional.</p>
+      <p>O simulador de testes calcula o dano final baseado no Dano Base do personagem multiplicado pelos buffs de passivas:</p>
       <ul>
-        <li><b>Common (Nami/Koby):</b> 0.405 Base / 0.6075 Raid</li>
-        <li><b>Raro (Usopp):</b> 0.675 Base / 1.0125 Raid</li>
-        <li><b>Épico (Buggy):</b> 1.08 Base / 2.43 Raid</li>
-        <li><b>Lendário (Zoro):</b> 1.35 Base / 4.05 Raid</li>
-        <li><b>Mítico (Luffy):</b> 2.43 Base / 4.2525 Raid</li>
-        <li><b>Secreto (Shanks):</b> 3.375 Base / 10.125 Raid</li>
+        <li><b>Dano Final</b> = Dano Base * Multiplicador da Passiva</li>
+        <li><b>Exemplo Egoist:</b> Dano Base * 2.0 (+100% de aumento).</li>
+        <li><b>Exemplo Blessing:</b> Dano Base * 1.5 (+50% de aumento).</li>
       </ul>
     </div>
   </section>
 
   <section>
-    <h2>2. Passivas & Raridades</h2>
+    <h2>Pets, Raids & NPCs (Dados Oficiais)</h2>
     <div class="card">
-      <h3>Mythic</h3>
-      <p><b>Blessing:</b> +50% All Stats, -1 Hit Ult.<br><b>Assassin:</b> -50% Dano, +200% Mult Ult.<br><b>Abençoado pelos céus:</b> +30% Luck.</p>
-      
-      <h3>Legendary</h3>
-      <p><b>The Egoist:</b> +100% Self Dmg, +5x Mult, -70% Allies.<br><b>Heart Good:</b> -100% Self Dmg, +50% Buff Global.</p>
-
-      <h3>Epic</h3>
-      <p><b>Golem:</b> +60% Dano, -35% Atk Spd.<br><b>Rich 3:</b> +30% Gold.<br><b>Sortudo 3:</b> +15% Luck.<br><b>Soldado 3:</b> +15% Força.</p>
-    </div>
-  </section>
-
-  <section>
-    <h2>3. Raids & Desafios</h2>
-    <div class="card">
-      <ul>
-        <li><b>Raid 1:</b> 55.000 HP | 15 Waves</li>
-        <li><b>Raid 2:</b> 100.000 HP | 20 Waves</li>
-        <li><b>Raid 3:</b> 250.000 HP | 25 Waves</li>
-        <li><b>Boss Secreto:</b> 150.000 HP</li>
-      </ul>
-    </div>
-  </section>
-
-  <section>
-    <h2>4. Chances de Roll</h2>
-    <div class="card">
-      <p>Common: 60% | Raro: 25% | Lendário: 3.5% | <b>Mítico: 0.035%</b></p>
+      <b>Pets:</b> Nami, Koby, Usopp, Buggy, Zoro, Luffy, Shanks (Bônus de Sorte e Atributos).<br>
+      <b>Raids:</b> Grand Line (55k), Paraíso (100k), Novo Mundo (250k).<br>
+      <b>Bosses:</b> Alvida (8k), Boss Secreto (150k).
     </div>
   </section>
 

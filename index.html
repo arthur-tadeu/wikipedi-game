@@ -10,7 +10,6 @@
   <style>
     :root {
       --primary: #6366f1;
-      --primary-glow: rgba(99, 102, 241, 0.5);
       --secondary: #f43f5e;
       --accent: #fbbf24;
       --radius: 12px;
@@ -107,7 +106,6 @@
     .nav-item { position: relative; }
     .nav-link { text-decoration: none; color: var(--text-dim); font-size: 0.85rem; font-weight: 700; transition: all 0.2s; padding: 8px 0; display: block; cursor: pointer; text-transform: uppercase; }
     .nav-link:hover { color: var(--primary); }
-    .nav-link.active { color: var(--primary); }
 
     .sub-nav {
       position: absolute;
@@ -129,7 +127,6 @@
 
     .hero { height: 80vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 2rem; padding-top: 100px; }
     .hero h1 { font-family: var(--font-title); font-size: clamp(2.5rem, 8vw, 5rem); font-weight: 900; line-height: 1; margin-bottom: 1rem; text-transform: uppercase; background: linear-gradient(to bottom, var(--text-main), var(--text-dim)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    .hero p { font-size: 1rem; color: var(--text-dim); max-width: 500px; }
 
     section { padding: 80px 1.5rem; max-width: 1100px; margin: 0 auto; }
     .section-header { margin-bottom: 2.5rem; text-align: center; }
@@ -147,26 +144,27 @@
     .b-red { background: #ef4444; color: #fff; }
     .b-black { background: #000; color: #fff; border: 1px solid #333; }
     .b-green { background: #22c55e; color: #fff; }
-    .b-teal { background: #14b8a6; color: #fff; }
 
     .ctrl-box { margin-bottom: 2rem; display: flex; gap: 1rem; flex-wrap: wrap; padding: 1rem; border-radius: var(--radius); }
     .ctrl-item { flex: 1; min-width: 140px; }
     .ctrl-item label { display: block; font-size: 10px; color: var(--text-dim); margin-bottom: 6px; font-weight: 800; }
-    select { width: 100%; background: var(--bg-dark); border: 1px solid var(--border); color: var(--text-main); padding: 12px; border-radius: 10px; font-size: 13px; }
+    select, input { width: 100%; background: var(--bg-dark); border: 1px solid var(--border); color: var(--text-main); padding: 12px; border-radius: 10px; font-size: 13px; }
+
+    .btn { background: var(--primary); color: #fff; border: none; padding: 12px 20px; border-radius: 10px; font-weight: 700; cursor: pointer; transition: all 0.2s; font-size: 13px; }
+    .btn:hover { background: var(--secondary); transform: scale(1.05); }
 
     .row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
     .rl { width: 80px; font-size: 10px; color: var(--text-dim); font-weight: 700; }
     .bwrap { flex: 1; height: 8px; background: rgba(0,0,0,0.1); border-radius: 4px; overflow: hidden; }
-    [data-theme="dark"] .bwrap { background: rgba(255,255,255,0.05); }
     .bar { height: 100%; border-radius: 4px; transition: width 0.6s ease; }
     .rv { width: 50px; text-align: right; font-size: 10px; font-weight: 800; }
 
-    footer { padding: 4rem 2rem; text-align: center; border-top: 1px solid var(--border); color: var(--text-dim); font-size: 0.8rem; }
+    /* MODAL */
+    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(8px); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 1.5rem; }
+    .modal-content { width: 100%; max-width: 600px; max-height: 85vh; overflow-y: auto; padding: 2rem; border-radius: 20px; position: relative; }
+    .close-modal { position: absolute; top: 1rem; right: 1rem; background: none; border: none; color: var(--text-main); font-size: 1.5rem; cursor: pointer; }
 
-    /* RARITY GROUPING */
-    .rarity-group { margin-bottom: 3rem; }
-    .rarity-header { display: flex; align-items: center; gap: 10px; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
-    .rarity-header h3 { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-dim); }
+    footer { padding: 4rem 2rem; text-align: center; border-top: 1px solid var(--border); color: var(--text-dim); font-size: 0.8rem; }
 
     @media (max-width: 600px) { .nav-links { gap: 0.8rem; } .nav-link { font-size: 0.7rem; } .card-grid { grid-template-columns: 1fr; } }
   </style>
@@ -189,8 +187,6 @@
           <a href="#passives">Passivas</a>
           <a href="#roll">Sistema de Roll</a>
           <a href="#prog">Tabela de XP</a>
-          <a href="#eco">Economia</a>
-          <a href="#npcs">NPCs & Bosses</a>
         </div>
       </div>
       <div class="nav-item">
@@ -198,15 +194,13 @@
         <div class="sub-nav">
           <a href="#td">Defesa Principal</a>
           <a href="#raids">Raids</a>
-          <a href="#asc">Ascensão</a>
         </div>
       </div>
       <div class="nav-item">
         <span class="nav-link">RPG</span>
         <div class="sub-nav">
-          <a href="#rpg">Exploração</a>
           <a href="#pets">Pets</a>
-          <a href="#com">Comunidade</a>
+          <a href="#npcs">NPCs & Bosses</a>
         </div>
       </div>
     </div>
@@ -215,7 +209,7 @@
 
 <header class="hero">
   <h1 class="reveal">ANIME CHAOS</h1>
-  <p class="reveal">O multiverso definitivo de simulação e estratégia.</p>
+  <p class="reveal">Simulador oficial de passivas e balanceamento multiverso.</p>
 </header>
 
 <main>
@@ -225,89 +219,75 @@
     <div class="ctrl-box glass">
       <div class="ctrl-item"><label>Nível</label><select id="slv" onchange="renderSim()"><option value="1">Lv 1</option><option value="5">Lv 5</option><option value="10">Lv 10</option></select></div>
       <div class="ctrl-item"><label>Fase</label><select id="sph" onchange="renderSim()"><option value="base">Base</option><option value="raid">Ascensão</option></select></div>
-      <div class="ctrl-item"><label>Variante</label><select id="sshiny" onchange="renderSim()"><option value="normal">Normal</option><option value="shiny">Shiny (+50%)</option></select></div>
+      <div class="ctrl-item" style="display:flex; align-items:flex-end;"><button class="btn" onclick="openTester()">🧪 Testar Passiva</button></div>
     </div>
     <div id="sim-body" class="card-grid"></div>
   </section>
 
   <!-- PASSIVAS -->
   <section id="passives" class="reveal">
-    <div class="section-header"><h2>Passivas (Exclusivo Simulador)</h2></div>
-    
-    <div class="rarity-group">
-      <div class="rarity-header"><span class="badge b-gray">Comum</span><h3>Inicial</h3></div>
-      <div class="card-grid">
-        <div class="card glass"><h3>Rich 1</h3><p style="font-size:11px; color:var(--text-dim)">+10% Gold extra.</p></div>
-        <div class="card glass"><h3>O Sortudo 1</h3><p style="font-size:11px; color:var(--text-dim)">+5% Luck.</p></div>
-        <div class="card glass"><h3>Soldado 1</h3><p style="font-size:11px; color:var(--text-dim)">+5% Força.</p></div>
-      </div>
-    </div>
-
-    <div class="rarity-group">
-      <div class="rarity-header"><span class="badge b-blue">Raro</span><h3>Evolutivo</h3></div>
-      <div class="card-grid">
-        <div class="card glass"><h3>Rich 2</h3><p style="font-size:11px; color:var(--text-dim)">+20% Gold extra.</p></div>
-        <div class="card glass"><h3>O Sortudo 2</h3><p style="font-size:11px; color:var(--text-dim)">+10% Luck.</p></div>
-        <div class="card glass"><h3>Soldado 2</h3><p style="font-size:11px; color:var(--text-dim)">+10% Força.</p></div>
-      </div>
-    </div>
-
-    <div class="rarity-group">
-      <div class="rarity-header"><span class="badge b-purple">Épico</span><h3>Elite</h3></div>
-      <div class="card-grid">
-        <div class="card glass"><h3>Rich 3</h3><p style="font-size:11px; color:var(--text-dim)">+30% Gold extra.</p></div>
-        <div class="card glass"><h3>O Sortudo 3</h3><p style="font-size:11px; color:var(--text-dim)">+15% Luck.</p></div>
-        <div class="card glass"><h3>Soldado 3</h3><p style="font-size:11px; color:var(--text-dim)">+15% Força.</p></div>
-        <div class="card glass" style="border-left:4px solid var(--accent)"><h3>Golem</h3><p style="font-size:11px; color:var(--text-dim)">+60% Dano | -35% Atk Speed.</p></div>
-      </div>
-    </div>
-
-    <div class="rarity-group">
-      <div class="rarity-header"><span class="badge b-yellow">Lendário</span><h3>Poder Supremo</h3></div>
-      <div class="card-grid">
-        <div class="card glass"><h3>Heart Good</h3><p style="font-size:11px; color:var(--text-dim)">-100% Dano | +50% Buff p/ Aliados.</p></div>
-        <div class="card glass"><h3>The Egoist</h3><p style="font-size:11px; color:var(--text-dim)">-70% Dano Aliados | +100% Dano Próprio | +5x Mult.</p></div>
-      </div>
-    </div>
-
-    <div class="rarity-group">
-      <div class="rarity-header"><span class="badge b-red">Mítico</span><h3>Celestial</h3></div>
-      <div class="card-grid">
-        <div class="card glass"><h3>Assassin</h3><p style="font-size:11px; color:var(--text-dim)">Dano -50% | Mult Ult +200% | Atk Speed +50%.</p></div>
-        <div class="card glass"><h3>Blessing</h3><p style="font-size:11px; color:var(--text-dim)">+50% em Todos os Stats | -1 Hit p/ Ult.</p></div>
-        <div class="card glass" style="border-left:4px solid var(--accent)"><h3>Abençoado pelos céus</h3><p style="font-size:11px; color:var(--text-dim)">+30% Luck.</p></div>
-      </div>
-    </div>
+    <div class="section-header"><h2>Passivas Disponíveis</h2></div>
+    <div id="passives-display" class="card-grid"></div>
   </section>
+
+  <!-- PETS -->
+  <section id="pets" class="reveal">
+    <div class="section-header"><h2>Pets Aliados</h2></div>
+    <div class="ctrl-box glass"><div class="ctrl-item"><label>Nível do Pet</label><select id="plv" onchange="renderPets()"><option value="1">Lv 1</option><option value="5">Lv 5</option><option value="10">Lv 10</option></select></div></div>
+    <div id="pets-body" class="card-grid"></div>
+  </section>
+
+  <!-- RAIDS -->
+  <section id="raids" class="reveal"><div class="section-header"><h2>Raids Co-op</h2></div><div id="raids-body" class="card-grid"></div></section>
+
+  <!-- NPCS -->
+  <section id="npcs" class="reveal"><div class="section-header"><h2>NPCs & Bosses</h2></div><div id="npcs-body" class="card-grid"></div></section>
 
   <!-- TOWER DEFENSE -->
   <section id="td" class="reveal">
-    <div class="section-header"><h2>Defesa Estratégica</h2></div>
-    <div class="ctrl-box glass">
-      <div class="ctrl-item"><label>Unidade</label><select id="tdchar" onchange="renderTD()"><option value="0">Nami</option><option value="1">Koby</option><option value="2">Usopp</option><option value="3">Buggy</option><option value="4">Zoro</option><option value="5">Luffy</option><option value="6">Shanks</option></select></div>
-    </div>
+    <div class="section-header"><h2>Defesa de Torre</h2></div>
+    <div class="ctrl-box glass"><div class="ctrl-item"><label>Unidade</label><select id="tdchar" onchange="renderTD()"><option value="0">Nami</option><option value="1">Koby</option><option value="2">Usopp</option><option value="3">Buggy</option><option value="4">Zoro</option><option value="5">Luffy</option><option value="6">Shanks</option></select></div></div>
     <div id="td-body"></div>
   </section>
 
-  <!-- OUTRAS SEÇÕES -->
-  <section id="raids" class="reveal"><div class="section-header"><h2>Raids</h2></div><div id="raids-body" class="card-grid"></div></section>
-  <section id="npcs" class="reveal"><div class="section-header"><h2>NPCs & Bosses</h2></div><div id="npcs-body" class="card-grid"></div></section>
-  <section id="asc" class="reveal"><div class="section-header"><h2>Ascensão</h2></div><div id="asc-body"></div></section>
-  <section id="pets" class="reveal"><div class="section-header"><h2>Pets</h2></div><div id="pets-body" class="card-grid"></div></section>
-  <section id="roll" class="reveal"><div class="section-header"><h2>Roll</h2></div><div id="roll-body"></div></section>
+  <!-- ROLL -->
+  <section id="roll" class="reveal"><div class="section-header"><h2>Chances de Roll</h2></div><div id="roll-body"></div></section>
 </main>
+
+<!-- TESTER MODAL -->
+<div id="tester-modal" class="modal-overlay" onclick="if(event.target===this) closeTester()">
+  <div class="modal-content glass">
+    <button class="close-modal" onclick="closeTester()">&times;</button>
+    <h2 style="font-family:var(--font-title); margin-bottom:1.5rem">🧪 Simulador de Passivas</h2>
+    
+    <div class="ctrl-box" style="background:none; border:none; padding:0">
+      <div class="ctrl-item"><label>Herói</label><select id="t-hero" onchange="calcTest()"></select></div>
+      <div class="ctrl-item"><label>Passiva</label><input type="text" id="t-search" placeholder="Pesquisar passiva..." oninput="calcTest()"></div>
+    </div>
+
+    <div id="t-results" style="margin-top:2rem">
+      <div class="card glass" style="text-align:center">
+        <p style="font-size:12px; color:var(--text-dim)">Selecione um herói e digite o nome da passiva.</p>
+      </div>
+    </div>
+
+    <div id="t-list" style="margin-top:1.5rem; font-size:11px; opacity:0.8">
+      <b>Dica:</b> Tente "Egoist", "Blessing", "Golem", "Rich" ou "Soldado".
+    </div>
+  </div>
+</div>
 
 <footer><p>&copy; 2026 Anime Chaos Simulator.</p></footer>
 
 <script>
-// CORE LOGIC
+// THEME
 function toggleTheme() { const h=document.documentElement; const n=h.getAttribute('data-theme')==='dark'?'light':'dark'; h.setAttribute('data-theme',n); localStorage.setItem('theme',n); }
 const savedTheme = localStorage.getItem('theme') || 'dark';
 document.documentElement.setAttribute('data-theme', savedTheme);
 const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if(entry.isIntersecting) entry.target.classList.add('active'); }); }, { threshold: 0.1 });
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-// ===================== DADOS COMPLETOS (NÃO APAGAR) =====================
+// ===================== DADOS COMPLETOS =====================
 const SIM = [
   { name:'Nami',  rar:'Common',  rc:'b-gray',   col:'#85B7EB', base:{dmg:3,mult:3.5},raid:{dmg:5,mult:4}, gB:0.405, gR:0.6075 },
   { name:'Koby',  rar:'Common',  rc:'b-gray',   col:'#B5D4F4', base:{dmg:5,mult:2},raid:{dmg:8,mult:3}, gB:0.405, gR:0.6075 },
@@ -318,70 +298,118 @@ const SIM = [
   { name:'Shanks',rar:'Secreto', rc:'b-black',  col:'#F0997B', base:{dmg:25,mult:10},raid:{dmg:50,mult:20}, gB:3.375, gR:10.125 },
 ];
 
+const PASSIVES = [
+  { n:'Rich 1', r:'Comum', b: { gold: 1.1 } }, { n:'Rich 2', r:'Raro', b: { gold: 1.2 } }, { n:'Rich 3', r:'Épico', b: { gold: 1.3 } },
+  { n:'O Sortudo 1', r:'Comum', b: { luck: 1.05 } }, { n:'O Sortudo 2', r:'Raro', b: { luck: 1.1 } }, { n:'O Sortudo 3', r:'Épico', b: { luck: 1.15 } },
+  { n:'Abençoado pelos céus', r:'Mítico', b: { luck: 1.3 } },
+  { n:'Soldado 1', r:'Comum', b: { dmg: 1.05 } }, { n:'Soldado 2', r:'Raro', b: { dmg: 1.1 } }, { n:'Soldado 3', r:'Épico', b: { dmg: 1.15 } },
+  { n:'Golem', r:'Épico', b: { dmg: 1.6, spd: 0.65 } },
+  { n:'Heart Good', r:'Lendário', b: { dmg: 0, buff: 1.5 } },
+  { n:'The Egoist', r:'Lendário', b: { dmg: 2.0, mult: 5, allies: 0.3 } },
+  { n:'Assassin', r:'Mítico', b: { dmg: 0.5, ult: 3.0, spd: 1.5 } },
+  { n:'Blessing', r:'Mítico', b: { dmg: 1.5, spd: 1.5, hits: -1 } }
+];
+
+const TD = [
+  { name:'Nami', rar:'Common', rc:'b-gray', qt:8, ups:[{n:0,range:15,cd:1,dmg:50,price:300,e:'—'},{n:3,range:15,cd:1.5,dmg:120,price:1200,e:'Gold'}] },
+  { name:'Koby', rar:'Common', rc:'b-gray', qt:5, ups:[{n:0,range:20,cd:5,dmg:40,price:600,e:'Buff'}] },
+  { name:'Usopp', rar:'Raro', rc:'b-blue', qt:8, ups:[{n:0,range:35,cd:1,dmg:110,price:500,e:'Bleed'}] },
+  { name:'Buggy', rar:'Épico', rc:'b-purple', qt:6, ups:[{n:0,range:30,cd:3,dmg:150,price:600,e:'Bleed'}] },
+  { name:'Zoro', rar:'Lendário', rc:'b-yellow', qt:4, ups:[{n:0,range:20,cd:2,dmg:110,price:750,e:'Bleed'}] },
+  { name:'Luffy', rar:'Mítico', rc:'b-red', qt:3, ups:[{n:0,range:35,cd:4,dmg:250,price:500,e:'—'}] },
+  { name:'Shanks', rar:'Secreto', rc:'b-black', qt:1, ups:[{n:0,range:35,cd:3,dmg:650,price:1000,e:'Bleed'},{n:6,range:50,cd:8,dmg:3100,price:10000,e:'Haki'}] }
+];
+
+const PETS = [ { name: 'Nami', buff: 5, asc: 7.5 }, { name: 'Koby', buff: 1.5, asc: 3 }, { name: 'Usopp', buff: 3, asc: 6 }, { name: 'Buggy', buff: -3, asc: -7 }, { name: 'Zoro', buff: 5, asc: 10 }, { name: 'Luffy', buff: 3, asc: 7 }, { name: 'Shanks', buff: 4, asc: 6 } ];
+
+// RENDERS
 function renderSim(){
-  const lv=parseInt(document.getElementById('slv').value); const ph=document.getElementById('sph').value; const s=document.getElementById('sshiny').value==='shiny';
-  const mD=( (SIM[6].raid.dmg) + (SIM[6].gR)*Math.pow(lv-1,1.15) ) * (s?1.5:1);
+  const lv=parseInt(document.getElementById('slv').value); const ph=document.getElementById('sph').value;
+  const mD=( (SIM[6].raid.dmg) + (SIM[6].gR)*Math.pow(lv-1,1.15) );
   let html=''; SIM.forEach(c=>{
-    const d=( (ph==='raid'?c.raid.dmg:c.base.dmg) + (ph==='raid'?c.gR:c.gB)*Math.pow(lv-1,1.15) ) * (s?1.5:1);
-    const u=d*(ph==='raid'?c.raid.mult:c.base.mult);
-    html+=`<div class="card glass">
-      <div style="display:flex;justify-content:space-between;margin-bottom:12px"><b>${c.name}</b> <span class="badge ${c.rc}">${c.rar}</span></div>
-      <div class="row"><span class="rl">Dano</span><div class="bwrap"><div class="bar" style="width:${(d/mD)*100}%;background:${c.col};"></div></div><span class="rv">${d.toFixed(1)}</span></div>
-      <div class="row"><span class="rl">Ult</span><div class="bwrap"><div class="bar" style="width:${(u/(mD*20))*100}%;background:var(--accent);"></div></div><span class="rv">${u.toFixed(0)}</span></div>
-    </div>`;
+    const d=(ph==='raid'?c.raid.dmg:c.base.dmg) + (ph==='raid'?c.gR:c.gB)*Math.pow(lv-1,1.15);
+    html+=`<div class="card glass"><b>${c.name}</b> <span class="badge ${c.rc}">${c.rar}</span><br><small>Dano: ${d.toFixed(1)}</small></div>`;
   });
   document.getElementById('sim-body').innerHTML=html;
 }
 
-const TD = [
-  { name:'Nami', rar:'Common', rc:'b-gray', qt:8, ups:[ { n:0, range:15, cd:1, dmg:50, price:300, e:'—', farm:60 }, { n:3, range:15, cd:1.5, dmg:120, price:1200, e:'Gold Extra', farm:150 } ] },
-  { name:'Koby', rar:'Common', rc:'b-gray', qt:5, ups:[ { n:0, range:20, cd:5, dmg:40, price:600, e:'Buff +5%' }, { n:3, range:25, cd:3.5, dmg:90, price:1500, e:'Buff +15%' } ] },
-  { name:'Usopp', rar:'Raro', rc:'b-blue', qt:8, ups:[ { n:0, range:35, cd:1, dmg:110, price:500, e:'Bleed' }, { n:3, range:60, cd:2, dmg:120, price:1700, e:'Triple Effect' } ] },
-  { name:'Buggy', rar:'Épico', rc:'b-purple', qt:6, ups:[ { n:0, range:30, cd:3, dmg:150, price:600, e:'Bleed' }, { n:3, range:10, cd:1.5, dmg:190, price:2200, e:'Cone Barrage' } ] },
-  { name:'Zoro', rar:'Lendário', rc:'b-yellow', qt:4, ups:[ { n:0, range:20, cd:2, dmg:110, price:750, e:'Bleed' }, { n:4, range:35, cd:3, dmg:200, price:3200, e:'Dash' } ] },
-  { name:'Luffy', rar:'Mítico', rc:'b-red', qt:3, ups:[ { n:0, range:35, cd:4, dmg:250, price:500, e:'—' }, { n:5, range:25, cd:2.5, dmg:950, price:4100, e:'Pure DPS' } ] },
-  { name:'Shanks', rar:'Secreto', rc:'b-black', qt:1, ups:[ { n:0, range:35, cd:3, dmg:650, price:1000, e:'Bleed' }, { n:6, range:50, cd:8, dmg:3100, price:10000, e:'Haki Rei' } ] },
-];
-function renderTD(){
-  const ci=document.getElementById('tdchar').value; const c=TD[ci];
-  let h=`<div class="card glass" style="margin-bottom:1rem"><b>${c.name}</b> <span class="badge ${c.rc}">${c.rar}</span> (Max ${c.qt})</div><div class="card-grid">`;
-  c.ups.forEach(u=>{ h+=`<div class="card glass"><div style="font-size:11px;font-weight:800;margin-bottom:5px">UP ${u.n} — $${u.price}</div><div style="font-size:10px;color:var(--text-dim)">R ${u.range} | CD ${u.cd}s | D ${u.dmg}</div><div style="font-size:10px;margin-top:5px"><b>E:</b> ${u.e}</div></div>`; });
-  document.getElementById('td-body').innerHTML=h+'</div>';
-}
-
-const PETS = [ { name: 'Nami', buff: 5, asc: 7.5 }, { name: 'Koby', buff: 1.5, asc: 3 }, { name: 'Usopp', buff: 3, asc: 6 }, { name: 'Buggy', buff: -3, asc: -7 }, { name: 'Zoro', buff: 5, asc: 10 }, { name: 'Luffy', buff: 3, asc: 7 }, { name: 'Shanks', buff: 4, asc: 6 } ];
 function renderPets(){
   const lv=document.getElementById('plv').value; let html='';
-  PETS.forEach(p=>{
-    const b=(p.buff/10*lv).toFixed(1); const a=(p.asc/10*lv).toFixed(1);
-    html+=`<div class="card glass"><b>${p.name}</b><div style="font-size:10px;margin-top:8px"><span class="badge b-green">Buff: ${b}%</span> <span class="badge b-teal">Asc: ${a}%</span></div></div>`;
-  });
+  PETS.forEach(p=>{ html+=`<div class="card glass"><b>${p.name}</b><div style="font-size:10px;margin-top:8px"><span class="badge b-green">Buff: ${(p.buff/10*lv).toFixed(1)}%</span></div></div>`; });
   document.getElementById('pets-body').innerHTML=html;
 }
 
 function renderRaids(){
-  const r=[ { n:'Raid 1 — Grand Line', hp:55000, w:15 }, { n:'Raid 2 — Paraíso', hp:100000, w:20 }, { n:'Raid 3 — Novo Mundo', hp:250000, w:25 } ];
-  let h=''; r.forEach(x=>{ h+=`<div class="card glass"><b>${x.n}</b><div style="font-size:10px;margin-top:5px">${x.hp.toLocaleString()} HP | ${x.w} Waves</div></div>`; });
+  const r=[ { n:'Raid 1', hp:55000, w:15 }, { n:'Raid 2', hp:100000, w:20 }, { n:'Raid 3', hp:250000, w:25 } ];
+  let h=''; r.forEach(x=>{ h+=`<div class="card glass"><b>${x.n}</b><div style="font-size:10px;margin-top:5px">${x.hp.toLocaleString()} HP</div></div>`; });
   document.getElementById('raids-body').innerHTML=h;
 }
 
 function renderNpcs(){
-  const n=[ { n:'Marinheiro', hp:400, g:20 }, { n:'Alvida', hp:8000, g:80 }, { n:'Boss Secreto', hp:150000, g:1200 } ];
-  let h=''; n.forEach(x=>{ h+=`<div class="card glass"><b>${x.n}</b><div style="font-size:10px;margin-top:5px">HP: ${x.hp.toLocaleString()} | Gold: $${x.g}</div></div>`; });
+  const n=[ { n:'Alvida', hp:8000, g:80 }, { n:'Boss Secreto', hp:150000, g:1200 } ];
+  let h=''; n.forEach(x=>{ h+=`<div class="card glass"><b>${x.n}</b><div style="font-size:10px;margin-top:5px">HP: ${x.hp.toLocaleString()}</div></div>`; });
   document.getElementById('npcs-body').innerHTML=h;
 }
 
-function renderAsc(){
-  const d=['Nami (200x, 5x Pose)','Koby (200x, 5x Capa)','Usopp (150x, 5x Óculos)','Buggy (100x, 3x Chapéu)','Zoro (50x, 3x Espada)','Luffy (25x, 3x Chapéu)','Shanks (15x, 3x Espada)'];
-  let h='<div class="card glass" style="font-size:11px"><ul>'; d.forEach(x=>h+=`<li>${x}</li>`);
-  document.getElementById('asc-body').innerHTML=h+'</ul></div>';
+function renderTD(){
+  const ci=document.getElementById('tdchar').value; const c=TD[ci];
+  let h=`<div class="card glass" style="margin-bottom:1rem"><b>${c.name}</b></div><div class="card-grid">`;
+  c.ups.forEach(u=>{ h+=`<div class="card glass">UP ${u.n} | D ${u.dmg}</div>`; });
+  document.getElementById('td-body').innerHTML=h+'</div>';
 }
 
 function renderRoll(){
-  document.getElementById('roll-body').innerHTML=`<div class="card glass"><table style="width:100%;font-size:12px"><tr><th>Raridade</th><th>Chance</th></tr><tr><td>Common</td><td>60%</td></tr><tr><td>Raro</td><td>25%</td></tr><tr><td>Lendário</td><td>3.5%</td></tr><tr><td>Mítico</td><td><b style="color:var(--secondary)">0.035%</b></td></tr></table></div>`;
+  document.getElementById('roll-body').innerHTML=`<div class="card glass">Common: 60% | Raro: 25% | Mítico: <b style="color:var(--secondary)">0.035%</b></div>`;
 }
 
-function init() { renderSim(); renderTD(); renderPets(); renderRaids(); renderNpcs(); renderAsc(); renderRoll(); }
+// TESTER LOGIC
+function openTester(){
+  document.getElementById('tester-modal').style.display='flex';
+  const sel=document.getElementById('t-hero'); sel.innerHTML='';
+  SIM.forEach((c,i)=>sel.innerHTML+=`<option value="${i}">${c.name}</option>`);
+  calcTest();
+}
+function closeTester(){ document.getElementById('tester-modal').style.display='none'; }
+
+function calcTest(){
+  const ci=document.getElementById('t-hero').value; const char=SIM[ci];
+  const query=document.getElementById('t-search').value.toLowerCase();
+  const pass=PASSIVES.find(p=>p.n.toLowerCase().includes(query) || p.r.toLowerCase().includes(query));
+  
+  if(!pass || query===''){
+    document.getElementById('t-results').innerHTML=`<div class="card glass" style="text-align:center">Digite o nome de uma passiva válida.</div>`;
+    return;
+  }
+
+  const baseD = char.base.dmg;
+  let finalD = baseD * (pass.b.dmg !== undefined ? pass.b.dmg : 1);
+  if(pass.n==='The Egoist') finalD = baseD * 2.0;
+  
+  document.getElementById('t-results').innerHTML=`
+    <div class="card glass" style="border-left:4px solid var(--primary)">
+      <div style="display:flex; justify-content:space-between; margin-bottom:1rem">
+        <b style="font-size:1.1rem">${pass.n}</b>
+        <span class="badge b-purple">${pass.r}</span>
+      </div>
+      <div style="font-size:13px; margin-bottom:10px"><b>Herói:</b> ${char.name}</div>
+      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px">
+        <div style="background:rgba(0,0,0,0.1); padding:10px; border-radius:8px">
+          <div style="font-size:9px; text-transform:uppercase">Dano Base</div>
+          <div style="font-size:1.2rem; font-weight:900">${baseD.toFixed(1)}</div>
+        </div>
+        <div style="background:var(--primary-glow); padding:10px; border-radius:8px">
+          <div style="font-size:9px; text-transform:uppercase">Dano Buffado</div>
+          <div style="font-size:1.2rem; font-weight:900; color:var(--primary)">${finalD.toFixed(1)}</div>
+        </div>
+      </div>
+      <div style="font-size:10px; margin-top:1rem; color:var(--text-dim)">
+        *Cálculo baseado no Dano Base do Nível 1.
+      </div>
+    </div>
+  `;
+}
+
+function init() { renderSim(); renderTD(); renderPets(); renderRaids(); renderNpcs(); renderRoll(); }
 init();
 </script>
 </body>
