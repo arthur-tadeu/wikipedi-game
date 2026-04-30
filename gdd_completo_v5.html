@@ -2,52 +2,72 @@
 <html lang="pt-BR" data-theme="dark">
 <head>
   <meta charset="UTF-8">
-  <title>Anime Chaos Simulator — GDD Passivas & Roll</title>
+  <title>Anime Chaos Simulator — GDD Completo (Oficial)</title>
   <style>
     :root { --primary: #6366f1; --bg: #000; --text: #fff; --border: rgba(255,255,255,0.1); }
     [data-theme="light"] { --bg: #f8fafc; --text: #000; --border: rgba(0,0,0,0.1); }
-    body { background: var(--bg); color: var(--text); font-family: sans-serif; padding: 2rem; }
-    .card { border: 1px solid var(--border); padding: 1rem; border-radius: 8px; margin-bottom: 1rem; }
-    .badge { font-size: 10px; padding: 2px 8px; border-radius: 10px; text-transform: uppercase; font-weight: bold; }
+    body { background: var(--bg); color: var(--text); font-family: sans-serif; padding: 2rem; line-height: 1.6; max-width: 1200px; margin: 0 auto; }
+    .card { border: 1px solid var(--border); padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem; background: rgba(255,255,255,0.02); }
+    h1, h2, h3 { text-transform: uppercase; letter-spacing: -1px; }
+    .badge { font-size: 10px; padding: 2px 8px; border-radius: 10px; text-transform: uppercase; font-weight: bold; margin-right: 5px; }
     .b-gray { background: #334155; } .b-blue { background: #3b82f6; } .b-purple { background: #a855f7; }
     .b-yellow { background: #eab308; color: #000; } .b-red { background: #ef4444; } .b-black { background: #000; border: 1px solid #333; }
+    ul { list-style: square; padding-left: 20px; font-size: 14px; color: #94a3b8; }
+    [data-theme="light"] ul { color: #475569; }
   </style>
 </head>
 <body>
-  <h1>GDD — Passivas & Roll</h1>
+  <h1>Documentação de Balanceamento</h1>
 
   <section>
-    <h2>Sistema de Roll</h2>
+    <h2>1. Personagens & Crescimento (+35% / +50%)</h2>
     <div class="card">
-      <b>Mítico:</b> <span style="color:#ef4444">0.035%</span> (Ajustado)
+      <p><b>Global Growth:</b> Dano Base aumentado em 35%. Na fase de Ascensão, o ganho de dano por nível recebe +50% adicional.</p>
+      <ul>
+        <li><b>Common (Nami/Koby):</b> 0.405 Base / 0.6075 Raid</li>
+        <li><b>Raro (Usopp):</b> 0.675 Base / 1.0125 Raid</li>
+        <li><b>Épico (Buggy):</b> 1.08 Base / 2.43 Raid</li>
+        <li><b>Lendário (Zoro):</b> 1.35 Base / 4.05 Raid</li>
+        <li><b>Mítico (Luffy):</b> 2.43 Base / 4.2525 Raid</li>
+        <li><b>Secreto (Shanks):</b> 3.375 Base / 10.125 Raid</li>
+      </ul>
     </div>
   </section>
 
   <section>
-    <h2>Passivas Expandidas</h2>
-    
+    <h2>2. Passivas & Raridades</h2>
     <div class="card">
-      <b>Common:</b> Rich 1, Sortudo 1 (+5% L), Soldado 1 (+5% F)
+      <h3>Mythic</h3>
+      <p><b>Blessing:</b> +50% All Stats, -1 Hit Ult.<br><b>Assassin:</b> -50% Dano, +200% Mult Ult.<br><b>Abençoado pelos céus:</b> +30% Luck.</p>
+      
+      <h3>Legendary</h3>
+      <p><b>The Egoist:</b> +100% Self Dmg, +5x Mult, -70% Allies.<br><b>Heart Good:</b> -100% Self Dmg, +50% Buff Global.</p>
+
+      <h3>Epic</h3>
+      <p><b>Golem:</b> +60% Dano, -35% Atk Spd.<br><b>Rich 3:</b> +30% Gold.<br><b>Sortudo 3:</b> +15% Luck.<br><b>Soldado 3:</b> +15% Força.</p>
     </div>
+  </section>
+
+  <section>
+    <h2>3. Raids & Desafios</h2>
     <div class="card">
-      <b>Rare:</b> Rich 2, Sortudo 2 (+10% L), Soldado 2 (+10% F)
+      <ul>
+        <li><b>Raid 1:</b> 55.000 HP | 15 Waves</li>
+        <li><b>Raid 2:</b> 100.000 HP | 20 Waves</li>
+        <li><b>Raid 3:</b> 250.000 HP | 25 Waves</li>
+        <li><b>Boss Secreto:</b> 150.000 HP</li>
+      </ul>
     </div>
+  </section>
+
+  <section>
+    <h2>4. Chances de Roll</h2>
     <div class="card">
-      <b>Epic:</b> Rich 3, Sortudo 3 (+15% L), Soldado 3 (+15% F), <b>Golem</b>
-    </div>
-    <div class="card">
-      <b>Legendary:</b> The Egoist, Heart Good
-    </div>
-    <div class="card">
-      <b>Mythic:</b> Assassin, Blessing, <b>Abençoado pelos céus</b> (+30% Luck)
+      <p>Common: 60% | Raro: 25% | Lendário: 3.5% | <b>Mítico: 0.035%</b></p>
     </div>
   </section>
 
   <script>
-    function toggleTheme() {
-      const h=document.documentElement; const n=h.getAttribute('data-theme')==='dark'?'light':'dark';
-      h.setAttribute('data-theme',n); localStorage.setItem('theme',n);
-    }
     const savedTheme = localStorage.getItem('theme') || 'dark';
     document.documentElement.setAttribute('data-theme', savedTheme);
   </script>

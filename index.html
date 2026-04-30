@@ -8,55 +8,172 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@500;700;900&display=swap" rel="stylesheet">
   <style>
-    :root { --primary: #6366f1; --secondary: #f43f5e; --accent: #fbbf24; --radius: 12px; --font-main: 'Inter', sans-serif; --font-title: 'Outfit', sans-serif; }
-    [data-theme="dark"] { --bg-dark: #000; --bg-card: rgba(15, 15, 20, 0.9); --text-main: #f8fafc; --text-dim: #94a3b8; --border: rgba(255, 255, 255, 0.08); --nav-bg: rgba(0, 0, 0, 0.85); --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8); }
-    [data-theme="light"] { --bg-dark: #f8fafc; --bg-card: rgba(255, 255, 255, 0.9); --text-main: #0f172a; --text-dim: #475569; --border: rgba(0, 0, 0, 0.1); --nav-bg: rgba(255, 255, 255, 0.9); --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1); }
+    :root {
+      --primary: #6366f1;
+      --primary-glow: rgba(99, 102, 241, 0.5);
+      --secondary: #f43f5e;
+      --accent: #fbbf24;
+      --radius: 12px;
+      --font-main: 'Inter', sans-serif;
+      --font-title: 'Outfit', sans-serif;
+    }
+
+    [data-theme="dark"] {
+      --bg-dark: #000000;
+      --bg-card: rgba(15, 15, 20, 0.9);
+      --text-main: #f8fafc;
+      --text-dim: #94a3b8;
+      --border: rgba(255, 255, 255, 0.08);
+      --nav-bg: rgba(0, 0, 0, 0.85);
+      --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
+    }
+
+    [data-theme="light"] {
+      --bg-dark: #f8fafc;
+      --bg-card: rgba(255, 255, 255, 0.9);
+      --text-main: #0f172a;
+      --text-dim: #475569;
+      --border: rgba(0, 0, 0, 0.1);
+      --nav-bg: rgba(255, 255, 255, 0.9);
+      --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+    }
+
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
-    body { background-color: var(--bg-dark); color: var(--text-main); font-family: var(--font-main); line-height: 1.6; transition: background-color 0.3s, color 0.3s; }
-    .reveal { opacity: 0; transform: translateY(40px); transition: all 1s cubic-bezier(0.1, 0, 0.3, 1); }
-    .reveal.active { opacity: 1; transform: translateY(0); }
-    .glass { background: var(--bg-card); backdrop-filter: blur(12px); border: 1px solid var(--border); box-shadow: var(--shadow); }
-    nav { position: fixed; top: 0; left: 0; right: 0; min-height: 70px; z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 0.5rem 1rem; border-bottom: 1px solid var(--border); background: var(--nav-bg); backdrop-filter: blur(15px); }
-    .nav-inner { width: 100%; max-width: 1200px; display: flex; flex-direction: column; align-items: center; gap: 0.5rem; }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: var(--font-main);
+      line-height: 1.6;
+      overflow-x: hidden;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 1s cubic-bezier(0.1, 0, 0.3, 1);
+    }
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .bg-glow {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+      background-image: 
+        radial-gradient(circle at 0% 0%, rgba(99, 102, 241, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 100% 100%, rgba(244, 63, 94, 0.05) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    .glass {
+      background: var(--bg-card);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      min-height: 70px;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.5rem 1rem;
+      border-bottom: 1px solid var(--border);
+      background: var(--nav-bg);
+      backdrop-filter: blur(15px);
+    }
+
+    .nav-inner {
+      width: 100%;
+      max-width: 1200px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
     .nav-top { display: flex; justify-content: space-between; align-items: center; width: 100%; }
     .logo { font-family: var(--font-title); font-weight: 900; font-size: 1.2rem; background: linear-gradient(to right, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
     .nav-links { display: flex; gap: 1.5rem; justify-content: center; width: 100%; flex-wrap: wrap; }
     .nav-item { position: relative; }
     .nav-link { text-decoration: none; color: var(--text-dim); font-size: 0.85rem; font-weight: 700; transition: all 0.2s; padding: 8px 0; display: block; cursor: pointer; text-transform: uppercase; }
     .nav-link:hover { color: var(--primary); }
     .nav-link.active { color: var(--primary); }
-    .sub-nav { position: absolute; top: 100%; left: 50%; transform: translateX(-50%) translateY(10px); background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 8px; min-width: 180px; display: flex; flex-direction: column; opacity: 0; visibility: hidden; transition: all 0.25s ease; }
+
+    .sub-nav {
+      position: absolute;
+      top: 100%; left: 50%;
+      transform: translateX(-50%) translateY(10px);
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 8px;
+      min-width: 180px;
+      display: flex;
+      flex-direction: column;
+      opacity: 0; visibility: hidden;
+      transition: all 0.25s ease;
+    }
     .nav-item:hover .sub-nav { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
     .sub-nav a { text-decoration: none; color: var(--text-dim); font-size: 0.75rem; font-weight: 600; padding: 10px 15px; border-radius: 6px; transition: all 0.2s; }
     .sub-nav a:hover { background: var(--primary); color: #fff; }
+
     .hero { height: 80vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 2rem; padding-top: 100px; }
     .hero h1 { font-family: var(--font-title); font-size: clamp(2.5rem, 8vw, 5rem); font-weight: 900; line-height: 1; margin-bottom: 1rem; text-transform: uppercase; background: linear-gradient(to bottom, var(--text-main), var(--text-dim)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .hero p { font-size: 1rem; color: var(--text-dim); max-width: 500px; }
+
     section { padding: 80px 1.5rem; max-width: 1100px; margin: 0 auto; }
     .section-header { margin-bottom: 2.5rem; text-align: center; }
     .section-header h2 { font-family: var(--font-title); font-size: 2.2rem; font-weight: 900; text-transform: uppercase; }
-    .rarity-group { margin-bottom: 3rem; }
-    .rarity-header { display: flex; align-items: center; gap: 10px; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
-    .rarity-header h3 { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-dim); }
+
     .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
     .card { border-radius: var(--radius); padding: 1.5rem; transition: all 0.3s ease; border: 1px solid var(--border); }
     .card:hover { transform: translateY(-5px); border-color: var(--primary); }
+
     .badge { font-size: 10px; padding: 4px 10px; border-radius: 20px; font-weight: 700; text-transform: uppercase; display: inline-block; }
-    .b-gray { background: #334155; color: #fff; } .b-blue { background: #3b82f6; color: #fff; } .b-purple { background: #a855f7; color: #fff; }
-    .b-yellow { background: #eab308; color: #000; } .b-red { background: #ef4444; color: #fff; } .b-black { background: #000; color: #fff; border: 1px solid #333; }
+    .b-gray { background: #334155; color: #fff; }
+    .b-blue { background: #3b82f6; color: #fff; }
+    .b-purple { background: #a855f7; color: #fff; }
+    .b-yellow { background: #eab308; color: #000; }
+    .b-red { background: #ef4444; color: #fff; }
+    .b-black { background: #000; color: #fff; border: 1px solid #333; }
+    .b-green { background: #22c55e; color: #fff; }
+    .b-teal { background: #14b8a6; color: #fff; }
+
     .ctrl-box { margin-bottom: 2rem; display: flex; gap: 1rem; flex-wrap: wrap; padding: 1rem; border-radius: var(--radius); }
     .ctrl-item { flex: 1; min-width: 140px; }
+    .ctrl-item label { display: block; font-size: 10px; color: var(--text-dim); margin-bottom: 6px; font-weight: 800; }
     select { width: 100%; background: var(--bg-dark); border: 1px solid var(--border); color: var(--text-main); padding: 12px; border-radius: 10px; font-size: 13px; }
+
     .row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
     .rl { width: 80px; font-size: 10px; color: var(--text-dim); font-weight: 700; }
     .bwrap { flex: 1; height: 8px; background: rgba(0,0,0,0.1); border-radius: 4px; overflow: hidden; }
+    [data-theme="dark"] .bwrap { background: rgba(255,255,255,0.05); }
     .bar { height: 100%; border-radius: 4px; transition: width 0.6s ease; }
     .rv { width: 50px; text-align: right; font-size: 10px; font-weight: 800; }
+
     footer { padding: 4rem 2rem; text-align: center; border-top: 1px solid var(--border); color: var(--text-dim); font-size: 0.8rem; }
+
+    /* RARITY GROUPING */
+    .rarity-group { margin-bottom: 3rem; }
+    .rarity-header { display: flex; align-items: center; gap: 10px; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
+    .rarity-header h3 { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-dim); }
+
     @media (max-width: 600px) { .nav-links { gap: 0.8rem; } .nav-link { font-size: 0.7rem; } .card-grid { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
+
+<div class="bg-glow"></div>
 
 <nav class="glass">
   <div class="nav-inner">
@@ -72,6 +189,8 @@
           <a href="#passives">Passivas</a>
           <a href="#roll">Sistema de Roll</a>
           <a href="#prog">Tabela de XP</a>
+          <a href="#eco">Economia</a>
+          <a href="#npcs">NPCs & Bosses</a>
         </div>
       </div>
       <div class="nav-item">
@@ -79,6 +198,15 @@
         <div class="sub-nav">
           <a href="#td">Defesa Principal</a>
           <a href="#raids">Raids</a>
+          <a href="#asc">Ascensão</a>
+        </div>
+      </div>
+      <div class="nav-item">
+        <span class="nav-link">RPG</span>
+        <div class="sub-nav">
+          <a href="#rpg">Exploração</a>
+          <a href="#pets">Pets</a>
+          <a href="#com">Comunidade</a>
         </div>
       </div>
     </div>
@@ -87,56 +215,53 @@
 
 <header class="hero">
   <h1 class="reveal">ANIME CHAOS</h1>
-  <p class="reveal">Sistema de Roll Facilitado & Novas Passivas de Sorte</p>
+  <p class="reveal">O multiverso definitivo de simulação e estratégia.</p>
 </header>
 
 <main>
   <!-- SIMULADOR -->
   <section id="sim" class="reveal">
-    <div class="section-header"><h2>Estatísticas</h2></div>
+    <div class="section-header"><h2>Estatísticas de Combate</h2></div>
     <div class="ctrl-box glass">
-      <div class="ctrl-item"><select id="slv" onchange="renderSim()"><option value="1">Lv 1</option><option value="5">Lv 5</option><option value="10">Lv 10</option></select></div>
-      <div class="ctrl-item"><select id="sph" onchange="renderSim()"><option value="base">Base</option><option value="raid">Ascensão</option></select></div>
+      <div class="ctrl-item"><label>Nível</label><select id="slv" onchange="renderSim()"><option value="1">Lv 1</option><option value="5">Lv 5</option><option value="10">Lv 10</option></select></div>
+      <div class="ctrl-item"><label>Fase</label><select id="sph" onchange="renderSim()"><option value="base">Base</option><option value="raid">Ascensão</option></select></div>
+      <div class="ctrl-item"><label>Variante</label><select id="sshiny" onchange="renderSim()"><option value="normal">Normal</option><option value="shiny">Shiny (+50%)</option></select></div>
     </div>
     <div id="sim-body" class="card-grid"></div>
   </section>
 
   <!-- PASSIVAS -->
   <section id="passives" class="reveal">
-    <div class="section-header"><h2>Passivas</h2></div>
-
-    <!-- COMUM -->
+    <div class="section-header"><h2>Passivas (Exclusivo Simulador)</h2></div>
+    
     <div class="rarity-group">
       <div class="rarity-header"><span class="badge b-gray">Comum</span><h3>Inicial</h3></div>
       <div class="card-grid">
         <div class="card glass"><h3>Rich 1</h3><p style="font-size:11px; color:var(--text-dim)">+10% Gold extra.</p></div>
-        <div class="card glass"><h3>O Sortudo 1</h3><p style="font-size:11px; color:var(--text-dim)">+5% de Sorte (Luck).</p></div>
-        <div class="card glass"><h3>Soldado 1</h3><p style="font-size:11px; color:var(--text-dim)">+5% de Força bruta.</p></div>
+        <div class="card glass"><h3>O Sortudo 1</h3><p style="font-size:11px; color:var(--text-dim)">+5% Luck.</p></div>
+        <div class="card glass"><h3>Soldado 1</h3><p style="font-size:11px; color:var(--text-dim)">+5% Força.</p></div>
       </div>
     </div>
 
-    <!-- RARO -->
     <div class="rarity-group">
-      <div class="rarity-header"><span class="badge b-blue">Raro</span><h3>Evolução</h3></div>
+      <div class="rarity-header"><span class="badge b-blue">Raro</span><h3>Evolutivo</h3></div>
       <div class="card-grid">
         <div class="card glass"><h3>Rich 2</h3><p style="font-size:11px; color:var(--text-dim)">+20% Gold extra.</p></div>
-        <div class="card glass"><h3>O Sortudo 2</h3><p style="font-size:11px; color:var(--text-dim)">+10% de Sorte (Luck).</p></div>
-        <div class="card glass"><h3>Soldado 2</h3><p style="font-size:11px; color:var(--text-dim)">+10% de Força bruta.</p></div>
+        <div class="card glass"><h3>O Sortudo 2</h3><p style="font-size:11px; color:var(--text-dim)">+10% Luck.</p></div>
+        <div class="card glass"><h3>Soldado 2</h3><p style="font-size:11px; color:var(--text-dim)">+10% Força.</p></div>
       </div>
     </div>
 
-    <!-- EPICO -->
     <div class="rarity-group">
       <div class="rarity-header"><span class="badge b-purple">Épico</span><h3>Elite</h3></div>
       <div class="card-grid">
         <div class="card glass"><h3>Rich 3</h3><p style="font-size:11px; color:var(--text-dim)">+30% Gold extra.</p></div>
-        <div class="card glass"><h3>O Sortudo 3</h3><p style="font-size:11px; color:var(--text-dim)">+15% de Sorte (Luck).</p></div>
-        <div class="card glass"><h3>Soldado 3</h3><p style="font-size:11px; color:var(--text-dim)">+15% de Força bruta.</p></div>
+        <div class="card glass"><h3>O Sortudo 3</h3><p style="font-size:11px; color:var(--text-dim)">+15% Luck.</p></div>
+        <div class="card glass"><h3>Soldado 3</h3><p style="font-size:11px; color:var(--text-dim)">+15% Força.</p></div>
         <div class="card glass" style="border-left:4px solid var(--accent)"><h3>Golem</h3><p style="font-size:11px; color:var(--text-dim)">+60% Dano | -35% Atk Speed.</p></div>
       </div>
     </div>
 
-    <!-- LENDARIO -->
     <div class="rarity-group">
       <div class="rarity-header"><span class="badge b-yellow">Lendário</span><h3>Poder Supremo</h3></div>
       <div class="card-grid">
@@ -145,48 +270,118 @@
       </div>
     </div>
 
-    <!-- MITICO -->
     <div class="rarity-group">
       <div class="rarity-header"><span class="badge b-red">Mítico</span><h3>Celestial</h3></div>
       <div class="card-grid">
         <div class="card glass"><h3>Assassin</h3><p style="font-size:11px; color:var(--text-dim)">Dano -50% | Mult Ult +200% | Atk Speed +50%.</p></div>
         <div class="card glass"><h3>Blessing</h3><p style="font-size:11px; color:var(--text-dim)">+50% em Todos os Stats | -1 Hit p/ Ult.</p></div>
-        <div class="card glass" style="border-left:4px solid var(--accent)"><h3>Abençoado pelos céus</h3><p style="font-size:11px; color:var(--text-dim)">O ápice da sorte: <span style="color:var(--accent)">+30% Luck</span>.</p></div>
+        <div class="card glass" style="border-left:4px solid var(--accent)"><h3>Abençoado pelos céus</h3><p style="font-size:11px; color:var(--text-dim)">+30% Luck.</p></div>
       </div>
     </div>
   </section>
 
-  <!-- ROLL -->
-  <section id="roll" class="reveal">
-    <div class="section-header"><h2>Sistema de Roll</h2></div>
-    <div id="roll-body"></div>
+  <!-- TOWER DEFENSE -->
+  <section id="td" class="reveal">
+    <div class="section-header"><h2>Defesa Estratégica</h2></div>
+    <div class="ctrl-box glass">
+      <div class="ctrl-item"><label>Unidade</label><select id="tdchar" onchange="renderTD()"><option value="0">Nami</option><option value="1">Koby</option><option value="2">Usopp</option><option value="3">Buggy</option><option value="4">Zoro</option><option value="5">Luffy</option><option value="6">Shanks</option></select></div>
+    </div>
+    <div id="td-body"></div>
   </section>
+
+  <!-- OUTRAS SEÇÕES -->
+  <section id="raids" class="reveal"><div class="section-header"><h2>Raids</h2></div><div id="raids-body" class="card-grid"></div></section>
+  <section id="npcs" class="reveal"><div class="section-header"><h2>NPCs & Bosses</h2></div><div id="npcs-body" class="card-grid"></div></section>
+  <section id="asc" class="reveal"><div class="section-header"><h2>Ascensão</h2></div><div id="asc-body"></div></section>
+  <section id="pets" class="reveal"><div class="section-header"><h2>Pets</h2></div><div id="pets-body" class="card-grid"></div></section>
+  <section id="roll" class="reveal"><div class="section-header"><h2>Roll</h2></div><div id="roll-body"></div></section>
 </main>
 
+<footer><p>&copy; 2026 Anime Chaos Simulator.</p></footer>
+
 <script>
+// CORE LOGIC
 function toggleTheme() { const h=document.documentElement; const n=h.getAttribute('data-theme')==='dark'?'light':'dark'; h.setAttribute('data-theme',n); localStorage.setItem('theme',n); }
 const savedTheme = localStorage.getItem('theme') || 'dark';
 document.documentElement.setAttribute('data-theme', savedTheme);
 const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if(entry.isIntersecting) entry.target.classList.add('active'); }); }, { threshold: 0.1 });
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-// ROLL TABLE
-function renderRoll(){
-  document.getElementById('roll-body').innerHTML=`<div class="card glass"><table style="width:100%;font-size:13px"><tr><th>Raridade</th><th>Chance</th></tr><tr><td>Common</td><td>60%</td></tr><tr><td>Raro</td><td>25%</td></tr><tr><td>Lendário</td><td>3.5%</td></tr><tr><td>Mítico</td><td><b style="color:var(--secondary)">0.035%</b></td></tr></table></div>`;
-}
+// ===================== DADOS COMPLETOS (NÃO APAGAR) =====================
+const SIM = [
+  { name:'Nami',  rar:'Common',  rc:'b-gray',   col:'#85B7EB', base:{dmg:3,mult:3.5},raid:{dmg:5,mult:4}, gB:0.405, gR:0.6075 },
+  { name:'Koby',  rar:'Common',  rc:'b-gray',   col:'#B5D4F4', base:{dmg:5,mult:2},raid:{dmg:8,mult:3}, gB:0.405, gR:0.6075 },
+  { name:'Usopp', rar:'Raro',    rc:'b-blue',   col:'#9FE1CB', base:{dmg:1,mult:16},raid:{dmg:1.5,mult:18}, gB:0.675, gR:1.0125 },
+  { name:'Buggy', rar:'Épico',   rc:'b-purple', col:'#F5C4B3', base:{dmg:8,mult:4.5},raid:{dmg:12,mult:5}, gB:1.08, gR:2.43 },
+  { name:'Zoro',  rar:'Lendário',rc:'b-yellow', col:'#EF9F27', base:{dmg:14,mult:3.5},raid:{dmg:20,mult:5}, gB:1.35, gR:4.05 },
+  { name:'Luffy', rar:'Mítico',  rc:'b-red',    col:'#CECBF6', base:{dmg:18,mult:12},raid:{dmg:21,mult:15}, gB:2.43, gR:4.2525 },
+  { name:'Shanks',rar:'Secreto', rc:'b-black',  col:'#F0997B', base:{dmg:25,mult:10},raid:{dmg:50,mult:20}, gB:3.375, gR:10.125 },
+];
 
-// RESTORING SIM (SUMMARY)
-const SIM = [{name:'Shanks',rar:'Secreto',rc:'b-black',col:'#F0997B',base:{dmg:25,mult:10},raid:{dmg:50,mult:20},gB:3.375,gR:10.125}];
 function renderSim(){
-  const lv=parseInt(document.getElementById('slv').value); const phase=document.getElementById('sph').value;
+  const lv=parseInt(document.getElementById('slv').value); const ph=document.getElementById('sph').value; const s=document.getElementById('sshiny').value==='shiny';
+  const mD=( (SIM[6].raid.dmg) + (SIM[6].gR)*Math.pow(lv-1,1.15) ) * (s?1.5:1);
   let html=''; SIM.forEach(c=>{
-    const d=+( (phase==='raid'?c.raid.dmg:c.base.dmg) + (phase==='raid'?c.gR:c.gB)*Math.pow(lv-1,1.15) ).toFixed(2);
-    html+=`<div class="card glass"><b>${c.name}</b> <span class="badge ${c.rc}">${c.rar}</span><br><small>Dano: ${d}</small></div>`;
+    const d=( (ph==='raid'?c.raid.dmg:c.base.dmg) + (ph==='raid'?c.gR:c.gB)*Math.pow(lv-1,1.15) ) * (s?1.5:1);
+    const u=d*(ph==='raid'?c.raid.mult:c.base.mult);
+    html+=`<div class="card glass">
+      <div style="display:flex;justify-content:space-between;margin-bottom:12px"><b>${c.name}</b> <span class="badge ${c.rc}">${c.rar}</span></div>
+      <div class="row"><span class="rl">Dano</span><div class="bwrap"><div class="bar" style="width:${(d/mD)*100}%;background:${c.col};"></div></div><span class="rv">${d.toFixed(1)}</span></div>
+      <div class="row"><span class="rl">Ult</span><div class="bwrap"><div class="bar" style="width:${(u/(mD*20))*100}%;background:var(--accent);"></div></div><span class="rv">${u.toFixed(0)}</span></div>
+    </div>`;
   });
   document.getElementById('sim-body').innerHTML=html;
 }
 
-function init() { renderSim(); renderRoll(); }
+const TD = [
+  { name:'Nami', rar:'Common', rc:'b-gray', qt:8, ups:[ { n:0, range:15, cd:1, dmg:50, price:300, e:'—', farm:60 }, { n:3, range:15, cd:1.5, dmg:120, price:1200, e:'Gold Extra', farm:150 } ] },
+  { name:'Koby', rar:'Common', rc:'b-gray', qt:5, ups:[ { n:0, range:20, cd:5, dmg:40, price:600, e:'Buff +5%' }, { n:3, range:25, cd:3.5, dmg:90, price:1500, e:'Buff +15%' } ] },
+  { name:'Usopp', rar:'Raro', rc:'b-blue', qt:8, ups:[ { n:0, range:35, cd:1, dmg:110, price:500, e:'Bleed' }, { n:3, range:60, cd:2, dmg:120, price:1700, e:'Triple Effect' } ] },
+  { name:'Buggy', rar:'Épico', rc:'b-purple', qt:6, ups:[ { n:0, range:30, cd:3, dmg:150, price:600, e:'Bleed' }, { n:3, range:10, cd:1.5, dmg:190, price:2200, e:'Cone Barrage' } ] },
+  { name:'Zoro', rar:'Lendário', rc:'b-yellow', qt:4, ups:[ { n:0, range:20, cd:2, dmg:110, price:750, e:'Bleed' }, { n:4, range:35, cd:3, dmg:200, price:3200, e:'Dash' } ] },
+  { name:'Luffy', rar:'Mítico', rc:'b-red', qt:3, ups:[ { n:0, range:35, cd:4, dmg:250, price:500, e:'—' }, { n:5, range:25, cd:2.5, dmg:950, price:4100, e:'Pure DPS' } ] },
+  { name:'Shanks', rar:'Secreto', rc:'b-black', qt:1, ups:[ { n:0, range:35, cd:3, dmg:650, price:1000, e:'Bleed' }, { n:6, range:50, cd:8, dmg:3100, price:10000, e:'Haki Rei' } ] },
+];
+function renderTD(){
+  const ci=document.getElementById('tdchar').value; const c=TD[ci];
+  let h=`<div class="card glass" style="margin-bottom:1rem"><b>${c.name}</b> <span class="badge ${c.rc}">${c.rar}</span> (Max ${c.qt})</div><div class="card-grid">`;
+  c.ups.forEach(u=>{ h+=`<div class="card glass"><div style="font-size:11px;font-weight:800;margin-bottom:5px">UP ${u.n} — $${u.price}</div><div style="font-size:10px;color:var(--text-dim)">R ${u.range} | CD ${u.cd}s | D ${u.dmg}</div><div style="font-size:10px;margin-top:5px"><b>E:</b> ${u.e}</div></div>`; });
+  document.getElementById('td-body').innerHTML=h+'</div>';
+}
+
+const PETS = [ { name: 'Nami', buff: 5, asc: 7.5 }, { name: 'Koby', buff: 1.5, asc: 3 }, { name: 'Usopp', buff: 3, asc: 6 }, { name: 'Buggy', buff: -3, asc: -7 }, { name: 'Zoro', buff: 5, asc: 10 }, { name: 'Luffy', buff: 3, asc: 7 }, { name: 'Shanks', buff: 4, asc: 6 } ];
+function renderPets(){
+  const lv=document.getElementById('plv').value; let html='';
+  PETS.forEach(p=>{
+    const b=(p.buff/10*lv).toFixed(1); const a=(p.asc/10*lv).toFixed(1);
+    html+=`<div class="card glass"><b>${p.name}</b><div style="font-size:10px;margin-top:8px"><span class="badge b-green">Buff: ${b}%</span> <span class="badge b-teal">Asc: ${a}%</span></div></div>`;
+  });
+  document.getElementById('pets-body').innerHTML=html;
+}
+
+function renderRaids(){
+  const r=[ { n:'Raid 1 — Grand Line', hp:55000, w:15 }, { n:'Raid 2 — Paraíso', hp:100000, w:20 }, { n:'Raid 3 — Novo Mundo', hp:250000, w:25 } ];
+  let h=''; r.forEach(x=>{ h+=`<div class="card glass"><b>${x.n}</b><div style="font-size:10px;margin-top:5px">${x.hp.toLocaleString()} HP | ${x.w} Waves</div></div>`; });
+  document.getElementById('raids-body').innerHTML=h;
+}
+
+function renderNpcs(){
+  const n=[ { n:'Marinheiro', hp:400, g:20 }, { n:'Alvida', hp:8000, g:80 }, { n:'Boss Secreto', hp:150000, g:1200 } ];
+  let h=''; n.forEach(x=>{ h+=`<div class="card glass"><b>${x.n}</b><div style="font-size:10px;margin-top:5px">HP: ${x.hp.toLocaleString()} | Gold: $${x.g}</div></div>`; });
+  document.getElementById('npcs-body').innerHTML=h;
+}
+
+function renderAsc(){
+  const d=['Nami (200x, 5x Pose)','Koby (200x, 5x Capa)','Usopp (150x, 5x Óculos)','Buggy (100x, 3x Chapéu)','Zoro (50x, 3x Espada)','Luffy (25x, 3x Chapéu)','Shanks (15x, 3x Espada)'];
+  let h='<div class="card glass" style="font-size:11px"><ul>'; d.forEach(x=>h+=`<li>${x}</li>`);
+  document.getElementById('asc-body').innerHTML=h+'</ul></div>';
+}
+
+function renderRoll(){
+  document.getElementById('roll-body').innerHTML=`<div class="card glass"><table style="width:100%;font-size:12px"><tr><th>Raridade</th><th>Chance</th></tr><tr><td>Common</td><td>60%</td></tr><tr><td>Raro</td><td>25%</td></tr><tr><td>Lendário</td><td>3.5%</td></tr><tr><td>Mítico</td><td><b style="color:var(--secondary)">0.035%</b></td></tr></table></div>`;
+}
+
+function init() { renderSim(); renderTD(); renderPets(); renderRaids(); renderNpcs(); renderAsc(); renderRoll(); }
 init();
 </script>
 </body>
