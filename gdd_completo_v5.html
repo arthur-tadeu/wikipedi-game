@@ -2,40 +2,24 @@
 <html lang="pt-BR" data-theme="dark">
 <head>
   <meta charset="UTF-8">
-  <title>Anime Chaos Simulator — GDD & Simulador de Testes</title>
+  <title>Anime Chaos Simulator — GDD & Tester</title>
   <style>
     :root { --primary: #6366f1; --bg: #000; --text: #fff; --border: rgba(255,255,255,0.1); }
     [data-theme="light"] { --bg: #f8fafc; --text: #000; --border: rgba(0,0,0,0.1); }
     body { background: var(--bg); color: var(--text); font-family: sans-serif; padding: 2rem; line-height: 1.6; max-width: 1200px; margin: 0 auto; }
     .card { border: 1px solid var(--border); padding: 1.5rem; border-radius: 12px; margin-bottom: 2rem; background: rgba(255,255,255,0.02); }
-    h1, h2 { text-transform: uppercase; }
-    ul { list-style: square; padding-left: 20px; color: #94a3b8; }
   </style>
 </head>
 <body>
-  <h1>Documentação Oficial — Ferramenta de Testes</h1>
-
-  <section>
-    <h2>Simulador de Passivas (Lógica)</h2>
-    <div class="card">
-      <p>O simulador de testes calcula o dano final baseado no Dano Base do personagem multiplicado pelos buffs de passivas:</p>
-      <ul>
-        <li><b>Dano Final</b> = Dano Base * Multiplicador da Passiva</li>
-        <li><b>Exemplo Egoist:</b> Dano Base * 2.0 (+100% de aumento).</li>
-        <li><b>Exemplo Blessing:</b> Dano Base * 1.5 (+50% de aumento).</li>
-      </ul>
-    </div>
-  </section>
-
-  <section>
-    <h2>Pets, Raids & NPCs (Dados Oficiais)</h2>
-    <div class="card">
-      <b>Pets:</b> Nami, Koby, Usopp, Buggy, Zoro, Luffy, Shanks (Bônus de Sorte e Atributos).<br>
-      <b>Raids:</b> Grand Line (55k), Paraíso (100k), Novo Mundo (250k).<br>
-      <b>Bosses:</b> Alvida (8k), Boss Secreto (150k).
-    </div>
-  </section>
-
+  <h1>Documentação — Sistema de Seleção de Passivas</h1>
+  <div class="card">
+    <p>O simulador de testes agora exibe todas as passivas em formato de cards selecionáveis por padrão.</p>
+    <ul>
+      <li><b>Seleção Direta:</b> O usuário clica no card da passiva desejada.</li>
+      <li><b>Filtro de Pesquisa:</b> A barra de busca oculta passivas que não correspondem ao termo digitado.</li>
+      <li><b>Feedback Visual:</b> O card selecionado recebe um destaque visual (cor primária).</li>
+    </ul>
+  </div>
   <script>
     const savedTheme = localStorage.getItem('theme') || 'dark';
     document.documentElement.setAttribute('data-theme', savedTheme);

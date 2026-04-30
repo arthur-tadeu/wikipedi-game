@@ -8,164 +8,55 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@500;700;900&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --primary: #6366f1;
-      --secondary: #f43f5e;
-      --accent: #fbbf24;
-      --radius: 12px;
-      --font-main: 'Inter', sans-serif;
-      --font-title: 'Outfit', sans-serif;
-    }
-
-    [data-theme="dark"] {
-      --bg-dark: #000000;
-      --bg-card: rgba(15, 15, 20, 0.9);
-      --text-main: #f8fafc;
-      --text-dim: #94a3b8;
-      --border: rgba(255, 255, 255, 0.08);
-      --nav-bg: rgba(0, 0, 0, 0.85);
-      --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
-    }
-
-    [data-theme="light"] {
-      --bg-dark: #f8fafc;
-      --bg-card: rgba(255, 255, 255, 0.9);
-      --text-main: #0f172a;
-      --text-dim: #475569;
-      --border: rgba(0, 0, 0, 0.1);
-      --nav-bg: rgba(255, 255, 255, 0.9);
-      --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
-    }
-
+    :root { --primary: #6366f1; --secondary: #f43f5e; --accent: #fbbf24; --radius: 12px; --font-main: 'Inter', sans-serif; --font-title: 'Outfit', sans-serif; }
+    [data-theme="dark"] { --bg-dark: #000; --bg-card: rgba(15, 15, 20, 0.9); --text-main: #f8fafc; --text-dim: #94a3b8; --border: rgba(255, 255, 255, 0.08); --nav-bg: rgba(0, 0, 0, 0.85); --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8); }
+    [data-theme="light"] { --bg-dark: #f8fafc; --bg-card: rgba(255, 255, 255, 0.9); --text-main: #0f172a; --text-dim: #475569; --border: rgba(0, 0, 0, 0.1); --nav-bg: rgba(255, 255, 255, 0.9); --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1); }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
-
-    body {
-      background-color: var(--bg-dark);
-      color: var(--text-main);
-      font-family: var(--font-main);
-      line-height: 1.6;
-      overflow-x: hidden;
-      transition: background-color 0.3s, color 0.3s;
-    }
-
-    .reveal {
-      opacity: 0;
-      transform: translateY(40px);
-      transition: all 1s cubic-bezier(0.1, 0, 0.3, 1);
-    }
-    .reveal.active {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .bg-glow {
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
-      background-image: 
-        radial-gradient(circle at 0% 0%, rgba(99, 102, 241, 0.05) 0%, transparent 50%),
-        radial-gradient(circle at 100% 100%, rgba(244, 63, 94, 0.05) 0%, transparent 50%);
-      pointer-events: none;
-    }
-
-    .glass {
-      background: var(--bg-card);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow);
-    }
-
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      min-height: 70px;
-      z-index: 1000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0.5rem 1rem;
-      border-bottom: 1px solid var(--border);
-      background: var(--nav-bg);
-      backdrop-filter: blur(15px);
-    }
-
-    .nav-inner {
-      width: 100%;
-      max-width: 1200px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
+    body { background-color: var(--bg-dark); color: var(--text-main); font-family: var(--font-main); line-height: 1.6; transition: background-color 0.3s, color 0.3s; }
+    .reveal { opacity: 0; transform: translateY(40px); transition: all 1s cubic-bezier(0.1, 0, 0.3, 1); }
+    .reveal.active { opacity: 1; transform: translateY(0); }
+    .glass { background: var(--bg-card); backdrop-filter: blur(12px); border: 1px solid var(--border); box-shadow: var(--shadow); }
+    nav { position: fixed; top: 0; left: 0; right: 0; min-height: 70px; z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 0.5rem 1rem; border-bottom: 1px solid var(--border); background: var(--nav-bg); backdrop-filter: blur(15px); }
+    .nav-inner { width: 100%; max-width: 1200px; display: flex; flex-direction: column; align-items: center; gap: 0.5rem; }
     .nav-top { display: flex; justify-content: space-between; align-items: center; width: 100%; }
     .logo { font-family: var(--font-title); font-weight: 900; font-size: 1.2rem; background: linear-gradient(to right, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-
     .nav-links { display: flex; gap: 1.5rem; justify-content: center; width: 100%; flex-wrap: wrap; }
     .nav-item { position: relative; }
     .nav-link { text-decoration: none; color: var(--text-dim); font-size: 0.85rem; font-weight: 700; transition: all 0.2s; padding: 8px 0; display: block; cursor: pointer; text-transform: uppercase; }
-    .nav-link:hover { color: var(--primary); }
-
-    .sub-nav {
-      position: absolute;
-      top: 100%; left: 50%;
-      transform: translateX(-50%) translateY(10px);
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 8px;
-      min-width: 180px;
-      display: flex;
-      flex-direction: column;
-      opacity: 0; visibility: hidden;
-      transition: all 0.25s ease;
-    }
+    .sub-nav { position: absolute; top: 100%; left: 50%; transform: translateX(-50%) translateY(10px); background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 8px; min-width: 180px; display: flex; flex-direction: column; opacity: 0; visibility: hidden; transition: all 0.25s ease; }
     .nav-item:hover .sub-nav { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
     .sub-nav a { text-decoration: none; color: var(--text-dim); font-size: 0.75rem; font-weight: 600; padding: 10px 15px; border-radius: 6px; transition: all 0.2s; }
     .sub-nav a:hover { background: var(--primary); color: #fff; }
-
-    .hero { height: 80vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 2rem; padding-top: 100px; }
+    .hero { height: 60vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 2rem; padding-top: 100px; }
     .hero h1 { font-family: var(--font-title); font-size: clamp(2.5rem, 8vw, 5rem); font-weight: 900; line-height: 1; margin-bottom: 1rem; text-transform: uppercase; background: linear-gradient(to bottom, var(--text-main), var(--text-dim)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-
-    section { padding: 80px 1.5rem; max-width: 1100px; margin: 0 auto; }
-    .section-header { margin-bottom: 2.5rem; text-align: center; }
+    section { padding: 40px 1.5rem; max-width: 1100px; margin: 0 auto; }
+    .section-header { margin-bottom: 2rem; text-align: center; }
     .section-header h2 { font-family: var(--font-title); font-size: 2.2rem; font-weight: 900; text-transform: uppercase; }
-
     .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
     .card { border-radius: var(--radius); padding: 1.5rem; transition: all 0.3s ease; border: 1px solid var(--border); }
     .card:hover { transform: translateY(-5px); border-color: var(--primary); }
-
     .badge { font-size: 10px; padding: 4px 10px; border-radius: 20px; font-weight: 700; text-transform: uppercase; display: inline-block; }
-    .b-gray { background: #334155; color: #fff; }
-    .b-blue { background: #3b82f6; color: #fff; }
-    .b-purple { background: #a855f7; color: #fff; }
-    .b-yellow { background: #eab308; color: #000; }
-    .b-red { background: #ef4444; color: #fff; }
-    .b-black { background: #000; color: #fff; border: 1px solid #333; }
-    .b-green { background: #22c55e; color: #fff; }
-
-    .ctrl-box { margin-bottom: 2rem; display: flex; gap: 1rem; flex-wrap: wrap; padding: 1rem; border-radius: var(--radius); }
+    .b-gray { background: #334155; } .b-blue { background: #3b82f6; } .b-purple { background: #a855f7; }
+    .b-yellow { background: #eab308; color: #000; } .b-red { background: #ef4444; } .b-black { background: #000; border: 1px solid #333; }
+    .ctrl-box { margin-bottom: 1.5rem; display: flex; gap: 1rem; flex-wrap: wrap; padding: 1rem; border-radius: var(--radius); }
     .ctrl-item { flex: 1; min-width: 140px; }
     .ctrl-item label { display: block; font-size: 10px; color: var(--text-dim); margin-bottom: 6px; font-weight: 800; }
     select, input { width: 100%; background: var(--bg-dark); border: 1px solid var(--border); color: var(--text-main); padding: 12px; border-radius: 10px; font-size: 13px; }
-
     .btn { background: var(--primary); color: #fff; border: none; padding: 12px 20px; border-radius: 10px; font-weight: 700; cursor: pointer; transition: all 0.2s; font-size: 13px; }
     .btn:hover { background: var(--secondary); transform: scale(1.05); }
-
     .row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
     .rl { width: 80px; font-size: 10px; color: var(--text-dim); font-weight: 700; }
     .bwrap { flex: 1; height: 8px; background: rgba(0,0,0,0.1); border-radius: 4px; overflow: hidden; }
     .bar { height: 100%; border-radius: 4px; transition: width 0.6s ease; }
     .rv { width: 50px; text-align: right; font-size: 10px; font-weight: 800; }
-
-    /* MODAL */
-    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(8px); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 1.5rem; }
-    .modal-content { width: 100%; max-width: 600px; max-height: 85vh; overflow-y: auto; padding: 2rem; border-radius: 20px; position: relative; }
-    .close-modal { position: absolute; top: 1rem; right: 1rem; background: none; border: none; color: var(--text-main); font-size: 1.5rem; cursor: pointer; }
-
+    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(10px); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 1.5rem; }
+    .modal-content { width: 100%; max-width: 800px; max-height: 90vh; overflow-y: auto; padding: 2rem; border-radius: 20px; position: relative; }
+    .close-modal { position: absolute; top: 1.5rem; right: 1.5rem; background: none; border: none; color: var(--text-main); font-size: 2rem; cursor: pointer; }
+    .mini-card { padding: 10px; border-radius: 8px; border: 1px solid var(--border); cursor: pointer; transition: all 0.2s; font-size: 11px; text-align: center; }
+    .mini-card:hover { border-color: var(--primary); background: rgba(99,102,241,0.1); }
+    .mini-card.active { border-color: var(--primary); background: var(--primary); color: #fff; }
     footer { padding: 4rem 2rem; text-align: center; border-top: 1px solid var(--border); color: var(--text-dim); font-size: 0.8rem; }
-
     @media (max-width: 600px) { .nav-links { gap: 0.8rem; } .nav-link { font-size: 0.7rem; } .card-grid { grid-template-columns: 1fr; } }
   </style>
 </head>
@@ -182,26 +73,15 @@
     <div class="nav-links">
       <div class="nav-item">
         <span class="nav-link">Simulador</span>
-        <div class="sub-nav">
-          <a href="#sim">Estatísticas</a>
-          <a href="#passives">Passivas</a>
-          <a href="#roll">Sistema de Roll</a>
-          <a href="#prog">Tabela de XP</a>
-        </div>
+        <div class="sub-nav"><a href="#sim">Estatísticas</a><a href="#passives">Passivas</a><a href="#roll">Roll</a></div>
       </div>
       <div class="nav-item">
         <span class="nav-link">Tower Defense</span>
-        <div class="sub-nav">
-          <a href="#td">Defesa Principal</a>
-          <a href="#raids">Raids</a>
-        </div>
+        <div class="sub-nav"><a href="#td">Defesa</a><a href="#raids">Raids</a></div>
       </div>
       <div class="nav-item">
         <span class="nav-link">RPG</span>
-        <div class="sub-nav">
-          <a href="#pets">Pets</a>
-          <a href="#npcs">NPCs & Bosses</a>
-        </div>
+        <div class="sub-nav"><a href="#pets">Pets</a><a href="#npcs">Bosses</a></div>
       </div>
     </div>
   </div>
@@ -209,13 +89,12 @@
 
 <header class="hero">
   <h1 class="reveal">ANIME CHAOS</h1>
-  <p class="reveal">Simulador oficial de passivas e balanceamento multiverso.</p>
+  <p class="reveal">Ferramenta definitiva de balanceamento e simulação.</p>
 </header>
 
 <main>
-  <!-- SIMULADOR -->
   <section id="sim" class="reveal">
-    <div class="section-header"><h2>Estatísticas de Combate</h2></div>
+    <div class="section-header"><h2>Estatísticas</h2></div>
     <div class="ctrl-box glass">
       <div class="ctrl-item"><label>Nível</label><select id="slv" onchange="renderSim()"><option value="1">Lv 1</option><option value="5">Lv 5</option><option value="10">Lv 10</option></select></div>
       <div class="ctrl-item"><label>Fase</label><select id="sph" onchange="renderSim()"><option value="base">Base</option><option value="raid">Ascensão</option></select></div>
@@ -224,70 +103,38 @@
     <div id="sim-body" class="card-grid"></div>
   </section>
 
-  <!-- PASSIVAS -->
-  <section id="passives" class="reveal">
-    <div class="section-header"><h2>Passivas Disponíveis</h2></div>
-    <div id="passives-display" class="card-grid"></div>
-  </section>
-
-  <!-- PETS -->
-  <section id="pets" class="reveal">
-    <div class="section-header"><h2>Pets Aliados</h2></div>
-    <div class="ctrl-box glass"><div class="ctrl-item"><label>Nível do Pet</label><select id="plv" onchange="renderPets()"><option value="1">Lv 1</option><option value="5">Lv 5</option><option value="10">Lv 10</option></select></div></div>
-    <div id="pets-body" class="card-grid"></div>
-  </section>
-
-  <!-- RAIDS -->
-  <section id="raids" class="reveal"><div class="section-header"><h2>Raids Co-op</h2></div><div id="raids-body" class="card-grid"></div></section>
-
-  <!-- NPCS -->
-  <section id="npcs" class="reveal"><div class="section-header"><h2>NPCs & Bosses</h2></div><div id="npcs-body" class="card-grid"></div></section>
-
-  <!-- TOWER DEFENSE -->
-  <section id="td" class="reveal">
-    <div class="section-header"><h2>Defesa de Torre</h2></div>
-    <div class="ctrl-box glass"><div class="ctrl-item"><label>Unidade</label><select id="tdchar" onchange="renderTD()"><option value="0">Nami</option><option value="1">Koby</option><option value="2">Usopp</option><option value="3">Buggy</option><option value="4">Zoro</option><option value="5">Luffy</option><option value="6">Shanks</option></select></div></div>
-    <div id="td-body"></div>
-  </section>
-
-  <!-- ROLL -->
-  <section id="roll" class="reveal"><div class="section-header"><h2>Chances de Roll</h2></div><div id="roll-body"></div></section>
+  <section id="passives" class="reveal"><div class="section-header"><h2>Passivas</h2></div><div id="pass-display" class="card-grid"></div></section>
+  <section id="pets" class="reveal"><div class="section-header"><h2>Pets</h2></div><div class="ctrl-box glass"><div class="ctrl-item"><select id="plv" onchange="renderPets()"><option value="1">Lv 1</option><option value="5">Lv 5</option><option value="10">Lv 10</option></select></div></div><div id="pets-body" class="card-grid"></div></section>
+  <section id="raids" class="reveal"><div class="section-header"><h2>Raids</h2></div><div id="raids-body" class="card-grid"></div></section>
+  <section id="npcs" class="reveal"><div class="section-header"><h2>Bosses</h2></div><div id="npcs-body" class="card-grid"></div></section>
+  <section id="td" class="reveal"><div class="section-header"><h2>Tower Defense</h2></div><div class="ctrl-box glass"><div class="ctrl-item"><select id="tdchar" onchange="renderTD()"><option value="0">Nami</option><option value="1">Koby</option><option value="2">Usopp</option><option value="3">Buggy</option><option value="4">Zoro</option><option value="5">Luffy</option><option value="6">Shanks</option></select></div></div><div id="td-body"></div></section>
+  <section id="roll" class="reveal"><div class="section-header"><h2>Roll</h2></div><div id="roll-body"></div></section>
 </main>
 
 <!-- TESTER MODAL -->
 <div id="tester-modal" class="modal-overlay" onclick="if(event.target===this) closeTester()">
   <div class="modal-content glass">
     <button class="close-modal" onclick="closeTester()">&times;</button>
-    <h2 style="font-family:var(--font-title); margin-bottom:1.5rem">🧪 Simulador de Passivas</h2>
-    
-    <div class="ctrl-box" style="background:none; border:none; padding:0">
+    <h2 style="margin-bottom:1.5rem">🧪 Simulador de Testes</h2>
+    <div class="ctrl-box" style="padding:0; background:none">
       <div class="ctrl-item"><label>Herói</label><select id="t-hero" onchange="calcTest()"></select></div>
-      <div class="ctrl-item"><label>Passiva</label><input type="text" id="t-search" placeholder="Pesquisar passiva..." oninput="calcTest()"></div>
+      <div class="ctrl-item"><label>Pesquisar Passiva (Opcional)</label><input type="text" id="t-search" placeholder="Filtre as passivas..." oninput="renderTesterCards()"></div>
     </div>
-
-    <div id="t-results" style="margin-top:2rem">
-      <div class="card glass" style="text-align:center">
-        <p style="font-size:12px; color:var(--text-dim)">Selecione um herói e digite o nome da passiva.</p>
-      </div>
-    </div>
-
-    <div id="t-list" style="margin-top:1.5rem; font-size:11px; opacity:0.8">
-      <b>Dica:</b> Tente "Egoist", "Blessing", "Golem", "Rich" ou "Soldado".
-    </div>
+    <div id="t-results" style="margin-bottom:2rem"></div>
+    <div id="t-cards" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap:10px;"></div>
   </div>
 </div>
 
 <footer><p>&copy; 2026 Anime Chaos Simulator.</p></footer>
 
 <script>
-// THEME
 function toggleTheme() { const h=document.documentElement; const n=h.getAttribute('data-theme')==='dark'?'light':'dark'; h.setAttribute('data-theme',n); localStorage.setItem('theme',n); }
 const savedTheme = localStorage.getItem('theme') || 'dark';
 document.documentElement.setAttribute('data-theme', savedTheme);
 const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if(entry.isIntersecting) entry.target.classList.add('active'); }); }, { threshold: 0.1 });
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-// ===================== DADOS COMPLETOS =====================
+// ===================== DADOS COMPLETOS (NÃO APAGAR) =====================
 const SIM = [
   { name:'Nami',  rar:'Common',  rc:'b-gray',   col:'#85B7EB', base:{dmg:3,mult:3.5},raid:{dmg:5,mult:4}, gB:0.405, gR:0.6075 },
   { name:'Koby',  rar:'Common',  rc:'b-gray',   col:'#B5D4F4', base:{dmg:5,mult:2},raid:{dmg:8,mult:3}, gB:0.405, gR:0.6075 },
@@ -299,28 +146,22 @@ const SIM = [
 ];
 
 const PASSIVES = [
-  { n:'Rich 1', r:'Comum', b: { gold: 1.1 } }, { n:'Rich 2', r:'Raro', b: { gold: 1.2 } }, { n:'Rich 3', r:'Épico', b: { gold: 1.3 } },
-  { n:'O Sortudo 1', r:'Comum', b: { luck: 1.05 } }, { n:'O Sortudo 2', r:'Raro', b: { luck: 1.1 } }, { n:'O Sortudo 3', r:'Épico', b: { luck: 1.15 } },
-  { n:'Abençoado pelos céus', r:'Mítico', b: { luck: 1.3 } },
-  { n:'Soldado 1', r:'Comum', b: { dmg: 1.05 } }, { n:'Soldado 2', r:'Raro', b: { dmg: 1.1 } }, { n:'Soldado 3', r:'Épico', b: { dmg: 1.15 } },
-  { n:'Golem', r:'Épico', b: { dmg: 1.6, spd: 0.65 } },
-  { n:'Heart Good', r:'Lendário', b: { dmg: 0, buff: 1.5 } },
-  { n:'The Egoist', r:'Lendário', b: { dmg: 2.0, mult: 5, allies: 0.3 } },
-  { n:'Assassin', r:'Mítico', b: { dmg: 0.5, ult: 3.0, spd: 1.5 } },
-  { n:'Blessing', r:'Mítico', b: { dmg: 1.5, spd: 1.5, hits: -1 } }
+  { n:'Rich 1', r:'Comum', b:1.0, gold:1.1 }, { n:'Rich 2', r:'Raro', b:1.0, gold:1.2 }, { n:'Rich 3', r:'Épico', b:1.0, gold:1.3 },
+  { n:'Sortudo 1', r:'Comum', b:1.0, luck:1.05 }, { n:'Sortudo 2', r:'Raro', b:1.0, luck:1.1 }, { n:'Sortudo 3', r:'Épico', b:1.0, luck:1.15 },
+  { n:'Céus', r:'Mítico', b:1.0, luck:1.3 },
+  { n:'Soldado 1', r:'Comum', b:1.05 }, { n:'Soldado 2', r:'Raro', b:1.1 }, { n:'Soldado 3', r:'Épico', b:1.15 },
+  { n:'Golem', r:'Épico', b:1.6 }, { n:'Heart Good', r:'Lendário', b:0 }, { n:'The Egoist', r:'Lendário', b:2.0 },
+  { n:'Assassin', r:'Mítico', b:0.5, ult:3.0 }, { n:'Blessing', r:'Mítico', b:1.5 }
 ];
 
 const TD = [
-  { name:'Nami', rar:'Common', rc:'b-gray', qt:8, ups:[{n:0,range:15,cd:1,dmg:50,price:300,e:'—'},{n:3,range:15,cd:1.5,dmg:120,price:1200,e:'Gold'}] },
-  { name:'Koby', rar:'Common', rc:'b-gray', qt:5, ups:[{n:0,range:20,cd:5,dmg:40,price:600,e:'Buff'}] },
-  { name:'Usopp', rar:'Raro', rc:'b-blue', qt:8, ups:[{n:0,range:35,cd:1,dmg:110,price:500,e:'Bleed'}] },
-  { name:'Buggy', rar:'Épico', rc:'b-purple', qt:6, ups:[{n:0,range:30,cd:3,dmg:150,price:600,e:'Bleed'}] },
-  { name:'Zoro', rar:'Lendário', rc:'b-yellow', qt:4, ups:[{n:0,range:20,cd:2,dmg:110,price:750,e:'Bleed'}] },
-  { name:'Luffy', rar:'Mítico', rc:'b-red', qt:3, ups:[{n:0,range:35,cd:4,dmg:250,price:500,e:'—'}] },
-  { name:'Shanks', rar:'Secreto', rc:'b-black', qt:1, ups:[{n:0,range:35,cd:3,dmg:650,price:1000,e:'Bleed'},{n:6,range:50,cd:8,dmg:3100,price:10000,e:'Haki'}] }
+  { name:'Nami', qt:8, ups:[{n:0,dmg:50,price:300},{n:3,dmg:120,price:1200}] },
+  { name:'Koby', qt:5, ups:[{n:0,dmg:40,price:600}] }, { name:'Usopp', qt:8, ups:[{n:0,dmg:110,price:500}] },
+  { name:'Buggy', qt:6, ups:[{n:0,dmg:150,price:600}] }, { name:'Zoro', qt:4, ups:[{n:0,dmg:110,price:750}] },
+  { name:'Luffy', qt:3, ups:[{n:0,dmg:250,price:500}] }, { name:'Shanks', qt:1, ups:[{n:0,dmg:650,price:1000},{n:6,dmg:3100,price:10000}] }
 ];
 
-const PETS = [ { name: 'Nami', buff: 5, asc: 7.5 }, { name: 'Koby', buff: 1.5, asc: 3 }, { name: 'Usopp', buff: 3, asc: 6 }, { name: 'Buggy', buff: -3, asc: -7 }, { name: 'Zoro', buff: 5, asc: 10 }, { name: 'Luffy', buff: 3, asc: 7 }, { name: 'Shanks', buff: 4, asc: 6 } ];
+const PETS = [ { name: 'Nami', b: 5 }, { name: 'Koby', b: 1.5 }, { name: 'Usopp', b: 3 }, { name: 'Buggy', b: -3 }, { name: 'Zoro', b: 5 }, { name: 'Luffy', b: 3 }, { name: 'Shanks', b: 4 } ];
 
 // RENDERS
 function renderSim(){
@@ -332,81 +173,62 @@ function renderSim(){
   });
   document.getElementById('sim-body').innerHTML=html;
 }
-
 function renderPets(){
   const lv=document.getElementById('plv').value; let html='';
-  PETS.forEach(p=>{ html+=`<div class="card glass"><b>${p.name}</b><div style="font-size:10px;margin-top:8px"><span class="badge b-green">Buff: ${(p.buff/10*lv).toFixed(1)}%</span></div></div>`; });
+  PETS.forEach(p=>{ html+=`<div class="card glass"><b>${p.name}</b><br><span class="badge b-green">Buff: ${(p.b/10*lv).toFixed(1)}%</span></div>`; });
   document.getElementById('pets-body').innerHTML=html;
 }
-
 function renderRaids(){
-  const r=[ { n:'Raid 1', hp:55000, w:15 }, { n:'Raid 2', hp:100000, w:20 }, { n:'Raid 3', hp:250000, w:25 } ];
-  let h=''; r.forEach(x=>{ h+=`<div class="card glass"><b>${x.n}</b><div style="font-size:10px;margin-top:5px">${x.hp.toLocaleString()} HP</div></div>`; });
+  const r=[ { n:'Raid 1', hp:55000 }, { n:'Raid 2', hp:100000 }, { n:'Raid 3', hp:250000 } ];
+  let h=''; r.forEach(x=>{ h+=`<div class="card glass"><b>${x.n}</b><br><small>${x.hp.toLocaleString()} HP</small></div>`; });
   document.getElementById('raids-body').innerHTML=h;
 }
-
 function renderNpcs(){
-  const n=[ { n:'Alvida', hp:8000, g:80 }, { n:'Boss Secreto', hp:150000, g:1200 } ];
-  let h=''; n.forEach(x=>{ h+=`<div class="card glass"><b>${x.n}</b><div style="font-size:10px;margin-top:5px">HP: ${x.hp.toLocaleString()}</div></div>`; });
+  const n=[ { n:'Alvida', hp:8000 }, { n:'Boss Secreto', hp:150000 } ];
+  let h=''; n.forEach(x=>{ h+=`<div class="card glass"><b>${x.n}</b><br><small>${x.hp.toLocaleString()} HP</small></div>`; });
   document.getElementById('npcs-body').innerHTML=h;
 }
-
 function renderTD(){
   const ci=document.getElementById('tdchar').value; const c=TD[ci];
-  let h=`<div class="card glass" style="margin-bottom:1rem"><b>${c.name}</b></div><div class="card-grid">`;
+  let h=`<div class="card glass" style="margin-bottom:1rem"><b>${c.name}</b> (Max ${c.qt})</div><div class="card-grid">`;
   c.ups.forEach(u=>{ h+=`<div class="card glass">UP ${u.n} | D ${u.dmg}</div>`; });
   document.getElementById('td-body').innerHTML=h+'</div>';
 }
-
-function renderRoll(){
-  document.getElementById('roll-body').innerHTML=`<div class="card glass">Common: 60% | Raro: 25% | Mítico: <b style="color:var(--secondary)">0.035%</b></div>`;
-}
+function renderRoll(){ document.getElementById('roll-body').innerHTML=`<div class="card glass">Mítico: <b style="color:var(--secondary)">0.035%</b></div>`; }
 
 // TESTER LOGIC
+let selectedPassive = PASSIVES[0];
 function openTester(){
   document.getElementById('tester-modal').style.display='flex';
   const sel=document.getElementById('t-hero'); sel.innerHTML='';
   SIM.forEach((c,i)=>sel.innerHTML+=`<option value="${i}">${c.name}</option>`);
-  calcTest();
+  renderTesterCards();
 }
 function closeTester(){ document.getElementById('tester-modal').style.display='none'; }
 
+function renderTesterCards(){
+  const query=document.getElementById('t-search').value.toLowerCase();
+  const container=document.getElementById('t-cards'); container.innerHTML='';
+  PASSIVES.filter(p=>p.n.toLowerCase().includes(query)).forEach(p=>{
+    const card=document.createElement('div'); card.className=`mini-card ${selectedPassive.n===p.n?'active':''}`;
+    card.innerHTML=`<b>${p.n}</b><br><span style="font-size:8px;opacity:0.7">${p.r}</span>`;
+    card.onclick=()=>{ selectedPassive=p; renderTesterCards(); calcTest(); };
+    container.appendChild(card);
+  });
+  calcTest();
+}
+
 function calcTest(){
   const ci=document.getElementById('t-hero').value; const char=SIM[ci];
-  const query=document.getElementById('t-search').value.toLowerCase();
-  const pass=PASSIVES.find(p=>p.n.toLowerCase().includes(query) || p.r.toLowerCase().includes(query));
-  
-  if(!pass || query===''){
-    document.getElementById('t-results').innerHTML=`<div class="card glass" style="text-align:center">Digite o nome de uma passiva válida.</div>`;
-    return;
-  }
-
-  const baseD = char.base.dmg;
-  let finalD = baseD * (pass.b.dmg !== undefined ? pass.b.dmg : 1);
-  if(pass.n==='The Egoist') finalD = baseD * 2.0;
-  
+  const baseD = char.base.dmg; const finalD = baseD * selectedPassive.b;
   document.getElementById('t-results').innerHTML=`
     <div class="card glass" style="border-left:4px solid var(--primary)">
-      <div style="display:flex; justify-content:space-between; margin-bottom:1rem">
-        <b style="font-size:1.1rem">${pass.n}</b>
-        <span class="badge b-purple">${pass.r}</span>
-      </div>
-      <div style="font-size:13px; margin-bottom:10px"><b>Herói:</b> ${char.name}</div>
+      <div style="display:flex; justify-content:space-between; margin-bottom:1rem"><b>${selectedPassive.n}</b> <span class="badge b-purple">${selectedPassive.r}</span></div>
       <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px">
-        <div style="background:rgba(0,0,0,0.1); padding:10px; border-radius:8px">
-          <div style="font-size:9px; text-transform:uppercase">Dano Base</div>
-          <div style="font-size:1.2rem; font-weight:900">${baseD.toFixed(1)}</div>
-        </div>
-        <div style="background:var(--primary-glow); padding:10px; border-radius:8px">
-          <div style="font-size:9px; text-transform:uppercase">Dano Buffado</div>
-          <div style="font-size:1.2rem; font-weight:900; color:var(--primary)">${finalD.toFixed(1)}</div>
-        </div>
+        <div style="background:rgba(0,0,0,0.1); padding:10px; border-radius:8px"><small>BASE</small><br><b>${baseD.toFixed(1)}</b></div>
+        <div style="background:var(--primary-glow); padding:10px; border-radius:8px"><small>BUFFED</small><br><b style="color:var(--primary)">${finalD.toFixed(1)}</b></div>
       </div>
-      <div style="font-size:10px; margin-top:1rem; color:var(--text-dim)">
-        *Cálculo baseado no Dano Base do Nível 1.
-      </div>
-    </div>
-  `;
+    </div>`;
 }
 
 function init() { renderSim(); renderTD(); renderPets(); renderRaids(); renderNpcs(); renderRoll(); }
