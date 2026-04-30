@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,14 +13,30 @@
       --primary-glow: rgba(99, 102, 241, 0.5);
       --secondary: #f43f5e;
       --accent: #fbbf24;
+      --radius: 12px;
+      --font-main: 'Inter', sans-serif;
+      --font-title: 'Outfit', sans-serif;
+    }
+
+    /* THEMES */
+    [data-theme="dark"] {
       --bg-dark: #000000;
       --bg-card: rgba(15, 15, 20, 0.9);
       --text-main: #f8fafc;
       --text-dim: #94a3b8;
       --border: rgba(255, 255, 255, 0.08);
-      --radius: 12px;
-      --font-main: 'Inter', sans-serif;
-      --font-title: 'Outfit', sans-serif;
+      --nav-bg: rgba(0, 0, 0, 0.85);
+      --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
+    }
+
+    [data-theme="light"] {
+      --bg-dark: #f8fafc;
+      --bg-card: rgba(255, 255, 255, 0.9);
+      --text-main: #0f172a;
+      --text-dim: #475569;
+      --border: rgba(0, 0, 0, 0.1);
+      --nav-bg: rgba(255, 255, 255, 0.9);
+      --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -28,14 +44,25 @@
 
     body {
       background-color: var(--bg-dark);
-      background-image: 
-        radial-gradient(circle at 0% 0%, rgba(99, 102, 241, 0.05) 0%, transparent 50%),
-        radial-gradient(circle at 100% 100%, rgba(244, 63, 94, 0.05) 0%, transparent 50%);
-      background-attachment: fixed;
       color: var(--text-main);
       font-family: var(--font-main);
       line-height: 1.6;
       overflow-x: hidden;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    /* BACKGROUND DECORATION */
+    .bg-glow {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background-image: 
+        radial-gradient(circle at 0% 0%, rgba(99, 102, 241, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 100% 100%, rgba(244, 63, 94, 0.05) 0%, transparent 50%);
+      pointer-events: none;
     }
 
     /* GLASSMORPHISM */
@@ -44,37 +71,47 @@
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border: 1px solid var(--border);
-      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+      box-shadow: var(--shadow);
     }
 
-    /* NAVBAR REFACTOR */
+    /* NAVBAR - CENTRALIZED & RESPONSIVE */
     nav {
       position: fixed;
       top: 0;
       left: 0;
       right: 0;
-      height: 70px;
+      min-height: 70px;
       z-index: 1000;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 0 2rem;
+      padding: 0.5rem 1rem;
       border-bottom: 1px solid var(--border);
+      background: var(--nav-bg);
+      backdrop-filter: blur(15px);
     }
 
     .nav-inner {
       width: 100%;
       max-width: 1200px;
       display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .nav-top {
+      display: flex;
       justify-content: space-between;
       align-items: center;
+      width: 100%;
     }
 
     .logo {
       font-family: var(--font-title);
       font-weight: 900;
       font-size: 1.2rem;
-      background: linear-gradient(to right, #fff, var(--primary));
+      background: linear-gradient(to right, var(--primary), var(--secondary));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       letter-spacing: -0.5px;
@@ -82,24 +119,27 @@
 
     .nav-links {
       display: flex;
-      gap: 2rem;
+      gap: 1.5rem;
+      justify-content: center;
+      width: 100%;
+      flex-wrap: wrap;
     }
 
-    .nav-item {
-      position: relative;
-    }
+    .nav-item { position: relative; }
 
     .nav-link {
       text-decoration: none;
       color: var(--text-dim);
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       font-weight: 700;
       transition: all 0.2s;
-      padding: 10px 0;
+      padding: 8px 0;
       display: block;
       cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
     }
-    .nav-link:hover { color: #fff; }
+    .nav-link:hover { color: var(--primary); }
     .nav-link.active { color: var(--primary); }
 
     .sub-nav {
@@ -107,18 +147,18 @@
       top: 100%;
       left: 50%;
       transform: translateX(-50%) translateY(10px);
-      background: rgba(10, 10, 10, 0.95);
+      background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: 8px;
-      padding: 10px;
-      min-width: 160px;
+      padding: 8px;
+      min-width: 180px;
       display: flex;
       flex-direction: column;
-      gap: 5px;
+      gap: 2px;
       opacity: 0;
       visibility: hidden;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      backdrop-filter: blur(10px);
+      transition: all 0.25s ease;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
     }
 
     .nav-item:hover .sub-nav {
@@ -132,105 +172,109 @@
       color: var(--text-dim);
       font-size: 0.75rem;
       font-weight: 600;
-      padding: 8px 12px;
-      border-radius: 4px;
+      padding: 10px 15px;
+      border-radius: 6px;
       transition: all 0.2s;
     }
     .sub-nav a:hover {
-      background: rgba(255, 255, 255, 0.05);
+      background: var(--primary);
       color: #fff;
+    }
+
+    /* THEME TOGGLE */
+    .theme-toggle {
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      padding: 8px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+    .theme-toggle:hover {
+      background: var(--border);
+      transform: scale(1.1);
     }
 
     /* HERO */
     .hero {
-      height: 100vh;
+      height: 90vh;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       text-align: center;
       padding: 2rem;
-      position: relative;
     }
 
     .hero h1 {
       font-family: var(--font-title);
-      font-size: clamp(3rem, 10vw, 6rem);
+      font-size: clamp(2.5rem, 8vw, 5.5rem);
       font-weight: 900;
-      line-height: 0.9;
-      margin-bottom: 1.5rem;
+      line-height: 1;
+      margin-bottom: 1rem;
       text-transform: uppercase;
-      background: linear-gradient(to bottom, #fff, #475569);
+      background: linear-gradient(to bottom, var(--text-main), var(--text-dim));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      filter: drop-shadow(0 0 30px rgba(255,255,255,0.1));
     }
 
     .hero p {
-      font-size: 1.1rem;
+      font-size: 1rem;
       color: var(--text-dim);
-      max-width: 600px;
-      margin-bottom: 2.5rem;
+      max-width: 500px;
+      margin-bottom: 2rem;
     }
 
     /* SECTIONS */
     section {
-      padding: 100px 1rem;
+      padding: 80px 1.5rem;
       max-width: 1100px;
       margin: 0 auto;
-      border-bottom: 1px solid rgba(255,255,255,0.03);
     }
 
-    .section-header {
-      margin-bottom: 3rem;
-      text-align: center;
-    }
-
+    .section-header { margin-bottom: 2.5rem; text-align: center; }
     .section-header h2 {
       font-family: var(--font-title);
-      font-size: 2.5rem;
-      font-weight: 800;
-      margin-bottom: 0.5rem;
+      font-size: 2rem;
+      font-weight: 900;
       text-transform: uppercase;
-      letter-spacing: -1px;
     }
 
     /* CARDS */
     .card-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
       gap: 1.5rem;
     }
 
     .card {
       border-radius: var(--radius);
       padding: 1.5rem;
-      transition: transform 0.3s, border-color 0.3s;
+      transition: all 0.3s ease;
     }
-    .card:hover {
-      transform: translateY(-5px);
-      border-color: var(--primary);
-    }
+    .card:hover { transform: translateY(-5px); border-color: var(--primary); }
 
-    /* BADGES & NEW RARITY COLORS */
+    /* BADGES */
     .badge {
       font-size: 10px;
       padding: 4px 10px;
       border-radius: 20px;
       font-weight: 700;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
       display: inline-block;
     }
-    .b-gray { background: #334155; color: #94a3b8; } /* Common */
-    .b-blue { background: rgba(37, 99, 235, 0.1); color: #3b82f6; border: 1px solid rgba(37, 99, 235, 0.2); } /* Raro */
-    .b-purple { background: rgba(147, 51, 234, 0.1); color: #a855f7; border: 1px solid rgba(147, 51, 234, 0.2); } /* Épico */
-    .b-yellow { background: rgba(234, 179, 8, 0.1); color: #eab308; border: 1px solid rgba(234, 179, 8, 0.2); } /* Lendário */
-    .b-red { background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.2); } /* Mítico */
-    .b-black { background: #000; color: #fff; border: 1px solid #333; } /* Secreto */
-    
-    .b-green { background: rgba(34, 197, 94, 0.1); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.2); }
-    .b-teal { background: rgba(20, 184, 166, 0.1); color: #2dd4bf; border: 1px solid rgba(20, 184, 166, 0.2); }
+    .b-gray { background: #334155; color: #fff; }
+    .b-blue { background: #3b82f6; color: #fff; }
+    .b-purple { background: #a855f7; color: #fff; }
+    .b-yellow { background: #eab308; color: #000; }
+    .b-red { background: #ef4444; color: #fff; }
+    .b-black { background: #000; color: #fff; border: 1px solid #333; }
+    .b-green { background: #22c55e; color: #fff; }
+    .b-teal { background: #14b8a6; color: #fff; }
 
     /* CONTROLS */
     .ctrl-box {
@@ -238,49 +282,61 @@
       display: flex;
       gap: 1rem;
       flex-wrap: wrap;
-      background: rgba(0,0,0,0.4);
       padding: 1rem;
       border-radius: var(--radius);
     }
-    .ctrl-item { flex: 1; min-width: 150px; }
-    .ctrl-item label { display: block; font-size: 11px; color: var(--text-dim); margin-bottom: 5px; text-transform: uppercase; }
+    .ctrl-item { flex: 1; min-width: 140px; }
+    .ctrl-item label { display: block; font-size: 10px; color: var(--text-dim); margin-bottom: 6px; font-weight: 800; }
     select {
       width: 100%;
-      background: #000;
+      background: var(--bg-dark);
       border: 1px solid var(--border);
-      color: #fff;
-      padding: 10px;
-      border-radius: 8px;
-      outline: none;
+      color: var(--text-main);
+      padding: 12px;
+      border-radius: 10px;
       font-size: 13px;
     }
 
-    /* STATS BARS */
-    .row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
-    .rl { width: 90px; font-size: 11px; color: var(--text-dim); }
-    .bwrap { flex: 1; height: 10px; background: #000; border-radius: 5px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05); }
-    .bar { height: 100%; border-radius: 5px; transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
-    .rv { width: 45px; text-align: right; font-size: 11px; font-weight: 700; color: #fff; }
+    /* STATS */
+    .row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+    .rl { width: 80px; font-size: 10px; color: var(--text-dim); font-weight: 700; }
+    .bwrap { flex: 1; height: 8px; background: rgba(0,0,0,0.1); border-radius: 4px; overflow: hidden; }
+    [data-theme="dark"] .bwrap { background: rgba(255,255,255,0.05); }
+    .bar { height: 100%; border-radius: 4px; transition: width 0.6s ease; }
+    .rv { width: 50px; text-align: right; font-size: 10px; font-weight: 800; }
 
     /* TABLES */
-    .tbl-container { overflow-x: auto; margin-top: 1rem; border-radius: 8px; border: 1px solid var(--border); }
-    table { width: 100%; border-collapse: collapse; font-size: 13px; background: rgba(0,0,0,0.3); }
-    th { text-align: left; padding: 12px; background: rgba(255,255,255,0.02); color: var(--text-dim); font-size: 11px; text-transform: uppercase; }
-    td { padding: 12px; border-top: 1px solid var(--border); }
+    .tbl-container { overflow-x: auto; border-radius: 10px; border: 1px solid var(--border); }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    th { text-align: left; padding: 15px; background: rgba(0,0,0,0.02); color: var(--text-dim); font-size: 10px; }
+    td { padding: 15px; border-top: 1px solid var(--border); }
 
-    footer { padding: 4rem 2rem; text-align: center; border-top: 1px solid var(--border); color: var(--text-dim); font-size: 0.9rem; }
+    footer { padding: 4rem 2rem; text-align: center; border-top: 1px solid var(--border); color: var(--text-dim); font-size: 0.8rem; }
 
-    @media (max-width: 768px) {
-      .nav-links { display: none; }
-      .hero h1 { font-size: 3rem; }
+    /* MOBILE ADJUSTMENTS */
+    @media (max-width: 600px) {
+      nav { height: auto; }
+      .nav-links { gap: 0.8rem; }
+      .nav-link { font-size: 0.7rem; }
+      .sub-nav { min-width: 140px; }
+      .hero { height: auto; padding: 6rem 1rem; }
+      .card-grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
 
+<div class="bg-glow"></div>
+
 <nav class="glass">
   <div class="nav-inner">
-    <div class="logo">ANIME CHAOS SIMULATOR</div>
+    <div class="nav-top">
+      <div class="logo">ANIME CHAOS SIMULATOR</div>
+      <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn" title="Alternar Tema">
+        <svg id="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <svg id="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </div>
     <div class="nav-links">
       <div class="nav-item">
         <span class="nav-link">Simulador</span>
@@ -323,7 +379,7 @@
   <section id="sim">
     <div class="section-header">
       <h2>Estatísticas</h2>
-      <p class="subtitle">Simulador de combate e progressão.</p>
+      <p class="subtitle">Simulador de combate e progressão de heróis.</p>
     </div>
     <div class="ctrl-box glass">
       <div class="ctrl-item">
@@ -348,50 +404,33 @@
     <div id="sim-body" class="card-grid"></div>
   </section>
 
-  <!-- PASSIVAS (NOVO) -->
+  <!-- PASSIVAS -->
   <section id="passives">
     <div class="section-header">
-      <h2>Sistema de Passivas</h2>
-      <p class="subtitle">Atributos especiais para maximizar seu herói.</p>
+      <h2>Passivas</h2>
+      <p class="subtitle">Atributos especiais para potencializar seu jogo.</p>
     </div>
     <div class="card-grid">
       <div class="card glass">
-        <div style="display:flex;justify-content:space-between;margin-bottom:10px">
+        <div style="display:flex;justify-content:space-between;margin-bottom:1rem">
           <h3>Rich (C/R/E)</h3>
-          <span class="badge b-gray">Economia</span>
+          <span class="badge b-yellow">Gold</span>
         </div>
-        <p style="font-size:12px; color:var(--text-dim)">Especialistas em acumular recursos.</p>
-        <div style="margin-top:15px; display:flex; flex-direction:column; gap:8px">
-          <div style="font-size:11px"><b>Rich 1:</b> +10% de Gold extra.</div>
-          <div style="font-size:11px"><b>Rich 2:</b> +20% de Gold extra.</div>
-          <div style="font-size:11px"><b>Rich 3:</b> +30% de Gold extra.</div>
-        </div>
+        <p style="font-size:12px; color:var(--text-dim)">+10%, +20% ou +30% de Gold extra.</p>
       </div>
       <div class="card glass" style="border-left:4px solid var(--secondary)">
-        <div style="display:flex;justify-content:space-between;margin-bottom:10px">
+        <div style="display:flex;justify-content:space-between;margin-bottom:1rem">
           <h3>Assassin</h3>
-          <span class="badge b-red">Dano Bruto</span>
+          <span class="badge b-red">Ultra</span>
         </div>
-        <p style="font-size:12px; color:var(--text-dim)">Troca estabilidade por explosão massiva.</p>
-        <div style="margin-top:15px; display:flex; flex-direction:column; gap:5px">
-          <div style="font-size:11px"><b>Dano Base:</b> <span style="color:var(--secondary)">-50% (Metade)</span></div>
-          <div style="font-size:11px"><b>Mult. Ult:</b> <span style="color:var(--accent)">+200%</span></div>
-          <div style="font-size:11px"><b>Atk Speed:</b> <span style="color:var(--primary)">+50%</span></div>
-          <div style="font-size:11px"><b>Hits p/ Ult:</b> <span style="color:var(--secondary)">+5 hits</span></div>
-        </div>
+        <p style="font-size:12px; color:var(--text-dim)">Dano Base reduzido (-50%), mas Mult da Ult aumentado em 200%. Atk Speed +50%, Hits p/ Ult +5.</p>
       </div>
       <div class="card glass" style="border-left:4px solid var(--accent)">
-        <div style="display:flex;justify-content:space-between;margin-bottom:10px">
+        <div style="display:flex;justify-content:space-between;margin-bottom:1rem">
           <h3>Blessing</h3>
-          <span class="badge b-yellow">Divino</span>
+          <span class="badge b-teal">Divina</span>
         </div>
-        <p style="font-size:12px; color:var(--text-dim)">A bênção completa dos deuses.</p>
-        <div style="margin-top:15px; display:flex; flex-direction:column; gap:5px">
-          <div style="font-size:11px"><b>Dano Total:</b> <span style="color:var(--accent)">+50%</span></div>
-          <div style="font-size:11px"><b>Movement Speed:</b> <span style="color:var(--accent)">+50%</span></div>
-          <div style="font-size:11px"><b>Atk Speed:</b> <span style="color:var(--accent)">+50%</span></div>
-          <div style="font-size:11px"><b>Hits p/ Ult:</b> <span style="color:var(--primary)">-1 hit</span></div>
-        </div>
+        <p style="font-size:12px; color:var(--text-dim)">+50% Dano, +50% Velocidade, +50% Atk Speed e -1 hit p/ Ult.</p>
       </div>
     </div>
   </section>
@@ -400,11 +439,10 @@
   <section id="td">
     <div class="section-header">
       <h2>Defesa Principal</h2>
-      <p class="subtitle">Estratégias de posicionamento e upgrade.</p>
     </div>
     <div class="ctrl-box glass">
       <div class="ctrl-item">
-        <label>Personagem</label>
+        <label>Selecionar Unidade</label>
         <select id="tdchar" onchange="renderTD()">
           <option value="0">Nami</option><option value="1">Koby</option><option value="2">Usopp</option>
           <option value="3">Buggy</option><option value="4">Zoro</option><option value="5">Luffy</option><option value="6">Shanks</option>
@@ -416,55 +454,31 @@
 
   <!-- RAIDS -->
   <section id="raids">
-    <div class="section-header">
-      <h2>Raids</h2>
-      <p class="subtitle">Desafios cooperativos e recompensas raras.</p>
-    </div>
+    <div class="section-header"><h2>Raids</h2></div>
     <div id="raids-body" class="card-grid"></div>
-  </section>
-
-  <!-- NPCS -->
-  <section id="npcs">
-    <div class="section-header">
-      <h2>NPCs & Bosses</h2>
-      <p class="subtitle">Inimigos e loot de mapa aberto.</p>
-    </div>
-    <div id="npcs-body" class="card-grid"></div>
   </section>
 
   <!-- ASCENSÃO -->
   <section id="asc">
-    <div class="section-header">
-      <h2>Requisitos de Ascensão</h2>
-      <p class="subtitle">O caminho para o poder supremo.</p>
-    </div>
+    <div class="section-header"><h2>Ascensão</h2></div>
     <div id="asc-body"></div>
   </section>
 
   <!-- ECONOMIA -->
   <section id="eco">
-    <div class="section-header">
-      <h2>Economia</h2>
-      <p class="subtitle">Gerenciamento de gold e taxas de ganho.</p>
-    </div>
+    <div class="section-header"><h2>Economia</h2></div>
     <div id="eco-body"></div>
   </section>
 
   <!-- ROLL -->
   <section id="roll">
-    <div class="section-header">
-      <h2>Invocação (Roll)</h2>
-      <p class="subtitle">Chances de invocação e custos.</p>
-    </div>
+    <div class="section-header"><h2>Roll</h2></div>
     <div id="roll-body"></div>
   </section>
 
   <!-- PROGRESSÃO -->
   <section id="prog">
-    <div class="section-header">
-      <h2>Progressão</h2>
-      <p class="subtitle">Curva de XP por raridade.</p>
-    </div>
+    <div class="section-header"><h2>XP & Progressão</h2></div>
     <div class="ctrl-box glass">
       <div class="ctrl-item">
         <label>Raridade</label>
@@ -477,28 +491,12 @@
     <div id="prog-body"></div>
   </section>
 
-  <!-- RPG -->
-  <section id="rpg">
-    <div class="section-header">
-      <h2>Sistema RPG</h2>
-      <p class="subtitle">Missões, Inventário e Mundo Aberto.</p>
-    </div>
-    <div class="card glass" style="text-align: center; padding: 4rem;">
-      <div style="font-size: 3rem; margin-bottom: 1rem;">⚔️</div>
-      <h3>MODO EXPLORAÇÃO</h3>
-      <p style="color: var(--text-dim); margin-top: 10px;">Em breve: Desbrave o arquipélago em busca de fragmentos secretos.</p>
-    </div>
-  </section>
-
   <!-- PETS -->
   <section id="pets">
-    <div class="section-header">
-      <h2>Pets & RPG</h2>
-      <p class="subtitle">Aliados de exploração e bônus passivos.</p>
-    </div>
+    <div class="section-header"><h2>Pets</h2></div>
     <div class="ctrl-box glass">
       <div class="ctrl-item">
-        <label>Nível do Pet</label>
+        <label>Nível Pet</label>
         <select id="plv" onchange="renderPets()">
           <option value="1">Lv 1</option><option value="5">Lv 5</option><option value="10">Lv 10</option>
         </select>
@@ -509,20 +507,15 @@
 
   <!-- COMUNIDADE -->
   <section id="com">
-    <div class="section-header">
-      <h2>Comunidade</h2>
-      <p class="subtitle">Links oficiais e suporte.</p>
-    </div>
+    <div class="section-header"><h2>Comunidade</h2></div>
     <div class="card-grid">
       <div class="card glass" style="text-align:center">
-        <div style="font-size: 2rem; margin-bottom: 1rem;">💬</div>
         <h3>Discord</h3>
-        <span class="badge b-blue">Entrar</span>
+        <span class="badge b-blue" style="margin-top:10px">Entrar</span>
       </div>
       <div class="card glass" style="text-align:center">
-        <div style="font-size: 2rem; margin-bottom: 1rem;">📖</div>
         <h3>Wiki</h3>
-        <span class="badge b-yellow">Acessar</span>
+        <span class="badge b-teal" style="margin-top:10px">Acessar</span>
       </div>
     </div>
   </section>
@@ -533,6 +526,33 @@
 </footer>
 
 <script>
+// THEME LOGIC
+function toggleTheme() {
+  const html = document.documentElement;
+  const current = html.getAttribute('data-theme');
+  const next = current === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  localStorage.setItem('theme', next);
+  updateThemeIcons(next);
+}
+
+function updateThemeIcons(theme) {
+  const sun = document.getElementById('sun-icon');
+  const moon = document.getElementById('moon-icon');
+  if (theme === 'light') {
+    sun.style.display = 'block';
+    moon.style.display = 'none';
+  } else {
+    sun.style.display = 'none';
+    moon.style.display = 'block';
+  }
+}
+
+// Persist theme
+const savedTheme = localStorage.getItem('theme') || 'dark';
+document.documentElement.setAttribute('data-theme', savedTheme);
+updateThemeIcons(savedTheme);
+
 // ===================== DADOS SIMULADOR =====================
 const SIM = [
   { name:'Nami',  rar:'Common',  rc:'b-gray',   arch:'Farmer/Air',   ac:'b-teal', col:'#85B7EB', ct:'#0C447C', base:{dmg:3,mult:3.5,hits:10},raid:{dmg:5,mult:4,hits:8}, growType:'exp', growBase:0.405, growRaid:0.6075 },
@@ -569,8 +589,8 @@ function renderSim(){
       <div class="row"><span class="rl">Dano base</span><div class="bwrap"><div class="bar" style="width:${dw}%;background:${c.col};"></div></div><span class="rv">${d.toFixed(1)}</span></div>
       <div class="row"><span class="rl">Dano ult</span><div class="bwrap"><div class="bar" style="width:${uw}%;background:var(--accent);"></div></div><span class="rv">${u.toFixed(1)}</span></div>
       <div style="display:flex; gap:6px; margin-top:12px">
-        <span class="badge b-gray">${c.base.mult}x Base</span>
-        <span class="badge b-blue">${c.raid.mult}x Raid</span>
+        <span class="badge b-gray">${c.base.mult}x B</span>
+        <span class="badge b-blue">${c.raid.mult}x R</span>
       </div>
     </div>`;
   });
@@ -579,13 +599,13 @@ function renderSim(){
 
 // ===================== TOWER DEFENSE =====================
 const TD = [
-  { name:'Nami', rar:'Common', rc:'b-gray',   arch:'Farmer / Air', col:'#85B7EB', qt:8, max_up:3, ups:[ { n:0, range:15, cd:1, dmg:50, price:300, e:'—', farm:60 }, { n:1, range:17, cd:1, dmg:70, price:450, e:'—', farm:80 }, { n:2, range:20, cd:2, dmg:100, price:800, e:'—', farm:110 }, { n:3, range:15, cd:1.5, dmg:120, price:1200, e:'Gold Extra', farm:150 } ] },
-  { name:'Koby', rar:'Common', rc:'b-gray',   arch:'Suporte / Ground', col:'#B5D4F4', qt:5, max_up:3, ups:[ { n:0, range:20, cd:5, dmg:40, price:600, e:'Buff +5%' }, { n:1, range:20, cd:4, dmg:60, price:850, e:'Buff +8%' }, { n:2, range:22, cd:4.5, dmg:85, price:1100, e:'Buff +12%' }, { n:3, range:25, cd:3.5, dmg:90, price:1500, e:'Buff +15%' } ] },
-  { name:'Usopp', rar:'Raro',   rc:'b-blue',   arch:'Assassin / Air+Ground', col:'#9FE1CB', qt:8, max_up:3, ups:[ { n:0, range:35, cd:1, dmg:110, price:500, e:'Bleed 25%' }, { n:1, range:40, cd:2, dmg:150, price:750, e:'Burn 40%' }, { n:2, range:50, cd:3, dmg:350, price:1000, e:'Slow' }, { n:3, range:60, cd:2, dmg:120, price:1700, e:'Triple Effect' } ] },
-  { name:'Buggy', rar:'Épico',  rc:'b-purple', arch:'DPS / Ground', col:'#F5C4B3', qt:6, max_up:3, ups:[ { n:0, range:30, cd:3, dmg:150, price:600, e:'Bleed' }, { n:1, range:35, cd:4, dmg:120, price:1000, e:'Bleed+' }, { n:2, range:40, cd:5, dmg:120, price:1400, e:'Bleed++' }, { n:3, range:10, cd:1.5, dmg:190, price:2200, e:'Cone Barrage' } ] },
-  { name:'Zoro',  rar:'Lendário',rc:'b-yellow', arch:'Solo Bleed', col:'#EF9F27', qt:4, max_up:4, ups:[ { n:0, range:20, cd:2, dmg:110, price:750, e:'Bleed 100%' }, { n:1, range:25, cd:2.5, dmg:150, price:1000, e:'Bleed 100%' }, { n:2, range:25, cd:2, dmg:150, price:1800, e:'Bleed 200%' }, { n:3, range:28, cd:2.5, dmg:165, price:2200, e:'Bleed 200%' }, { n:4, range:35, cd:3, dmg:200, price:3200, e:'3-Sword Dash' } ] },
-  { name:'Luffy', rar:'Mítico', rc:'b-red',    arch:'Heavy Cannon', col:'#CECBF6', qt:3, max_up:5, ups:[ { n:0, range:35, cd:4, dmg:250, price:500, e:'—' }, { n:1, range:35, cd:4, dmg:330, price:1400, e:'—' }, { n:2, range:30, cd:3.5, dmg:500, price:2100, e:'—' }, { n:3, range:30, cd:3, dmg:600, price:2900, e:'—' }, { n:4, range:20, cd:2.5, dmg:800, price:3500, e:'—' }, { n:5, range:25, cd:2.5, dmg:950, price:4100, e:'Pure DPS' } ] },
-  { name:'Shanks',rar:'Secreto', rc:'b-black',  arch:'The Strongest', col:'#F0997B', qt:1, max_up:6, ups:[ { n:0, range:35, cd:3, dmg:650, price:1000, e:'Bleed' }, { n:1, range:40, cd:3, dmg:800, price:2000, e:'Bleed' }, { n:2, range:45, cd:3.5, dmg:1000, price:3000, e:'Area Smash' }, { n:3, range:45, cd:2, dmg:1000, price:4000, e:'Area Smash' }, { n:4, range:50, cd:2.5, dmg:1300, price:5000, e:'Dash' }, { n:5, range:50, cd:3, dmg:2500, price:6000, e:'Massive Dmg' }, { n:6, range:50, cd:8, dmg:3100, price:10000, e:'Haki do Rei' } ] },
+  { name:'Nami', rar:'Common', rc:'b-gray', col:'#85B7EB', qt:8, max_up:3, ups:[ { n:0, range:15, cd:1, dmg:50, price:300, e:'—', farm:60 }, { n:1, range:17, cd:1, dmg:70, price:450, e:'—', farm:80 }, { n:2, range:20, cd:2, dmg:100, price:800, e:'—', farm:110 }, { n:3, range:15, cd:1.5, dmg:120, price:1200, e:'Gold Extra', farm:150 } ] },
+  { name:'Koby', rar:'Common', rc:'b-gray', col:'#B5D4F4', qt:5, max_up:3, ups:[ { n:0, range:20, cd:5, dmg:40, price:600, e:'Buff +5%' }, { n:1, range:20, cd:4, dmg:60, price:850, e:'Buff +8%' }, { n:2, range:22, cd:4.5, dmg:85, price:1100, e:'Buff +12%' }, { n:3, range:25, cd:3.5, dmg:90, price:1500, e:'Buff +15%' } ] },
+  { name:'Usopp', rar:'Raro', rc:'b-blue', col:'#9FE1CB', qt:8, max_up:3, ups:[ { n:0, range:35, cd:1, dmg:110, price:500, e:'Bleed 25%' }, { n:1, range:40, cd:2, dmg:150, price:750, e:'Burn 40%' }, { n:2, range:50, cd:3, dmg:350, price:1000, e:'Slow' }, { n:3, range:60, cd:2, dmg:120, price:1700, e:'Triple Effect' } ] },
+  { name:'Buggy', rar:'Épico', rc:'b-purple', col:'#F5C4B3', qt:6, max_up:3, ups:[ { n:0, range:30, cd:3, dmg:150, price:600, e:'Bleed' }, { n:1, range:35, cd:4, dmg:120, price:1000, e:'Bleed+' }, { n:2, range:40, cd:5, dmg:120, price:1400, e:'Bleed++' }, { n:3, range:10, cd:1.5, dmg:190, price:2200, e:'Cone Barrage' } ] },
+  { name:'Zoro', rar:'Lendário', rc:'b-yellow', col:'#EF9F27', qt:4, max_up:4, ups:[ { n:0, range:20, cd:2, dmg:110, price:750, e:'Bleed 100%' }, { n:1, range:25, cd:2.5, dmg:150, price:1000, e:'Bleed 100%' }, { n:2, range:25, cd:2, dmg:150, price:1800, e:'Bleed 200%' }, { n:3, range:28, cd:2.5, dmg:165, price:2200, e:'Bleed 200%' }, { n:4, range:35, cd:3, dmg:200, price:3200, e:'3-Sword Dash' } ] },
+  { name:'Luffy', rar:'Mítico', rc:'b-red', col:'#CECBF6', qt:3, max_up:5, ups:[ { n:0, range:35, cd:4, dmg:250, price:500, e:'—' }, { n:1, range:35, cd:4, dmg:330, price:1400, e:'—' }, { n:2, range:30, cd:3.5, dmg:500, price:2100, e:'—' }, { n:3, range:30, cd:3, dmg:600, price:2900, e:'—' }, { n:4, range:20, cd:2.5, dmg:800, price:3500, e:'—' }, { n:5, range:25, cd:2.5, dmg:950, price:4100, e:'Pure DPS' } ] },
+  { name:'Shanks', rar:'Secreto', rc:'b-black', col:'#F0997B', qt:1, max_up:6, ups:[ { n:0, range:35, cd:3, dmg:650, price:1000, e:'Bleed' }, { n:1, range:40, cd:3, dmg:800, price:2000, e:'Bleed' }, { n:2, range:45, cd:3.5, dmg:1000, price:3000, e:'Area Smash' }, { n:3, range:45, cd:2, dmg:1000, price:4000, e:'Area Smash' }, { n:4, range:50, cd:2.5, dmg:1300, price:5000, e:'Dash' }, { n:5, range:50, cd:3, dmg:2500, price:6000, e:'Massive Dmg' }, { n:6, range:50, cd:8, dmg:3100, price:10000, e:'Haki do Rei' } ] },
 ];
 
 function renderTD(){
@@ -603,12 +623,12 @@ function renderTD(){
   <div class="card-grid">`;
   c.ups.forEach(u=>{
     html+=`<div class="card glass" style="border-left:4px solid ${u.n === c.max_up ? 'var(--accent)' : 'var(--border)'}">
-      <div style="font-weight:800; font-size:12px; margin-bottom:8px">UPGRADE ${u.n} <span style="font-weight:400; color:var(--text-dim)">— $${u.price}</span></div>
+      <div style="font-weight:800; font-size:11px; margin-bottom:8px">UPGRADE ${u.n} <span style="font-weight:400; color:var(--text-dim)">— $${u.price}</span></div>
       <div style="display:flex; gap:5px; flex-wrap:wrap; margin-bottom:10px">
-        <span class="badge b-gray">Range ${u.range}</span>
+        <span class="badge b-gray">R ${u.range}</span>
         <span class="badge b-blue">CD ${u.cd}s</span>
-        <span class="badge b-green">Dano ${u.dmg}</span>
-        ${u.farm ? `<span class="badge b-w">+$${u.farm}</span>` : ''}
+        <span class="badge b-green">D ${u.dmg}</span>
+        ${u.farm ? `<span class="badge b-yellow">+$${u.farm}</span>` : ''}
       </div>
       <div style="font-size:11px; color:var(--text-dim)"><b>Efeito:</b> ${u.e}</div>
     </div>`;
@@ -638,171 +658,77 @@ function renderPets() {
         <span class="badge b-purple">Lv ${lv}</span>
       </div>
       <div style="font-size:11px; margin-bottom:1rem">
-        <b style="color:var(--primary)">Assist:</b> ${p.assist} (${p.dist})<br>
-        <b style="color:var(--primary)">Cooldown:</b> ${p.cd}
+        <b style="color:var(--primary)">Assist:</b> ${p.assist}<br>
+        <b style="color:var(--primary)">CD:</b> ${p.cd}
       </div>
-      <div class="sec" style="font-size:9px; margin-top:0">Buffs Atuais</div>
       <div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px">
         ${Object.entries(p.buff).map(([k,v])=>(v/10*lv).toFixed(2)+'% '+k).map(v=>`<span class="badge b-green">${v}</span>`).join('')}
-        ${p.pass ? Object.entries(p.pass).map(([k,v])=>(v/10*lv).toFixed(2)+'% '+k).map(v=>`<span class="badge b-blue">${v} (P)</span>`).join('') : ''}
       </div>
-      <div class="sec" style="font-size:9px; margin-top:0">Ascensão (Progressão Lv)</div>
       <div style="display:flex;gap:5px;flex-wrap:wrap">
-        ${Object.entries(p.asc).map(([k,v])=>(v/10*lv).toFixed(2)+'% '+k).map(v=>`<span class="badge b-teal">${v}</span>`).join('')}
-        ${p.asc_pass ? Object.entries(p.asc_pass).map(([k,v])=>(v/10*lv).toFixed(2)+'% '+k).map(v=>`<span class="badge b-yellow">${v} (P)</span>`).join('') : ''}
+        ${Object.entries(p.asc).map(([k,v])=>(v/10*lv).toFixed(2)+'% '+k).map(v=>`<span class="badge b-teal">${v} (Asc)</span>`).join('')}
       </div>
     </div>`;
   });
   document.getElementById('pets-body').innerHTML = html;
 }
 
-// ===================== RAIDS =====================
-const RAIDS=[
-  { n:'Raid 1 — Grand Line', p:'2-3 Jóg.', w:15, b:'Ever 5w', hp:55000, drops:['Eternal Pose', 'Capa', 'Óculos'] },
-  { n:'Raid 2 — Paraíso', p:'3-4 Jóg.', w:20, b:'Ever 5w', hp:100000, drops:['Espada Zoro', 'Chapéu', 'Nariz'] },
-  { n:'Raid 3 — Novo Mundo', p:'8 Jóg.', w:25, b:'Ever 5w', hp:250000, drops:['Espada Shanks', 'Chapéu'] },
-];
-
+// ===================== OUTROS =====================
 function renderRaids(){
+  const RAIDS=[ { n:'R1 — Grand Line', p:'2-3 J.', w:15, hp:55000 }, { n:'R2 — Paraíso', p:'3-4 J.', w:20, hp:100000 }, { n:'R3 — Novo Mundo', p:'8 J.', w:25, hp:250000 } ];
   let html='';
   RAIDS.forEach(r=>{
     html+=`<div class="card glass">
       <h3 style="font-size:14px; margin-bottom:10px">${r.n}</h3>
-      <div style="display:flex; gap:5px; flex-wrap:wrap; margin-bottom:10px">
-        <span class="badge b-red">${r.p}</span>
-        <span class="badge b-gray">${r.w} Waves</span>
-        <span class="badge b-black">${r.hp.toLocaleString()} HP</span>
+      <div style="display:flex; gap:5px; flex-wrap:wrap">
+        <span class="badge b-red">${r.hp.toLocaleString()} HP</span>
+        <span class="badge b-gray">${r.w} W</span>
       </div>
-      <div class="sec" style="font-size:9px">Drops</div>
-      <div style="display:flex;gap:5px;flex-wrap:wrap">${r.drops.map(d=>`<span class="badge b-green">${d}</span>`).join('')}</div>
     </div>`;
   });
   document.getElementById('raids-body').innerHTML=html;
 }
 
-// ===================== NPCS =====================
-function renderNpcs(){
-  const npcs=[
-    { n:'Marinheiro', hp:400, g:20, d:'Chapéu, Mapa, Estilingue' },
-    { n:'Alvida', hp:8000, g:80, d:'Bandana, Jaqueta, Nariz' },
-    { n:'Kuro', hp:20000, g:320, d:'Nariz, Bandana, Jaqueta' },
-    { n:'Boss Secreto', hp:150000, g:1200, d:'Capa Shanks, Espada Shanks' },
-  ];
-  let html='';
-  npcs.forEach(n=>{
-    html+=`<div class="card glass">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px">
-        <span style="font-weight:700">${n.n}</span>
-        <span class="badge b-red">${n.hp.toLocaleString()} HP</span>
-      </div>
-      <div style="font-size:11px; color:var(--text-dim); margin-bottom:8px">Drops: ${n.d}</div>
-      <span class="badge b-yellow">$${n.g} Gold</span>
-    </div>`;
-  });
-  document.getElementById('npcs-body').innerHTML=html;
-}
-
-// ===================== ASCENSÃO =====================
-const ASC=[
-  { name:'Nami', items:['200× Nami','50× Mapa','5× Eternal Pose'] },
-  { name:'Koby', items:['200× Koby','50× Bone','5× Capa Marinha'] },
-  { name:'Usopp', items:['150× Usopp','50× Estilingue','5× Óculos'] },
-  { name:'Buggy', items:['100× Buggy','40× Nariz','3× Chapéu Palhaço'] },
-  { name:'Zoro', items:['50× Zoro','35× Bandana','3× Espada Zoro'] },
-  { name:'Luffy', items:['25× Luffy','15× Jaqueta','3× Chapéu'] },
-];
 function renderAsc(){
+  const ASC=[ { name:'Nami', items:['200× Nami','5× Eternal Pose'] }, { name:'Zoro', items:['50× Zoro','3× Espada Zoro'] } ];
   let html='';
   ASC.forEach(a=>{
     html+=`<div class="card glass" style="margin-bottom:10px">
-      <h4 style="margin-bottom:8px">${a.name} Ascensão</h4>
+      <h4 style="font-size:12px; margin-bottom:5px">${a.name}</h4>
       <div style="display:flex; gap:5px; flex-wrap:wrap">${a.items.map(i=>`<span class="badge b-blue">${i}</span>`).join('')}</div>
     </div>`;
   });
   document.getElementById('asc-body').innerHTML=html;
 }
 
-// ===================== ECONOMIA =====================
 function renderEco(){
-  document.getElementById('eco-body').innerHTML=`<div class="card glass">
-    <div class="tbl-container">
-      <table>
-        <thead><tr><th>Fonte</th><th>Valor</th><th>Obs</th></tr></thead>
-        <tbody>
-          <tr><td>Fixo/Wave</td><td><span class="badge b-green">400</span></td><td>Base</td></tr>
-          <tr><td>Kill</td><td><span class="badge b-green">15</span></td><td>Per NPC</td></tr>
-          <tr><td>Nami Farm</td><td><span class="badge b-yellow">60~150</span></td><td>Per Wave</td></tr>
-          <tr><td>Roll Cost</td><td><span class="badge b-red">80</span></td><td>Per Roll</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>`;
+  document.getElementById('eco-body').innerHTML=`<div class="card glass"><div class="tbl-container"><table><thead><tr><th>Fonte</th><th>Valor</th></tr></thead><tbody><tr><td>Wave Fixa</td><td><span class="badge b-green">400</span></td></tr><tr><td>Kill NPC</td><td><span class="badge b-green">15</span></td></tr><tr><td>Roll Cost</td><td><span class="badge b-red">80</span></td></tr></tbody></table></div></div>`;
 }
 
-// ===================== ROLL =====================
 function renderRoll(){
-  document.getElementById('roll-body').innerHTML=`<div class="card glass">
-    <div class="tbl-container">
-      <table>
-        <thead><tr><th>Raridade</th><th>Chance</th></tr></thead>
-        <tbody>
-          <tr><td>Common</td><td>60%</td></tr><tr><td>Raro</td><td>25%</td></tr>
-          <tr><td>Épico</td><td>10%</td></tr><tr><td>Lendário</td><td>3.5%</td></tr>
-          <tr><td>Mítico</td><td>0.0035%</td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>`;
+  document.getElementById('roll-body').innerHTML=`<div class="card glass"><div class="tbl-container"><table><thead><tr><th>Raridade</th><th>Chance</th></tr></thead><tbody><tr><td>Common</td><td>60%</td></tr><tr><td>Raro</td><td>25%</td></tr><tr><td>Lendário</td><td>3.5%</td></tr><tr><td>Mítico</td><td>0.0035%</td></tr></tbody></table></div></div>`;
 }
 
-// ===================== PROGRESSÃO =====================
 function renderProg(){
   const r=parseInt(document.getElementById('prar').value);
   const m=Math.pow(1.5, r);
-  const data=[{l:'1→2',xp:48},{l:'5→6',xp:934},{l:'9→10',xp:18155}];
-  let html=`<div class="card glass"><div class="tbl-container"><table><thead><tr><th>Level</th><th>XP (x${m.toFixed(1)})</th></tr></thead><tbody>`;
-  data.forEach(d=>{
-    html+=`<tr><td>${d.l}</td><td>${Math.round(d.xp*m).toLocaleString()} XP</td></tr>`;
-  });
+  const data=[{l:'1→2',xp:48},{l:'5→6',xp:934}];
+  let html=`<div class="card glass"><div class="tbl-container"><table><thead><tr><th>Level</th><th>XP</th></tr></thead><tbody>`;
+  data.forEach(d=>{ html+=`<tr><td>${d.l}</td><td>${Math.round(d.xp*m).toLocaleString()}</td></tr>`; });
   html+=`</tbody></table></div></div>`;
   document.getElementById('prog-body').innerHTML=html;
 }
 
-// INITIAL RENDER
 function init() {
-  renderSim();
-  renderTD();
-  renderPets();
-  renderRaids();
-  renderNpcs();
-  renderAsc();
-  renderEco();
-  renderRoll();
-  renderProg();
+  renderSim(); renderTD(); renderPets(); renderRaids(); renderAsc(); renderEco(); renderRoll(); renderProg();
 }
 
 window.addEventListener('scroll', () => {
   let current = "";
-  const sections = document.querySelectorAll("section, header");
-  sections.forEach((section) => {
-    const sectionTop = section.offsetTop;
-    if (pageYOffset >= sectionTop - 150) {
-      current = section.getAttribute("id");
-    }
-  });
-
-  document.querySelectorAll(".nav-link").forEach((link) => {
-    link.classList.remove("active");
-    // Special handling for nested links
-    const parentItem = link.closest('.nav-item');
-    if (parentItem) {
-      const subLinks = parentItem.querySelectorAll('.sub-nav a');
-      subLinks.forEach(sl => {
-        if (sl.getAttribute('href').includes(current)) {
-          link.classList.add("active");
-        }
-      });
-    }
+  document.querySelectorAll("section, header").forEach((s) => { if (pageYOffset >= s.offsetTop - 150) current = s.id; });
+  document.querySelectorAll(".nav-link").forEach((l) => {
+    l.classList.remove("active");
+    const parent = l.closest('.nav-item');
+    if (parent && parent.querySelector('.sub-nav a[href="#'+current+'"]')) l.classList.add("active");
   });
 });
 

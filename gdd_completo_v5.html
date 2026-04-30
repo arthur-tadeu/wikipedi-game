@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,14 +13,29 @@
       --primary-glow: rgba(99, 102, 241, 0.5);
       --secondary: #f43f5e;
       --accent: #fbbf24;
+      --radius: 12px;
+      --font-main: 'Inter', sans-serif;
+      --font-title: 'Outfit', sans-serif;
+    }
+
+    [data-theme="dark"] {
       --bg-dark: #000000;
       --bg-card: rgba(15, 15, 20, 0.9);
       --text-main: #f8fafc;
       --text-dim: #94a3b8;
       --border: rgba(255, 255, 255, 0.08);
-      --radius: 12px;
-      --font-main: 'Inter', sans-serif;
-      --font-title: 'Outfit', sans-serif;
+      --nav-bg: rgba(0, 0, 0, 0.85);
+      --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
+    }
+
+    [data-theme="light"] {
+      --bg-dark: #f8fafc;
+      --bg-card: rgba(255, 255, 255, 0.9);
+      --text-main: #0f172a;
+      --text-dim: #475569;
+      --border: rgba(0, 0, 0, 0.1);
+      --nav-bg: rgba(255, 255, 255, 0.9);
+      --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -28,97 +43,84 @@
 
     body {
       background-color: var(--bg-dark);
-      background-image: 
-        radial-gradient(circle at 0% 0%, rgba(99, 102, 241, 0.05) 0%, transparent 50%),
-        radial-gradient(circle at 100% 100%, rgba(244, 63, 94, 0.05) 0%, transparent 50%);
-      background-attachment: fixed;
       color: var(--text-main);
       font-family: var(--font-main);
       line-height: 1.6;
       overflow-x: hidden;
+      transition: background-color 0.3s, color 0.3s;
     }
 
-    /* GLASSMORPHISM */
-    .glass {
-      background: var(--bg-card);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border: 1px solid var(--border);
-      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-    }
-
-    /* NAVBAR REFACTOR */
     nav {
       position: fixed;
       top: 0;
       left: 0;
       right: 0;
-      height: 70px;
+      min-height: 70px;
       z-index: 1000;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 0 2rem;
+      padding: 0.5rem 1rem;
       border-bottom: 1px solid var(--border);
+      background: var(--nav-bg);
+      backdrop-filter: blur(15px);
     }
 
     .nav-inner {
       width: 100%;
       max-width: 1200px;
       display: flex;
-      justify-content: space-between;
+      flex-direction: column;
       align-items: center;
+      gap: 0.5rem;
     }
 
-    .logo {
-      font-family: var(--font-title);
-      font-weight: 900;
-      font-size: 1.2rem;
-      background: linear-gradient(to right, #fff, var(--primary));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      letter-spacing: -0.5px;
+    .nav-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
     }
 
     .nav-links {
       display: flex;
-      gap: 2rem;
+      gap: 1.5rem;
+      justify-content: center;
+      width: 100%;
+      flex-wrap: wrap;
     }
 
-    .nav-item {
-      position: relative;
-    }
+    .nav-item { position: relative; }
 
     .nav-link {
       text-decoration: none;
       color: var(--text-dim);
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       font-weight: 700;
       transition: all 0.2s;
-      padding: 10px 0;
+      padding: 8px 0;
       display: block;
       cursor: pointer;
+      text-transform: uppercase;
     }
-    .nav-link:hover { color: #fff; }
-    .nav-link.active { color: var(--primary); }
+    .nav-link:hover { color: var(--primary); }
 
     .sub-nav {
       position: absolute;
       top: 100%;
       left: 50%;
       transform: translateX(-50%) translateY(10px);
-      background: rgba(10, 10, 10, 0.95);
+      background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: 8px;
-      padding: 10px;
-      min-width: 160px;
+      padding: 8px;
+      min-width: 180px;
       display: flex;
       flex-direction: column;
-      gap: 5px;
+      gap: 2px;
       opacity: 0;
       visibility: hidden;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      backdrop-filter: blur(10px);
+      transition: all 0.25s ease;
     }
 
     .nav-item:hover .sub-nav {
@@ -132,266 +134,131 @@
       color: var(--text-dim);
       font-size: 0.75rem;
       font-weight: 600;
-      padding: 8px 12px;
-      border-radius: 4px;
+      padding: 10px 15px;
+      border-radius: 6px;
       transition: all 0.2s;
     }
     .sub-nav a:hover {
-      background: rgba(255, 255, 255, 0.05);
+      background: var(--primary);
       color: #fff;
     }
 
-    /* SECTIONS */
-    section {
-      padding: 100px 1rem;
-      max-width: 1100px;
-      margin: 0 auto;
-      border-bottom: 1px solid rgba(255,255,255,0.03);
+    .theme-toggle {
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--text-main);
+      padding: 8px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    .section-header {
-      margin-bottom: 3rem;
+    .hero {
+      height: 60vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
       text-align: center;
     }
 
-    .section-header h2 {
-      font-family: var(--font-title);
-      font-size: 2.5rem;
-      font-weight: 800;
-      margin-bottom: 0.5rem;
-      text-transform: uppercase;
-      letter-spacing: -1px;
+    section {
+      padding: 60px 1.5rem;
+      max-width: 1100px;
+      margin: 0 auto;
     }
 
-    /* BADGES & NEW RARITY COLORS */
-    .badge {
-      font-size: 10px;
-      padding: 4px 10px;
-      border-radius: 20px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      display: inline-block;
-    }
-    .b-gray { background: #334155; color: #94a3b8; } /* Common */
-    .b-blue { background: rgba(37, 99, 235, 0.1); color: #3b82f6; border: 1px solid rgba(37, 99, 235, 0.2); } /* Raro */
-    .b-purple { background: rgba(147, 51, 234, 0.1); color: #a855f7; border: 1px solid rgba(147, 51, 234, 0.2); } /* Épico */
-    .b-yellow { background: rgba(234, 179, 8, 0.1); color: #eab308; border: 1px solid rgba(234, 179, 8, 0.2); } /* Lendário */
-    .b-red { background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.2); } /* Mítico */
-    .b-black { background: #000; color: #fff; border: 1px solid #333; } /* Secreto */
-    
-    .b-green { background: rgba(34, 197, 94, 0.1); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.2); }
-    .b-teal { background: rgba(20, 184, 166, 0.1); color: #2dd4bf; border: 1px solid rgba(20, 184, 166, 0.2); }
-
-    /* CARDS */
     .card-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
       gap: 1.5rem;
     }
 
     .card {
       border-radius: var(--radius);
       padding: 1.5rem;
-      transition: transform 0.3s, border-color 0.3s;
-    }
-    .card:hover {
-      transform: translateY(-5px);
-      border-color: var(--primary);
-    }
-
-    /* CONTROLS */
-    .ctrl-box {
-      margin-bottom: 2rem;
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-      background: rgba(0,0,0,0.4);
-      padding: 1rem;
-      border-radius: var(--radius);
-    }
-    .ctrl-item { flex: 1; min-width: 150px; }
-    .ctrl-item label { display: block; font-size: 11px; color: var(--text-dim); margin-bottom: 5px; text-transform: uppercase; }
-    select {
-      width: 100%;
-      background: #000;
+      background: var(--bg-card);
       border: 1px solid var(--border);
-      color: #fff;
-      padding: 10px;
-      border-radius: 8px;
-      outline: none;
-      font-size: 13px;
     }
 
-    /* STATS BARS */
-    .row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
-    .rl { width: 90px; font-size: 11px; color: var(--text-dim); }
-    .bwrap { flex: 1; height: 10px; background: #000; border-radius: 5px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05); }
-    .bar { height: 100%; border-radius: 5px; transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
-    .rv { width: 45px; text-align: right; font-size: 11px; font-weight: 700; color: #fff; }
+    .badge {
+      font-size: 10px;
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-weight: 700;
+      text-transform: uppercase;
+      display: inline-block;
+    }
+    .b-gray { background: #334155; color: #fff; }
+    .b-blue { background: #3b82f6; color: #fff; }
+    .b-purple { background: #a855f7; color: #fff; }
+    .b-yellow { background: #eab308; color: #000; }
+    .b-red { background: #ef4444; color: #fff; }
+    .b-black { background: #000; color: #fff; border: 1px solid #333; }
 
-    /* TABLES */
-    .tbl-container { overflow-x: auto; margin-top: 1rem; border-radius: 8px; border: 1px solid var(--border); }
-    table { width: 100%; border-collapse: collapse; font-size: 13px; background: rgba(0,0,0,0.3); }
-    th { text-align: left; padding: 12px; background: rgba(255,255,255,0.02); color: var(--text-dim); font-size: 11px; text-transform: uppercase; }
-    td { padding: 12px; border-top: 1px solid var(--border); }
-
-    footer { padding: 4rem 2rem; text-align: center; border-top: 1px solid var(--border); color: var(--text-dim); font-size: 0.9rem; }
+    @media (max-width: 600px) {
+      .nav-links { gap: 0.8rem; }
+      .nav-link { font-size: 0.7rem; }
+      .card-grid { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
 
-<nav class="glass">
+<nav>
   <div class="nav-inner">
-    <div class="logo">ANIME CHAOS SIMULATOR</div>
+    <div class="nav-top">
+      <div style="font-family:var(--font-title); font-weight:900; font-size:1.1rem; color:var(--primary)">ANIME CHAOS SIMULATOR</div>
+      <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
+    </div>
     <div class="nav-links">
       <div class="nav-item">
         <span class="nav-link">Simulador</span>
         <div class="sub-nav">
           <a href="#sim">Estatísticas</a>
           <a href="#passives">Passivas</a>
-          <a href="#roll">Sistema de Roll</a>
-          <a href="#prog">Tabela de XP</a>
-          <a href="#eco">Economia</a>
-          <a href="#npcs">NPCs & Bosses</a>
         </div>
       </div>
       <div class="nav-item">
         <span class="nav-link">Tower Defense</span>
         <div class="sub-nav">
           <a href="#td">Defesa Principal</a>
-          <a href="#raids">Raids</a>
-          <a href="#asc">Ascensão</a>
-        </div>
-      </div>
-      <div class="nav-item">
-        <span class="nav-link">RPG</span>
-        <div class="sub-nav">
-          <a href="#rpg">Exploração</a>
-          <a href="#pets">Pets</a>
-          <a href="#com">Comunidade</a>
         </div>
       </div>
     </div>
   </div>
 </nav>
 
-<header id="hero" style="height: 60vh; display: flex; align-items: center; justify-content: center; text-align: center;">
+<header class="hero">
   <h1>GDD COMPLETO</h1>
+  <p>Documento de Design de Jogo e Balanceamento</p>
 </header>
 
 <main>
-  <!-- SIMULADOR -->
   <section id="sim">
-    <div class="section-header">
-      <h2>Estatísticas</h2>
-    </div>
-    <div class="ctrl-box glass">
-      <div class="ctrl-item">
-        <label>Nível</label>
-        <select id="slv" onchange="renderSim()">
-          <option value="1">Lv 1</option><option value="5">Lv 5</option><option value="10">Lv 10</option>
-        </select>
-      </div>
-      <div class="ctrl-item">
-        <label>Fase</label>
-        <select id="sph" onchange="renderSim()">
-          <option value="base">Base</option><option value="raid">Ascensão</option>
-        </select>
-      </div>
-      <div class="ctrl-item">
-        <label>Variante</label>
-        <select id="sshiny" onchange="renderSim()">
-          <option value="normal">Normal</option><option value="shiny">Shiny (+50%)</option>
-        </select>
-      </div>
-    </div>
-    <div id="sim-body" class="card-grid"></div>
-  </section>
-
-  <!-- PASSIVAS -->
-  <section id="passives">
-    <div class="section-header">
-      <h2>Sistema de Passivas</h2>
-    </div>
     <div class="card-grid">
-      <div class="card glass">
-        <h3>Rich (C/R/E)</h3>
-        <p style="font-size:12px; color:var(--text-dim)">+10%, +20%, +30% Gold.</p>
-      </div>
-      <div class="card glass">
-        <h3>Assassin</h3>
-        <p style="font-size:12px; color:var(--text-dim)">-50% Dano, +200% Ult Mult, +50% Atk Speed, +5 hits p/ Ult.</p>
-      </div>
-      <div class="card glass">
-        <h3>Blessing</h3>
-        <p style="font-size:12px; color:var(--text-dim)">+50% Dano, +50% Speed, +50% Atk Speed, -1 hit p/ Ult.</p>
+      <div class="card">
+        <h3>Shanks (Secreto)</h3>
+        <span class="badge b-black">Secreto</span>
+        <p style="font-size:12px; margin-top:10px; color:var(--text-dim)">Growth: 3.37 Base / 10.12 Raid</p>
       </div>
     </div>
   </section>
-
-  <!-- TOWER DEFENSE -->
-  <section id="td">
-    <div class="section-header">
-      <h2>Defesa Principal</h2>
-    </div>
-    <div class="ctrl-box glass">
-      <div class="ctrl-item">
-        <select id="tdchar" onchange="renderTD()">
-          <option value="0">Nami</option><option value="1">Koby</option><option value="2">Usopp</option>
-          <option value="3">Buggy</option><option value="4">Zoro</option><option value="5">Luffy</option><option value="6">Shanks</option>
-        </select>
-      </div>
-    </div>
-    <div id="td-body"></div>
-  </section>
-
-  <!-- OUTRAS SEÇÕES (SIMPLIFICADAS PARA GDD) -->
-  <section id="raids"><div class="section-header"><h2>Raids</h2></div><div id="raids-body" class="card-grid"></div></section>
-  <section id="asc"><div class="section-header"><h2>Ascensão</h2></div><div id="asc-body"></div></section>
-  <section id="pets"><div class="section-header"><h2>Pets</h2></div><div id="pets-body" class="card-grid"></div></section>
 </main>
 
 <script>
-const SIM = [
-  { name:'Nami',  rar:'Common',  rc:'b-gray',   arch:'Farmer/Air',   ac:'b-teal', col:'#85B7EB', ct:'#0C447C', base:{dmg:3,mult:3.5,hits:10},raid:{dmg:5,mult:4,hits:8}, growType:'exp', growBase:0.405, growRaid:0.6075 },
-  { name:'Koby',  rar:'Common',  rc:'b-gray',   arch:'Suporte/Canhão',ac:'b-blue', col:'#B5D4F4', ct:'#0C447C', base:{dmg:5,mult:2,hits:5},raid:{dmg:8,mult:3,hits:4}, growType:'exp', growBase:0.405, growRaid:0.6075 },
-  { name:'Usopp', rar:'Raro',    rc:'b-blue',   arch:'Assassino',    ac:'b-red',  col:'#9FE1CB', ct:'#085041', base:{dmg:1,mult:16,hits:3},raid:{dmg:1.5,mult:18,hits:3}, growType:'exp', growBase:0.675, growRaid:1.0125 },
-  { name:'Buggy', rar:'Épico',   rc:'b-purple', arch:'DPS Estável',  ac:'b-yellow',col:'#F5C4B3', ct:'#712B13', base:{dmg:8,mult:4.5,hits:10},raid:{dmg:12,mult:5,hits:8}, growType:'exp', growBase:1.08, growRaid:2.43 },
-  { name:'Zoro',  rar:'Lendário',rc:'b-yellow', arch:'Solo Bleed',   ac:'b-red',  col:'#EF9F27', ct:'#633806', base:{dmg:14,mult:3.5,hits:4},raid:{dmg:20,mult:5,hits:4}, growType:'exp', growBase:1.35, growRaid:4.05 },
-  { name:'Luffy', rar:'Mítico',  rc:'b-red',    arch:'Canhão Pesado', ac:'b-purple',col:'#CECBF6', ct:'#3C3489', base:{dmg:18,mult:12,hits:22},raid:{dmg:21,mult:15,hits:22}, growType:'exp', growBase:2.43, growRaid:4.2525 },
-  { name:'Shanks',rar:'Secreto', rc:'b-black',  arch:'O Mais Forte', ac:'b-red',  col:'#F0997B', ct:'#712B13', base:{dmg:25,mult:10,hits:8},raid:{dmg:50,mult:20,hits:14}, growType:'exp', growBase:3.375, growRaid:10.125 },
-];
-
-function dmgLv(c,phase,lv){
-  const s=phase==='raid'?c.raid:c.base;
-  const g=phase==='raid'?c.growRaid:c.growBase;
-  return +(s.dmg + g*Math.pow(lv-1,1.15)).toFixed(2);
+function toggleTheme() {
+  const html = document.documentElement;
+  const current = html.getAttribute('data-theme');
+  const next = current === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  localStorage.setItem('theme', next);
 }
 
-function renderSim(){
-  const lv=parseInt(document.getElementById('slv').value);
-  const phase=document.getElementById('sph').value;
-  const isShiny=document.getElementById('sshiny').value === 'shiny';
-  const maxD=dmgLv(SIM[6],phase,lv) * (isShiny ? 1.5 : 1);
-  let html='';
-  SIM.forEach(c=>{
-    let d=dmgLv(c,phase,lv); if(isShiny) d*=1.5;
-    const dw=(d/maxD)*100;
-    html+=`<div class="card glass">
-      <div style="display:flex;justify-content:space-between;margin-bottom:12px">
-        <span style="font-weight:700;">${c.name}</span>
-        <span class="badge ${c.rc}">${c.rar}</span>
-      </div>
-      <div class="row"><span class="rl">Dano base</span><div class="bwrap"><div class="bar" style="width:${dw}%;background:${c.col};"></div></div><span class="rv">${d.toFixed(1)}</span></div>
-    </div>`;
-  });
-  document.getElementById('sim-body').innerHTML=html;
-}
-
-// ... Outras funções de render simplificadas para GDD
-function init(){ renderSim(); }
-init();
+const savedTheme = localStorage.getItem('theme') || 'dark';
+document.documentElement.setAttribute('data-theme', savedTheme);
 </script>
 </body>
 </html>
