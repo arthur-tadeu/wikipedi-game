@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>One Piece — Game Design Document</title>
+  <title>Anime Chaos Multiverse — Game Design Document</title>
 </head>
 <body>
 <style>
@@ -76,6 +76,7 @@ select{font-size:14px;padding:8px 12px;border-radius:var(--border-radius-md);bor
   <button class="tab" onclick="showTab('eco')">Economia</button>
   <button class="tab" onclick="showTab('roll')">⭐ Roll</button>
   <button class="tab" onclick="showTab('prog')">Progressão</button>
+  <button class="tab" onclick="showTab('pets')">🐾 Pets</button>
 </div>
 
 <!-- SIMULADOR -->
@@ -162,6 +163,28 @@ select{font-size:14px;padding:8px 12px;border-radius:var(--border-radius-md);bor
   </div>
 </div>
 <div id="prog-body"></div>
+</div>
+
+<!-- PETS -->
+<div id="tab-pets" class="panel">
+<div class="ctrl">
+  <div class="ctrl-row">
+    <label class="ctrl-label" for="plv">Nível do Pet:</label>
+    <select id="plv" onchange="renderPets()">
+      <option value="1">Lv 1</option>
+      <option value="2">Lv 2</option>
+      <option value="3">Lv 3</option>
+      <option value="4">Lv 4</option>
+      <option value="5">Lv 5</option>
+      <option value="6">Lv 6</option>
+      <option value="7">Lv 7</option>
+      <option value="8">Lv 8</option>
+      <option value="9">Lv 9</option>
+      <option value="10">Lv 10</option>
+    </select>
+  </div>
+</div>
+<div id="pets-body"></div>
 </div>
 </div>
 
@@ -593,7 +616,7 @@ function renderRoll(){
 }
 
 function showTab(id){
-  const ids=['sim','td','raids','npcs','asc','eco','roll','prog'];
+  const ids=['sim','td','raids','npcs','asc','eco','roll','prog','pets'];
   document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',ids[i]===id));
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
   document.getElementById('tab-'+id).classList.add('active');
@@ -604,6 +627,7 @@ function showTab(id){
   if(id==='eco') renderEco();
   if(id==='roll') renderRoll();
   if(id==='prog') renderProg();
+  if(id==='pets') renderPets();
 }
 
 function renderProg() {
@@ -665,6 +689,63 @@ function renderProg() {
   </div>`;
   document.getElementById('prog-body').innerHTML = html;
 }
+
+// ===================== PETS =====================
+const PETS = [
+  { name: 'Nami',   dist: 'De perto', assist: 'surge e bate o bastão na pessoa ou npc, atordoando (deixando stunado por 0.5s)', cd: '2 min', buff: { 'Money': 5 }, asc: { 'Money': 7.5, 'XP': 5 } },
+  { name: 'Koby',   dist: 'De perto', assist: 'aparece e bate a vassoura no player ou npc, tirando 3% de dano', cd: '2 min', buff: { 'Melee': 1.5 }, asc: { 'Melee': 3 } },
+  { name: 'Usopp',  dist: 'De longe', assist: 'joga uma bola de fogo com o estilingue e da burn de 2% do dano da sua gun por 2 segundos', cd: '2 min', buff: { 'Gun Damage': 3 }, asc: { 'Gun Damage': 6 } },
+  { name: 'Buggy',  dist: 'De longe', assist: 'joga facas causando bleed de 3% do dano da sua espada por 3 segundos', cd: '2 min', buff: { 'Sword Damage Taken': -3 }, asc: { 'Sword Damage Taken': -7 } },
+  { name: 'Zoro',   dist: 'De média distância', assist: 'da um dash na pessoa, causando dano de 5% o dano da sua espada, e atordoando o player por 0.8 segundo', cd: '2 min', buff: { 'Sword Damage': 5 }, asc: { 'Sword Damage': 10 } },
+  { name: 'Luffy',  dist: 'De longe', assist: 'da um gomu pistol na pessoa causando dano de 6% do dano do seu melee', cd: '2 min', buff: { 'Melee Damage': 3, 'Gomu Damage': 5 }, asc: { 'Melee Damage': 7, 'Gomu Damage': 8 } },
+  { name: 'Shanks', dist: 'De longe', assist: 'kamusari que da 8% de dano da sua espada', cd: '2 min', buff: { 'Sword Damage': 4, 'Melee Damage': 5 }, passive: { 'Sword Cooldown': -5 }, asc: { 'Sword Damage Taken': -8, 'Melee Damage': 6 }, asc_passive: { 'Sword Cooldown': -10 } }
+];
+
+function renderPets() {
+  const lv = parseInt(document.getElementById('plv').value);
+  let html = '';
+  
+  PETS.forEach(p => {
+    html += `<div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+        <span style="font-size:15px;font-weight:700;color:var(--color-text-primary)">${p.name} <span style="font-weight:400;font-size:11px;color:var(--color-text-tertiary)">Pet de Assistência</span></span>
+        <span class="badge b-purple">Lv ${lv}</span>
+      </div>
+      
+      <div class="sec">Assistência (${p.dist})</div>
+      <div style="font-size:12px;color:var(--color-text-secondary);margin-bottom:8px">
+        ${p.assist} | <b style="color:var(--color-text-primary)">Cooldown: ${p.cd}</b>
+      </div>
+
+      <div class="sec">Buffs (Status Base)</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px">
+        ${Object.entries(p.buff).map(([k, v]) => {
+          const val = (v / 10 * lv).toFixed(2);
+          const color = v > 0 ? 'b-green' : 'b-e';
+          return `<span class="badge ${color}">${k}: ${v > 0 ? '+' : ''}${val}%</span>`;
+        }).join('')}
+        ${p.passive ? Object.entries(p.passive).map(([k, v]) => {
+          const val = (v / 10 * lv).toFixed(2);
+          return `<span class="badge b-blue">${k}: ${val}% (Passiva)</span>`;
+        }).join('') : ''}
+      </div>
+
+      <div class="sec">Ascensão (Máximo)</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap">
+        ${Object.entries(p.asc).map(([k, v]) => {
+          const color = v > 0 ? 'b-teal' : 'b-coral';
+          return `<span class="badge ${color}">${k}: ${v > 0 ? '+' : ''}${v}%</span>`;
+        }).join('')}
+        ${p.asc_passive ? Object.entries(p.asc_passive).map(([k, v]) => {
+          return `<span class="badge b-w">${k}: ${v}% (Passiva)</span>`;
+        }).join('') : ''}
+      </div>
+    </div>`;
+  });
+  
+  document.getElementById('pets-body').innerHTML = html;
+}
+
 renderSim();
 </script>
 </body>
