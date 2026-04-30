@@ -2,7 +2,7 @@
 <html lang="pt-BR" data-theme="dark">
 <head>
   <meta charset="UTF-8">
-  <title>GDD — Anime Chaos Simulator (Global)</title>
+  <title>GDD — Anime Chaos Simulator (Full Restoration)</title>
   <style>
     :root { --primary: #6366f1; --bg: #000; --text: #fff; --border: rgba(255,255,255,0.1); }
     [data-theme="light"] { --bg: #f8fafc; --text: #000; --border: rgba(0,0,0,0.1); }
@@ -11,38 +11,16 @@
   </style>
 </head>
 <body>
-  <h1>Documentação — Versão Global</h1>
-
-  <section>
-    <h2>1. Raids (Mínimo p/ Solo)</h2>
-    <div class="card">
-      <ul>
-        <li><b>Raid 1:</b> Mínimo Solo Lv 20</li>
-        <li><b>Raid 2:</b> Mínimo Solo Lv 50</li>
-        <li><b>Raid 3:</b> Mínimo Solo Lv 90</li>
-      </ul>
-    </div>
-  </section>
-
-  <section>
-    <h2>2. Tower Defense (Efeitos)</h2>
-    <div class="card">
-      <p>Unidades agora possuem efeitos de monitoramento:</p>
-      <ul>
-        <li><b>Bleed:</b> Dano contínuo por segundo.</li>
-        <li><b>Triple:</b> Três ataques simultâneos.</li>
-        <li><b>Haki Rei:</b> Dano massivo e atordoamento.</li>
-      </ul>
-    </div>
-  </section>
-
-  <section>
-    <h2>3. Suporte Multi-Linguagem</h2>
-    <div class="card">
-      <p>O sistema agora suporta <b>Português (PT)</b> e <b>Inglês (EN)</b> com persistência de escolha via localStorage.</p>
-    </div>
-  </section>
-
+  <h1>GDD Oficial — Restauração de Dados</h1>
+  <div class="card">
+    <p>Todos os sistemas foram restaurados e sincronizados:</p>
+    <ul>
+      <li><b>Passivas:</b> Linhas de Sorte, Força, Gold e Especiais (Golem, Egoist, etc.) organizadas por raridade.</li>
+      <li><b>Tower Defense:</b> Monitoramento de todos os upgrades com efeitos ativos (Bleed, Haki, etc.).</li>
+      <li><b>Simulador:</b> Opção Shiny (+50%) e Testador de Passiva Global.</li>
+      <li><b>Localização:</b> Suporte total para Português e Inglês.</li>
+    </ul>
+  </div>
   <script>
     const savedTheme = localStorage.getItem('theme') || 'dark';
     document.documentElement.setAttribute('data-theme', savedTheme);

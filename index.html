@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Anime Chaos Simulator — GDD & Stats</title>
+  <title>Anime Chaos Simulator — Oficial</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@500;700;900&display=swap" rel="stylesheet">
@@ -13,8 +13,8 @@
     [data-theme="light"] { --bg-dark: #f8fafc; --bg-card: rgba(255, 255, 255, 0.9); --text-main: #0f172a; --text-dim: #475569; --border: rgba(0, 0, 0, 0.1); --nav-bg: rgba(255, 255, 255, 0.9); --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1); }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
-    body { background-color: var(--bg-dark); color: var(--text-main); font-family: var(--font-main); line-height: 1.6; transition: background-color 0.3s, color 0.3s; }
-    .reveal { opacity: 0; transform: translateY(30px); transition: 1s cubic-bezier(0.1, 0, 0.3, 1); }
+    body { background-color: var(--bg-dark); color: var(--text-main); font-family: var(--font-main); line-height: 1.6; overflow-x: hidden; transition: background-color 0.3s, color 0.3s; }
+    .reveal { opacity: 0; transform: translateY(40px); transition: 1s cubic-bezier(0.1, 0, 0.3, 1); }
     .reveal.active { opacity: 1; transform: translateY(0); }
     .glass { background: var(--bg-card); backdrop-filter: blur(12px); border: 1px solid var(--border); box-shadow: var(--shadow); }
     nav { position: fixed; top: 0; left: 0; right: 0; min-height: 70px; z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 0.5rem 1rem; border-bottom: 1px solid var(--border); background: var(--nav-bg); backdrop-filter: blur(15px); }
@@ -36,9 +36,8 @@
     .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
     .card { border-radius: var(--radius); padding: 1.5rem; transition: 0.3s ease; border: 1px solid var(--border); }
     .badge { font-size: 10px; padding: 4px 10px; border-radius: 20px; font-weight: 700; text-transform: uppercase; display: inline-block; }
-    .b-gray { background: #334155; } .b-blue { background: #3b82f6; } .b-purple { background: #a855f7; }
-    .b-yellow { background: #eab308; color: #000; } .b-red { background: #ef4444; } .b-black { background: #000; border: 1px solid #333; }
-    .b-teal { background: #14b8a6; color: #fff; }
+    .b-gray { background: #334155; color: #fff; } .b-blue { background: #3b82f6; color: #fff; } .b-purple { background: #a855f7; color: #fff; }
+    .b-yellow { background: #eab308; color: #000; } .b-red { background: #ef4444; color: #fff; } .b-black { background: #000; color: #fff; border: 1px solid #333; }
     .ctrl-box { margin-bottom: 1.5rem; display: flex; gap: 1rem; flex-wrap: wrap; padding: 1.2rem; border-radius: var(--radius); }
     .ctrl-item { flex: 1; min-width: 130px; }
     .ctrl-item label { display: block; font-size: 9px; color: var(--text-dim); margin-bottom: 6px; font-weight: 800; text-transform: uppercase; }
@@ -46,14 +45,17 @@
     .btn { background: var(--primary); color: #fff; border: none; padding: 10px 18px; border-radius: 10px; font-weight: 700; cursor: pointer; transition: 0.2s; font-size: 12px; }
     .btn:hover { background: var(--secondary); transform: scale(1.03); }
     .row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
-    .rl { width: 70px; font-size: 9px; color: var(--text-dim); font-weight: 700; }
+    .rl { width: 75px; font-size: 9px; color: var(--text-dim); font-weight: 700; }
     .bwrap { flex: 1; height: 6px; background: rgba(0,0,0,0.1); border-radius: 3px; overflow: hidden; }
     .bar { height: 100%; border-radius: 3px; transition: width 0.6s ease; }
     .rv { width: 45px; text-align: right; font-size: 9px; font-weight: 800; }
     .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(12px); z-index: 2000; display: none; align-items: center; justify-content: center; padding: 1.5rem; }
-    .modal-content { width: 100%; max-width: 800px; max-height: 90vh; overflow-y: auto; padding: 2.5rem; border-radius: 20px; position: relative; }
-    .close-modal { position: absolute; top: 1.5rem; right: 1.5rem; background: none; border: none; color: var(--text-main); font-size: 2rem; cursor: pointer; }
-    .res-card { background: rgba(0,0,0,0.2); padding: 12px; border-radius: 10px; margin-bottom: 10px; border-left: 3px solid var(--primary); display: flex; justify-content: space-between; align-items: center; }
+    .modal-content { width: 100%; max-width: 850px; max-height: 90vh; overflow-y: auto; padding: 2.5rem; border-radius: 20px; position: relative; }
+    .close-modal { position: absolute; top: 1rem; right: 1.5rem; background: none; border: none; color: var(--text-main); font-size: 2.5rem; cursor: pointer; }
+    .res-card { background: rgba(0,0,0,0.2); padding: 12px; border-radius: 10px; margin-bottom: 8px; border-left: 3px solid var(--primary); display: flex; justify-content: space-between; align-items: center; }
+    .rarity-group { margin-bottom: 2.5rem; }
+    .rarity-header { display: flex; align-items: center; gap: 10px; margin-bottom: 1rem; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+    .rarity-header h3 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-dim); }
     footer { padding: 4rem 2rem; text-align: center; border-top: 1px solid var(--border); color: var(--text-dim); font-size: 0.8rem; }
     .lang-btn { background: none; border: 1px solid var(--border); color: var(--text-dim); padding: 4px 10px; border-radius: 5px; cursor: pointer; font-size: 10px; font-weight: 700; }
     .lang-btn.active { color: var(--primary); border-color: var(--primary); }
@@ -84,67 +86,72 @@
 
 <header class="hero">
   <h1 class="reveal" id="hero-title">ANIME CHAOS</h1>
-  <p class="reveal" id="hero-desc">Simulador definitivo de balanceamento e multiverso anime.</p>
+  <p class="reveal" id="hero-desc">Multiverso definitivo de balanceamento e estratégia.</p>
 </header>
 
 <main>
+  <!-- SIMULADOR -->
   <section id="sim" class="reveal">
     <div class="section-header"><h2 id="title-sim">Estatísticas</h2></div>
     <div class="ctrl-box glass">
-      <div class="ctrl-item"><label id="lbl-lv">Nível</label><select id="slv" onchange="renderSim()"><option value="1">Lv 1</option><option value="5">Lv 5</option><option value="10">Lv 10</option><option value="50">Lv 50</option><option value="100">Lv 100</option></select></div>
+      <div class="ctrl-item"><label id="lbl-lv">Nível</label><select id="slv" onchange="renderSim()"><option value="1">Lv 1</option><option value="10">Lv 10</option><option value="50">Lv 50</option><option value="100">Lv 100</option></select></div>
       <div class="ctrl-item"><label id="lbl-ph">Fase</label><select id="sph" onchange="renderSim()"><option value="base">Base</option><option value="raid">Ascensão</option></select></div>
-      <div class="ctrl-item"><label id="lbl-sh">Shiny</label><select id="sshiny" onchange="renderSim()"><option value="normal">Não</option><option value="shiny">Sim (+50%)</option></select></div>
+      <div class="ctrl-item"><label id="lbl-sh">Shiny</label><select id="sshiny" onchange="renderSim()"><option value="normal">Normal</option><option value="shiny">Shiny (+50%)</option></select></div>
       <div class="ctrl-item" style="display:flex; align-items:flex-end;"><button class="btn" onclick="openTester()" id="btn-tester">🧪 Testar Passiva</button></div>
     </div>
     <div id="sim-body" class="card-grid"></div>
   </section>
 
-  <section id="passives" class="reveal"><div class="section-header"><h2 id="title-pass">Passivas</h2></div><div id="pass-display" class="card-grid"></div></section>
-  <section id="td" class="reveal"><div class="section-header"><h2 id="title-td">Tower Defense</h2></div><div class="ctrl-box glass"><div class="ctrl-item"><label id="lbl-unit">Unidade</label><select id="tdchar" onchange="renderTD()"><option value="0">Nami</option><option value="1">Koby</option><option value="2">Usopp</option><option value="3">Buggy</option><option value="4">Zoro</option><option value="5">Luffy</option><option value="6">Shanks</option></select></div></div><div id="td-body" class="card-grid"></div></section>
+  <!-- PASSIVAS -->
+  <section id="passives" class="reveal">
+    <div class="section-header"><h2 id="title-pass">Passivas</h2></div>
+    <div id="passives-container"></div>
+  </section>
+
+  <!-- TOWER DEFENSE -->
+  <section id="td" class="reveal">
+    <div class="section-header"><h2 id="title-td">Tower Defense</h2></div>
+    <div class="ctrl-box glass"><div class="ctrl-item"><label id="lbl-unit">Unidade</label><select id="tdchar" onchange="renderTD()"><option value="0">Nami</option><option value="1">Koby</option><option value="2">Usopp</option><option value="3">Buggy</option><option value="4">Zoro</option><option value="5">Luffy</option><option value="6">Shanks</option></select></div></div>
+    <div id="td-body" class="card-grid"></div>
+  </section>
+
+  <!-- RAIDS -->
   <section id="raids" class="reveal"><div class="section-header"><h2 id="title-raids">Raids</h2></div><div id="raids-body" class="card-grid"></div></section>
+
+  <!-- PETS -->
   <section id="pets" class="reveal"><div class="section-header"><h2 id="title-pets">Pets</h2></div><div class="ctrl-box glass"><div class="ctrl-item"><label id="lbl-plv">Nível Pet</label><select id="plv" onchange="renderPets()"><option value="1">Lv 1</option><option value="5">Lv 5</option><option value="10">Lv 10</option></select></div></div><div id="pets-body" class="card-grid"></div></section>
+
+  <!-- NPCS -->
   <section id="npcs" class="reveal"><div class="section-header"><h2 id="title-boss">Bosses</h2></div><div id="npcs-body" class="card-grid"></div></section>
+
+  <!-- ROLL -->
+  <section id="roll" class="reveal"><div class="section-header"><h2>Roll</h2></div><div id="roll-body" class="card"></div></section>
 </main>
 
+<!-- TESTER MODAL -->
 <div id="tester-modal" class="modal-overlay" onclick="if(event.target===this) closeTester()">
   <div class="modal-content glass">
     <button class="close-modal" onclick="closeTester()">&times;</button>
-    <h2 id="modal-title">Simulador de Testes</h2>
+    <h2 id="modal-title" style="margin-bottom:1.5rem">Simulador de Passivas</h2>
     <div id="modal-initial">
-      <div class="ctrl-box" style="padding:0; background:none"><div class="ctrl-item"><input type="text" id="t-search" placeholder="Filtre as passivas..." oninput="renderTesterCards()"></div></div>
+      <div class="ctrl-box" style="padding:0; background:none"><input type="text" id="t-search" placeholder="Filtrar..." oninput="renderTesterCards()"></div>
       <div id="t-cards" style="display:grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap:10px;"></div>
     </div>
     <div id="modal-results" style="display:none">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem"><h3 id="res-pass-name">Passiva</h3><button class="btn" onclick="backToSelection()" id="btn-back">🔄 Voltar</button></div>
+      <div style="display:flex; justify-content:space-between; margin-bottom:1.5rem"><h3 id="res-pass-name"></h3><button class="btn" onclick="backToSelection()" id="btn-back">🔄 Voltar</button></div>
       <div id="res-list"></div>
     </div>
   </div>
 </div>
 
+<footer><p>&copy; 2026 Anime Chaos Simulator.</p></footer>
+
 <script>
-// LANG SYSTEM
 let lang = 'pt';
 const TXT = {
   pt: { hero:'ANIME CHAOS', desc:'O multiverso de simulação definitiva.', sim:'Simulador', td:'Tower Defense', rpg:'RPG', l_lv:'Nível', l_ph:'Fase', l_sh:'Shiny', b_test:'🧪 Testar Passiva', t_pass:'Passivas', t_raids:'Raids', t_pets:'Pets', t_boss:'Bosses', m_solo:'Mín. Solo:', b_back:'🔄 Voltar', res_dmg:'Dano:' },
   en: { hero:'ANIME CHAOS', desc:'The ultimate simulation multiverse.', sim:'Simulator', td:'Tower Defense', rpg:'RPG', l_lv:'Level', l_ph:'Phase', l_sh:'Shiny', b_test:'🧪 Test Passive', t_pass:'Passives', t_raids:'Raids', t_pets:'Pets', t_boss:'Bosses', m_solo:'Min. Solo:', b_back:'🔄 Back', res_dmg:'Damage:' }
 };
-function setLang(l){ lang=l; localStorage.setItem('lang',l); updateUI(); }
-function updateUI(){
-  const t=TXT[lang]; document.getElementById('hero-title').innerText=t.hero; document.getElementById('hero-desc').innerText=t.desc;
-  document.getElementById('nav-sim').innerText=t.sim; document.getElementById('nav-td').innerText=t.td; document.getElementById('nav-rpg').innerText=t.rpg;
-  document.getElementById('lbl-lv').innerText=t.l_lv; document.getElementById('lbl-ph').innerText=t.l_ph; document.getElementById('lbl-sh').innerText=t.l_sh;
-  document.getElementById('btn-tester').innerText=t.b_test; document.getElementById('title-sim').innerText=t.sim; document.getElementById('title-pass').innerText=t.t_pass;
-  document.getElementById('title-td').innerText=t.td; document.getElementById('title-raids').innerText=t.t_raids; document.getElementById('title-pets').innerText=t.t_pets;
-  document.getElementById('title-boss').innerText=t.t_boss; document.getElementById('btn-back').innerText=t.b_back;
-  document.getElementById('btn-pt').classList.toggle('active',lang==='pt'); document.getElementById('btn-en').classList.toggle('active',lang==='en');
-  init();
-}
-
-// THEME & REVEAL
-function toggleTheme() { const h=document.documentElement; const n=h.getAttribute('data-theme')==='dark'?'light':'dark'; h.setAttribute('data-theme',n); localStorage.setItem('theme',n); }
-const savedTheme = localStorage.getItem('theme') || 'dark'; document.documentElement.setAttribute('data-theme', savedTheme);
-const savedLang = localStorage.getItem('lang') || 'pt'; lang=savedLang;
-const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if(entry.isIntersecting) entry.target.classList.add('active'); }); }, { threshold: 0.1 });
 
 // ===================== DATA =====================
 const SIM = [
@@ -158,22 +165,22 @@ const SIM = [
 ];
 
 const PASSIVES = [
-  { n:'Rich 1', r:'Comum', b:1, g:1.1 }, { n:'Rich 2', r:'Raro', b:1, g:1.2 }, { n:'Rich 3', r:'Épico', b:1, g:1.3 },
-  { n:'Sortudo 1', r:'Comum', b:1, l:1.05 }, { n:'Sortudo 2', r:'Raro', b:1, l:1.1 }, { n:'Sortudo 3', r:'Épico', b:1, l:1.15 },
-  { n:'Céus', r:'Mítico', b:1, l:1.3 }, { n:'Soldado 1', r:'Comum', b:1.05 }, { n:'Soldado 2', r:'Raro', b:1.1 }, { n:'Soldado 3', r:'Épico', b:1.15 },
-  { n:'Golem', r:'Épico', b:1.6 }, { n:'Heart Good', r:'Lendário', b:0, buff:1.5 }, { n:'The Egoist', r:'Lendário', b:2.0 },
-  { n:'Assassin', r:'Mítico', b:0.5 }, { n:'Blessing', r:'Mítico', b:1.5 }
+  { n:'Rich 1', r:'Comum', b:1, g:1.1, desc:'+10% Gold' }, { n:'Rich 2', r:'Raro', b:1, g:1.2, desc:'+20% Gold' }, { n:'Rich 3', r:'Épico', b:1, g:1.3, desc:'+30% Gold' },
+  { n:'Sortudo 1', r:'Comum', b:1, l:1.05, desc:'+5% Luck' }, { n:'Sortudo 2', r:'Raro', b:1, l:1.1, desc:'+10% Luck' }, { n:'Sortudo 3', r:'Épico', b:1, l:1.15, desc:'+15% Luck' },
+  { n:'Céus', r:'Mítico', b:1, l:1.3, desc:'+30% Luck' }, { n:'Soldado 1', r:'Comum', b:1.05, desc:'+5% Force' }, { n:'Soldado 2', r:'Raro', b:1.1, desc:'+10% Force' }, { n:'Soldado 3', r:'Épico', b:1.15, desc:'+15% Force' },
+  { n:'Golem', r:'Épico', b:1.6, desc:'+60% Dmg, -35% Atk Spd' }, { n:'Heart Good', r:'Lendário', b:0, buff:1.5, desc:'-100% Dmg, +50% Buff' }, { n:'The Egoist', r:'Lendário', b:2.0, desc:'+100% Dmg, +5x Mult' },
+  { n:'Assassin', r:'Mítico', b:0.5, ult:3.0, desc:'-50% Dmg, +200% Mult' }, { n:'Blessing', r:'Mítico', b:1.5, desc:'+50% All Stats, -1 Hit' }
 ];
 
 const TD = [
-  { name:'Nami', rc:'b-gray', ups:[{n:0,d:50,r:15,c:1,p:300,e:'—'},{n:1,d:80,r:15,c:1,p:600,e:'—'},{n:2,d:100,r:15,c:1,p:900,e:'—'},{n:3,d:120,r:15,c:1.5,p:1200,e:'Gold'}] },
-  { name:'Usopp', rc:'b-blue', ups:[{n:0,d:110,r:35,c:1,p:500,e:'Bleed'},{n:1,d:150,r:40,c:1.5,p:800,e:'Bleed'},{n:3,d:220,r:60,c:2,p:1700,e:'Triple'}] },
-  { name:'Shanks', rc:'b-black', ups:[{n:0,d:650,r:35,c:3,p:1000,e:'Bleed'},{n:6,d:3100,r:50,c:8,p:10000,e:'Haki Rei'}] }
+  { name:'Nami', rc:'b-gray', ups:[{n:0,d:50,r:15,c:1,e:'—'},{n:1,d:80,r:15,c:1,e:'—'},{n:3,d:120,r:15,c:1.5,e:'Gold'}] },
+  { name:'Usopp', rc:'b-blue', ups:[{n:0,d:110,r:35,c:1,e:'Bleed'},{n:1,d:150,r:40,c:1,e:'Bleed'},{n:3,d:220,r:60,c:2,e:'Triple'}] },
+  { name:'Shanks', rc:'b-black', ups:[{n:0,d:650,r:35,c:3,e:'Bleed'},{n:6,d:3100,r:50,c:8,e:'Haki Rei'}] }
 ];
 
 const RAIDS = [ { n:'Grand Line', hp:55000, solo:20 }, { n:'Paraíso', hp:100000, solo:50 }, { n:'Novo Mundo', hp:250000, solo:90 } ];
-const NPCS = [ { n:'Alvida', hp:8000 }, { n:'Buggy Boss', hp:25000 }, { n:'Boss Secreto', hp:150000 } ];
-const PETS = [ { n:'Nami', b:5 }, { n:'Zoro', b:5 }, { n:'Luffy', b:3 }, { name:'Shanks', b:4 } ];
+const PETS = [ { n:'Nami', b:5 }, { n:'Zoro', b:5 }, { n:'Shanks', b:4 } ];
+const NPCS = [ { n:'Alvida', hp:8000 }, { n:'Boss Secreto', hp:150000 } ];
 
 // RENDERS
 function renderSim(){
@@ -181,14 +188,27 @@ function renderSim(){
   const mD=( (SIM[6].raid.dmg) + (SIM[6].gR)*Math.pow(lv-1,1.15) ) * (s?1.5:1);
   let h=''; SIM.forEach(c=>{
     const d=( (ph==='raid'?c.raid.dmg:c.base.dmg) + (ph==='raid'?c.gR:c.gB)*Math.pow(lv-1,1.15) ) * (s?1.5:1);
-    h+=`<div class="card glass"><b>${c.name}</b><br><small>Dano: ${d.toFixed(1)}</small><div class="bwrap" style="margin-top:8px"><div class="bar" style="width:${(d/mD)*100}%; background:${c.col}"></div></div></div>`;
+    h+=`<div class="card glass"><b>${c.name}</b> <span class="badge ${c.rc}">${c.rar}</span><br><small>${d.toFixed(1)} DMG</small><div class="bwrap" style="margin-top:8px"><div class="bar" style="width:${(d/mD)*100}%; background:${c.col}"></div></div></div>`;
   });
   document.getElementById('sim-body').innerHTML=h;
 }
 
+function renderPassives(){
+  const container = document.getElementById('passives-container'); container.innerHTML = '';
+  const rarities = ['Comum','Raro','Épico','Lendário','Mítico'];
+  rarities.forEach(r => {
+    const group = PASSIVES.filter(p => p.r === r);
+    if(group.length > 0){
+      let h = `<div class="rarity-group"><div class="rarity-header"><span class="badge ${r==='Comum'?'b-gray':r==='Raro'?'b-blue':r==='Épico'?'b-purple':r==='Lendário'?'b-yellow':'b-red'}">${r}</span><h3>${r}</h3></div><div class="card-grid">`;
+      group.forEach(p => { h += `<div class="card glass"><b>${p.n}</b><br><small>${p.desc}</small></div>`; });
+      container.innerHTML += h + `</div></div>`;
+    }
+  });
+}
+
 function renderTD(){
   const ci=document.getElementById('tdchar').value; const c=TD[ci]||TD[0];
-  let h=''; c.ups.forEach(u=>{ h+=`<div class="card glass"><b>UP ${u.n}</b><br><small>D: ${u.d} | R: ${u.r} | C: ${u.c}s</small><br><span class="badge b-blue" style="font-size:8px; margin-top:5px">${u.e}</span></div>`; });
+  let h=''; c.ups.forEach(u=>{ h+=`<div class="card glass"><b>UP ${u.n}</b><br><small>D: ${u.d} | R: ${u.r}</small><br><span class="badge b-blue" style="margin-top:5px">${u.e}</span></div>`; });
   document.getElementById('td-body').innerHTML=h;
 }
 
@@ -199,37 +219,44 @@ function renderRaids(){
 
 function renderPets(){
   const lv=document.getElementById('plv').value; let h='';
-  PETS.forEach(p=>{ h+=`<div class="card glass"><b>${p.n||p.name}</b><br><span class="badge b-green">Buff: ${(p.b/10*lv).toFixed(1)}%</span></div>`; });
+  PETS.forEach(p=>{ h+=`<div class="card glass"><b>${p.n}</b><br><span class="badge b-green">+${(p.b/10*lv).toFixed(1)}%</span></div>`; });
   document.getElementById('pets-body').innerHTML=h;
 }
 
-function renderNpcs(){ let h=''; NPCS.forEach(n=>{ h+=`<div class="card glass"><b>${n.n}</b><br><small>HP: ${n.hp.toLocaleString()}</small></div>`; }); document.getElementById('npcs-body').innerHTML=h; }
+function renderRoll(){ document.getElementById('roll-body').innerHTML=`Mítico: <b style="color:var(--secondary)">0.035%</b>`; }
 
-// TESTER
+// MODAL
 function openTester(){ document.getElementById('tester-modal').style.display='flex'; renderTesterCards(); }
 function closeTester(){ document.getElementById('tester-modal').style.display='none'; }
 function backToSelection(){ document.getElementById('modal-initial').style.display='block'; document.getElementById('modal-results').style.display='none'; }
-
 function renderTesterCards(){
   const q=document.getElementById('t-search').value.toLowerCase(); const c=document.getElementById('t-cards'); c.innerHTML='';
   PASSIVES.filter(p=>p.n.toLowerCase().includes(q)).forEach(p=>{
     const d=document.createElement('div'); d.className='card glass'; d.style.padding='10px'; d.style.cursor='pointer'; d.style.fontSize='10px';
-    d.innerHTML=`<b>${p.n}</b><br><small>${p.r}</small>`; d.onclick=()=>showResults(p); c.appendChild(d);
+    d.innerHTML=`<b>${p.n}</b>`; d.onclick=()=>showResults(p); c.appendChild(d);
   });
 }
-
 function showResults(p){
   document.getElementById('modal-initial').style.display='none'; document.getElementById('modal-results').style.display='block';
   document.getElementById('res-pass-name').innerText=p.n; let h='';
-  SIM.forEach(c=>{
-    const base=c.base.dmg; const fin=base*p.b;
-    h+=`<div class="res-card"><span><b>${c.name}</b></span><span>${TXT[lang].res_dmg} <b style="color:var(--primary)">${fin.toFixed(1)}</b></span></div>`;
-  });
+  SIM.forEach(c=>{ const fin=c.base.dmg*p.b; h+=`<div class="res-card"><b>${c.name}</b> <span>${TXT[lang].res_dmg} ${fin.toFixed(1)}</span></div>`; });
   document.getElementById('res-list').innerHTML=h;
 }
 
-function init(){ renderSim(); renderTD(); renderRaids(); renderPets(); renderNpcs(); document.querySelectorAll('.reveal').forEach(el=>observer.observe(el)); }
-updateUI();
+function setLang(l){ lang=l; localStorage.setItem('lang',l); updateUI(); }
+function updateUI(){
+  const t=TXT[lang]; document.getElementById('hero-title').innerText=t.hero; document.getElementById('hero-desc').innerText=t.desc;
+  document.getElementById('nav-sim').innerText=t.sim; document.getElementById('nav-td').innerText=t.td; document.getElementById('nav-rpg').innerText=t.rpg;
+  document.getElementById('lbl-lv').innerText=t.l_lv; document.getElementById('lbl-ph').innerText=t.l_ph; document.getElementById('lbl-sh').innerText=t.l_sh;
+  document.getElementById('btn-tester').innerText=t.b_test; document.getElementById('title-sim').innerText=t.sim; document.getElementById('title-pass').innerText=t.t_pass;
+  document.getElementById('title-td').innerText=t.td; document.getElementById('title-raids').innerText=t.t_raids; document.getElementById('title-pets').innerText=t.t_pets;
+  document.getElementById('title-boss').innerText=t.t_boss; document.getElementById('btn-back').innerText=t.b_back;
+  document.getElementById('btn-pt').classList.toggle('active',lang==='pt'); document.getElementById('btn-en').classList.toggle('active',lang==='en');
+  renderSim(); renderPassives(); renderTD(); renderRaids(); renderPets(); renderRoll();
+}
+
+function init(){ document.querySelectorAll('.reveal').forEach(el=>new IntersectionObserver((ent)=>{ent.forEach(e=>{if(e.isIntersecting)e.target.classList.add('active')})},{threshold:0.1}).observe(el)); updateUI(); }
+init();
 </script>
 </body>
 </html>
