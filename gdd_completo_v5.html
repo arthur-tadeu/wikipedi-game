@@ -464,13 +464,13 @@
 <script>
 // ===================== DADOS SIMULADOR =====================
 const SIM = [
-  { name:'Nami',  rar:'Common',  rc:'b-gray',  arch:'Farmer/Air',   ac:'b-teal', col:'#85B7EB', ct:'#0C447C', base:{dmg:3,mult:3.5,hits:10},raid:{dmg:5,mult:4,hits:8}, growType:'exp', growBase:0.3, growRaid:0.3 },
-  { name:'Koby',  rar:'Common',  rc:'b-gray',  arch:'Suporte/Canhão',ac:'b-blue', col:'#B5D4F4', ct:'#0C447C', base:{dmg:5,mult:2,hits:5},raid:{dmg:8,mult:3,hits:4}, growType:'exp', growBase:0.3, growRaid:0.3 },
-  { name:'Usopp', rar:'Raro',    rc:'b-blue',  arch:'Assassino',    ac:'b-e', col:'#9FE1CB', ct:'#085041', base:{dmg:1,mult:16,hits:3},raid:{dmg:1.5,mult:18,hits:3}, growType:'exp', growBase:0.5, growRaid:0.5 },
-  { name:'Buggy', rar:'Épico',   rc:'b-coral', arch:'DPS Estável',  ac:'b-w', col:'#F5C4B3', ct:'#712B13', base:{dmg:8,mult:4.5,hits:10},raid:{dmg:12,mult:5,hits:8}, growType:'exp', growBase:0.8, growRaid:1.2 },
-  { name:'Zoro',  rar:'Lendário',rc:'b-w',     arch:'Solo Bleed',   ac:'b-coral', col:'#EF9F27', ct:'#633806', base:{dmg:14,mult:3.5,hits:4},raid:{dmg:20,mult:5,hits:4}, growType:'exp', growBase:1.0, growRaid:2.0 },
-  { name:'Luffy', rar:'Mítico',  rc:'b-purple',arch:'Canhão Pesado', ac:'b-purple', col:'#CECBF6', ct:'#3C3489', base:{dmg:18,mult:12,hits:22},raid:{dmg:21,mult:15,hits:22}, growType:'exp', growBase:1.8, growRaid:2.1 },
-  { name:'Shanks',rar:'Secreto', rc:'b-e',     arch:'O Mais Forte', ac:'b-e', col:'#F0997B', ct:'#712B13', base:{dmg:25,mult:10,hits:8},raid:{dmg:50,mult:20,hits:14}, growType:'exp', growBase:2.5, growRaid:5.0 },
+  { name:'Nami',  rar:'Common',  rc:'b-gray',  arch:'Farmer/Air',   ac:'b-teal', col:'#85B7EB', ct:'#0C447C', base:{dmg:3,mult:3.5,hits:10},raid:{dmg:5,mult:4,hits:8}, growType:'exp', growBase:0.405, growRaid:0.6075 },
+  { name:'Koby',  rar:'Common',  rc:'b-gray',  arch:'Suporte/Canhão',ac:'b-blue', col:'#B5D4F4', ct:'#0C447C', base:{dmg:5,mult:2,hits:5},raid:{dmg:8,mult:3,hits:4}, growType:'exp', growBase:0.405, growRaid:0.6075 },
+  { name:'Usopp', rar:'Raro',    rc:'b-blue',  arch:'Assassino',    ac:'b-e', col:'#9FE1CB', ct:'#085041', base:{dmg:1,mult:16,hits:3},raid:{dmg:1.5,mult:18,hits:3}, growType:'exp', growBase:0.675, growRaid:1.0125 },
+  { name:'Buggy', rar:'Épico',   rc:'b-coral', arch:'DPS Estável',  ac:'b-w', col:'#F5C4B3', ct:'#712B13', base:{dmg:8,mult:4.5,hits:10},raid:{dmg:12,mult:5,hits:8}, growType:'exp', growBase:1.08, growRaid:2.43 },
+  { name:'Zoro',  rar:'Lendário',rc:'b-w',     arch:'Solo Bleed',   ac:'b-coral', col:'#EF9F27', ct:'#633806', base:{dmg:14,mult:3.5,hits:4},raid:{dmg:20,mult:5,hits:4}, growType:'exp', growBase:1.35, growRaid:4.05 },
+  { name:'Luffy', rar:'Mítico',  rc:'b-purple',arch:'Canhão Pesado', ac:'b-purple', col:'#CECBF6', ct:'#3C3489', base:{dmg:18,mult:12,hits:22},raid:{dmg:21,mult:15,hits:22}, growType:'exp', growBase:2.43, growRaid:4.2525 },
+  { name:'Shanks',rar:'Secreto', rc:'b-e',     arch:'O Mais Forte', ac:'b-e', col:'#F0997B', ct:'#712B13', base:{dmg:25,mult:10,hits:8},raid:{dmg:50,mult:20,hits:14}, growType:'exp', growBase:3.375, growRaid:10.125 },
 ];
 
 function dmgLv(c,phase,lv){
