@@ -2,98 +2,50 @@
 <html lang="pt-BR" data-theme="dark">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Anime Chaos Simulator — Oficial GDD</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@500;700;900&display=swap" rel="stylesheet">
+  <title>Anime Chaos Simulator — GDD Passivas</title>
   <style>
-    :root {
-      --primary: #6366f1;
-      --secondary: #f43f5e;
-      --accent: #fbbf24;
-      --bg-dark: #000000;
-      --bg-card: rgba(15, 15, 20, 0.9);
-      --text-main: #f8fafc;
-      --text-dim: #94a3b8;
-      --border: rgba(255, 255, 255, 0.08);
-    }
-
-    [data-theme="light"] {
-      --bg-dark: #f8fafc;
-      --bg-card: rgba(255, 255, 255, 0.9);
-      --text-main: #0f172a;
-      --text-dim: #475569;
-      --border: rgba(0, 0, 0, 0.1);
-    }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background: var(--bg-dark); color: var(--text-main); font-family: 'Inter', sans-serif; line-height: 1.6; }
-
-    /* REVEAL ANIMATION */
-    .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
-    .reveal.active { opacity: 1; transform: translateY(0); }
-
-    nav { position: fixed; top: 0; left: 0; right: 0; min-height: 70px; z-index: 1000; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.8); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); }
-    .nav-inner { width: 100%; max-width: 1200px; display: flex; justify-content: space-between; align-items: center; padding: 0 2rem; }
-
-    .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; padding: 2rem; max-width: 1200px; margin: 0 auto; }
-    .card { background: var(--bg-card); border: 1px solid var(--border); padding: 1.5rem; border-radius: 12px; }
-
-    .badge { font-size: 10px; padding: 4px 10px; border-radius: 20px; font-weight: 700; text-transform: uppercase; display: inline-block; }
-    .b-blue { background: #3b82f6; color: #fff; }
-    .b-red { background: #ef4444; color: #fff; }
-    .b-black { background: #000; color: #fff; border: 1px solid #333; }
+    :root { --primary: #6366f1; --secondary: #f43f5e; --bg-dark: #000; --text-main: #fff; --border: rgba(255,255,255,0.1); }
+    [data-theme="light"] { --bg-dark: #f8fafc; --text-main: #000; --border: rgba(0,0,0,0.1); }
+    body { background: var(--bg-dark); color: var(--text-main); font-family: sans-serif; }
+    .section { max-width: 1000px; margin: 0 auto; padding: 2rem; }
+    .rarity-header { border-bottom: 2px solid var(--border); margin: 2rem 0 1rem; padding-bottom: 5px; text-transform: uppercase; font-size: 0.8rem; opacity: 0.7; }
+    .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1rem; }
+    .card { border: 1px solid var(--border); padding: 1rem; border-radius: 8px; background: rgba(255,255,255,0.02); }
+    .badge { font-size: 9px; padding: 2px 8px; border-radius: 10px; text-transform: uppercase; font-weight: bold; }
+    .b-gray { background: #334155; } .b-blue { background: #3b82f6; } .b-purple { background: #a855f7; }
+    .b-yellow { background: #eab308; color: #000; } .b-red { background: #ef4444; } .b-black { background: #000; border: 1px solid #333; }
   </style>
 </head>
 <body>
+<div class="section">
+  <h1>Hierarquia de Passivas</h1>
 
-<nav>
-  <div class="nav-inner">
-    <div style="font-weight:900; color:var(--primary)">ANIME CHAOS SIMULATOR GDD</div>
-    <button onclick="toggleTheme()" style="background:none; border:1px solid var(--border); color:var(--text-main); padding:5px 10px; border-radius:20px; cursor:pointer">🌓 Tema</button>
+  <div class="rarity-header">Common</div>
+  <div class="card-grid"><div class="card"><b>Rich 1</b><br><small>+10% Gold</small></div></div>
+
+  <div class="rarity-header">Rare</div>
+  <div class="card-grid">
+    <div class="card"><b>Rich 2</b><br><small>+20% Gold</small></div>
+    <div class="card"><b>Golem</b><br><small>+60% Dmg, -35% Atk Spd</small></div>
   </div>
-</nav>
 
-<header style="height:40vh; display:flex; align-items:center; justify-content:center; text-align:center; padding-top:70px">
-  <h1 class="reveal">Documento de Passivas</h1>
-</header>
+  <div class="rarity-header">Epic</div>
+  <div class="card-grid"><div class="card"><b>Rich 3</b><br><small>+30% Gold</small></div></div>
 
-<main>
-  <section class="reveal">
-    <div class="card-grid">
-      <!-- PASSIVAS -->
-      <div class="card">
-        <h3>Heart Good</h3>
-        <span class="badge b-blue">Suporte</span>
-        <p style="font-size:12px; color:var(--text-dim); margin-top:10px">-100% Dano Próprio | +50% Dano Aliados.</p>
-      </div>
-      <div class="card">
-        <h3>Golem</h3>
-        <span class="badge b-red">Tanque</span>
-        <p style="font-size:12px; color:var(--text-dim); margin-top:10px">+60% Dano | -35% Atk Speed.</p>
-      </div>
-      <div class="card">
-        <h3>The Egoist</h3>
-        <span class="badge b-black">Solo</span>
-        <p style="font-size:12px; color:var(--text-dim); margin-top:10px">-70% Dano Aliados | +100% Dano Próprio | +5x Mult.</p>
-      </div>
-    </div>
-  </section>
-</main>
+  <div class="rarity-header">Legendary</div>
+  <div class="card-grid">
+    <div class="card"><b>Heart Good</b><br><small>-100% Dmg, +50% Buff Others</small></div>
+    <div class="card"><b>The Egoist</b><br><small>-70% Others, +100% Self, +5x Mult</small></div>
+  </div>
 
-<script>
-function toggleTheme() {
-  const h=document.documentElement; const n=h.getAttribute('data-theme')==='dark'?'light':'dark';
-  h.setAttribute('data-theme',n); localStorage.setItem('theme',n);
-}
-const savedTheme = localStorage.getItem('theme') || 'dark';
-document.documentElement.setAttribute('data-theme', savedTheme);
+  <div class="rarity-header">Mythic</div>
+  <div class="card-grid">
+    <div class="card"><b>Assassin</b><br><small>-50% Dmg, +200% Ult, +50% Atk Spd</small></div>
+    <div class="card"><b>Blessing</b><br><small>+50% All Stats, -1 Hit</small></div>
+  </div>
 
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => { if(entry.isIntersecting) entry.target.classList.add('active'); });
-}, { threshold: 0.1 });
-document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-</script>
+  <div class="rarity-header">Secret</div>
+  <div class="card-grid"><div class="card" style="opacity:0.5; font-style:italic">Vazio</div></div>
+</div>
 </body>
 </html>

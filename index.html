@@ -46,32 +46,17 @@
       color: var(--text-main);
       font-family: var(--font-main);
       line-height: 1.6;
-      overflow-x: hidden;
       transition: background-color 0.3s, color 0.3s;
     }
 
-    /* REVEAL ANIMATION */
     .reveal {
       opacity: 0;
-      transform: translateY(40px);
-      transition: all 1s cubic-bezier(0.1, 0, 0.3, 1);
+      transform: translateY(30px);
+      transition: all 0.8s cubic-bezier(0.1, 0, 0.3, 1);
     }
     .reveal.active {
       opacity: 1;
       transform: translateY(0);
-    }
-
-    .bg-glow {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-      background-image: 
-        radial-gradient(circle at 0% 0%, rgba(99, 102, 241, 0.05) 0%, transparent 50%),
-        radial-gradient(circle at 100% 100%, rgba(244, 63, 94, 0.05) 0%, transparent 50%);
-      pointer-events: none;
     }
 
     .glass {
@@ -84,9 +69,7 @@
 
     nav {
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
+      top: 0; left: 0; right: 0;
       min-height: 70px;
       z-index: 1000;
       display: flex;
@@ -107,42 +90,18 @@
       gap: 0.5rem;
     }
 
-    .nav-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      width: 100%;
-    }
-
-    .logo {
-      font-family: var(--font-title);
-      font-weight: 900;
-      font-size: 1.2rem;
-      background: linear-gradient(to right, var(--primary), var(--secondary));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
+    .nav-top { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+    .logo { font-family: var(--font-title); font-weight: 900; font-size: 1.2rem; background: linear-gradient(to right, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
     .nav-links { display: flex; gap: 1.5rem; justify-content: center; width: 100%; flex-wrap: wrap; }
     .nav-item { position: relative; }
-    .nav-link {
-      text-decoration: none;
-      color: var(--text-dim);
-      font-size: 0.85rem;
-      font-weight: 700;
-      transition: all 0.2s;
-      padding: 8px 0;
-      display: block;
-      cursor: pointer;
-      text-transform: uppercase;
-    }
+    .nav-link { text-decoration: none; color: var(--text-dim); font-size: 0.85rem; font-weight: 700; transition: all 0.2s; padding: 8px 0; display: block; cursor: pointer; text-transform: uppercase; }
     .nav-link:hover { color: var(--primary); }
     .nav-link.active { color: var(--primary); }
 
     .sub-nav {
       position: absolute;
-      top: 100%;
-      left: 50%;
+      top: 100%; left: 50%;
       transform: translateX(-50%) translateY(10px);
       background: var(--bg-card);
       border: 1px solid var(--border);
@@ -151,47 +110,27 @@
       min-width: 180px;
       display: flex;
       flex-direction: column;
-      gap: 2px;
-      opacity: 0;
-      visibility: hidden;
+      opacity: 0; visibility: hidden;
       transition: all 0.25s ease;
     }
-
     .nav-item:hover .sub-nav { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
-
-    .sub-nav a {
-      text-decoration: none;
-      color: var(--text-dim);
-      font-size: 0.75rem;
-      font-weight: 600;
-      padding: 10px 15px;
-      border-radius: 6px;
-      transition: all 0.2s;
-    }
+    .sub-nav a { text-decoration: none; color: var(--text-dim); font-size: 0.75rem; font-weight: 600; padding: 10px 15px; border-radius: 6px; transition: all 0.2s; }
     .sub-nav a:hover { background: var(--primary); color: #fff; }
 
-    .theme-toggle {
-      background: none;
-      border: 1px solid var(--border);
-      color: var(--text-main);
-      padding: 8px;
-      border-radius: 50%;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+    .hero { height: 80vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 2rem; padding-top: 100px; }
+    .hero h1 { font-family: var(--font-title); font-size: clamp(2.5rem, 8vw, 5rem); font-weight: 900; line-height: 1; margin-bottom: 1rem; text-transform: uppercase; background: linear-gradient(to bottom, var(--text-main), var(--text-dim)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .hero p { font-size: 1rem; color: var(--text-dim); max-width: 500px; }
 
-    .hero { height: 90vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 2rem; }
-    .hero h1 { font-family: var(--font-title); font-size: clamp(2.5rem, 8vw, 5.5rem); font-weight: 900; line-height: 1; margin-bottom: 1rem; text-transform: uppercase; background: linear-gradient(to bottom, var(--text-main), var(--text-dim)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    .hero p { font-size: 1rem; color: var(--text-dim); max-width: 500px; margin-bottom: 2rem; }
-
-    section { padding: 80px 1.5rem; max-width: 1100px; margin: 0 auto; }
+    section { padding: 60px 1.5rem; max-width: 1100px; margin: 0 auto; }
     .section-header { margin-bottom: 2.5rem; text-align: center; }
-    .section-header h2 { font-family: var(--font-title); font-size: 2rem; font-weight: 900; text-transform: uppercase; }
+    .section-header h2 { font-family: var(--font-title); font-size: 2.2rem; font-weight: 900; text-transform: uppercase; }
+
+    .rarity-group { margin-bottom: 3rem; }
+    .rarity-header { display: flex; align-items: center; gap: 10px; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
+    .rarity-header h3 { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-dim); }
 
     .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
-    .card { border-radius: var(--radius); padding: 1.5rem; transition: all 0.3s ease; }
+    .card { border-radius: var(--radius); padding: 1.5rem; transition: all 0.3s ease; border: 1px solid var(--border); }
     .card:hover { transform: translateY(-5px); border-color: var(--primary); }
 
     .badge { font-size: 10px; padding: 4px 10px; border-radius: 20px; font-weight: 700; text-transform: uppercase; display: inline-block; }
@@ -202,24 +141,16 @@
     .b-red { background: #ef4444; color: #fff; }
     .b-black { background: #000; color: #fff; border: 1px solid #333; }
     .b-green { background: #22c55e; color: #fff; }
-    .b-teal { background: #14b8a6; color: #fff; }
 
     .ctrl-box { margin-bottom: 2rem; display: flex; gap: 1rem; flex-wrap: wrap; padding: 1rem; border-radius: var(--radius); }
     .ctrl-item { flex: 1; min-width: 140px; }
-    .ctrl-item label { display: block; font-size: 10px; color: var(--text-dim); margin-bottom: 6px; font-weight: 800; }
     select { width: 100%; background: var(--bg-dark); border: 1px solid var(--border); color: var(--text-main); padding: 12px; border-radius: 10px; font-size: 13px; }
 
     .row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
     .rl { width: 80px; font-size: 10px; color: var(--text-dim); font-weight: 700; }
     .bwrap { flex: 1; height: 8px; background: rgba(0,0,0,0.1); border-radius: 4px; overflow: hidden; }
-    [data-theme="dark"] .bwrap { background: rgba(255,255,255,0.05); }
     .bar { height: 100%; border-radius: 4px; transition: width 0.6s ease; }
     .rv { width: 50px; text-align: right; font-size: 10px; font-weight: 800; }
-
-    .tbl-container { overflow-x: auto; border-radius: 10px; border: 1px solid var(--border); }
-    table { width: 100%; border-collapse: collapse; font-size: 13px; }
-    th { text-align: left; padding: 15px; background: rgba(0,0,0,0.02); color: var(--text-dim); font-size: 10px; }
-    td { padding: 15px; border-top: 1px solid var(--border); }
 
     footer { padding: 4rem 2rem; text-align: center; border-top: 1px solid var(--border); color: var(--text-dim); font-size: 0.8rem; }
 
@@ -232,13 +163,11 @@
 </head>
 <body>
 
-<div class="bg-glow"></div>
-
 <nav class="glass">
   <div class="nav-inner">
     <div class="nav-top">
       <div class="logo">ANIME CHAOS SIMULATOR</div>
-      <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn" title="Alternar Tema">🌓</button>
+      <button onclick="toggleTheme()" style="background:none; border:1px solid var(--border); color:var(--text-main); padding:8px; border-radius:50%; cursor:pointer">🌓</button>
     </div>
     <div class="nav-links">
       <div class="nav-item">
@@ -248,8 +177,6 @@
           <a href="#passives">Passivas</a>
           <a href="#roll">Sistema de Roll</a>
           <a href="#prog">Tabela de XP</a>
-          <a href="#eco">Economia</a>
-          <a href="#npcs">NPCs & Bosses</a>
         </div>
       </div>
       <div class="nav-item">
@@ -257,115 +184,100 @@
         <div class="sub-nav">
           <a href="#td">Defesa Principal</a>
           <a href="#raids">Raids</a>
-          <a href="#asc">Ascensão</a>
-        </div>
-      </div>
-      <div class="nav-item">
-        <span class="nav-link">RPG</span>
-        <div class="sub-nav">
-          <a href="#rpg">Exploração</a>
-          <a href="#pets">Pets</a>
-          <a href="#com">Comunidade</a>
         </div>
       </div>
     </div>
   </div>
 </nav>
 
-<header id="hero" class="hero">
-  <h1 class="reveal">ANIME CHAOS<br>SIMULATOR</h1>
-  <p class="reveal">O simulador definitivo de multiverse anime. Colete heróis, evolua suas habilidades e domine o Tower Defense!</p>
+<header class="hero">
+  <h1 class="reveal">ANIME CHAOS</h1>
+  <p class="reveal">Sistema de Passivas por Raridade</p>
 </header>
 
 <main>
   <!-- SIMULADOR -->
   <section id="sim" class="reveal">
-    <div class="section-header">
-      <h2>Estatísticas</h2>
-      <p class="subtitle">Simulador de combate e progressão de heróis.</p>
-    </div>
+    <div class="section-header"><h2>Estatísticas</h2></div>
     <div class="ctrl-box glass">
-      <div class="ctrl-item">
-        <label>Nível</label>
-        <select id="slv" onchange="renderSim()">
-          <option value="1">Lv 1</option><option value="5">Lv 5</option><option value="10">Lv 10</option>
-        </select>
-      </div>
-      <div class="ctrl-item">
-        <label>Fase</label>
-        <select id="sph" onchange="renderSim()">
-          <option value="base">Base</option><option value="raid">Ascensão</option>
-        </select>
-      </div>
-      <div class="ctrl-item">
-        <label>Variante</label>
-        <select id="sshiny" onchange="renderSim()">
-          <option value="normal">Normal</option><option value="shiny">Shiny (+50%)</option>
-        </select>
-      </div>
+      <div class="ctrl-item"><select id="slv" onchange="renderSim()"><option value="1">Lv 1</option><option value="5">Lv 5</option><option value="10">Lv 10</option></select></div>
+      <div class="ctrl-item"><select id="sph" onchange="renderSim()"><option value="base">Base</option><option value="raid">Ascensão</option></select></div>
     </div>
     <div id="sim-body" class="card-grid"></div>
   </section>
 
-  <!-- PASSIVAS -->
+  <!-- PASSIVAS ORGANIZADAS -->
   <section id="passives" class="reveal">
     <div class="section-header">
-      <h2>Passivas (Modo Simulador)</h2>
-      <p class="subtitle">Efeitos exclusivos para maximizar seu desempenho.</p>
+      <h2>Passivas do Simulador</h2>
+      <p class="subtitle">Organizadas por Raridade</p>
     </div>
-    <div class="card-grid">
-      <div class="card glass">
-        <h3>Rich (C/R/E)</h3>
-        <span class="badge b-yellow">Gold</span>
-        <p style="font-size:12px; color:var(--text-dim); margin-top:8px">+10%, +20% ou +30% de Gold extra.</p>
-      </div>
-      <div class="card glass">
-        <h3>Assassin</h3>
-        <span class="badge b-red">Ultra</span>
-        <p style="font-size:12px; color:var(--text-dim); margin-top:8px">Dano Base -50% | Mult Ult +200% | Atk Speed +50% | Hits p/ Ult +5.</p>
-      </div>
-      <div class="card glass">
-        <h3>Blessing</h3>
-        <span class="badge b-teal">Divina</span>
-        <p style="font-size:12px; color:var(--text-dim); margin-top:8px">+50% Dano, Speed e Atk Speed | -1 hit p/ Ult.</p>
-      </div>
-      <!-- NOVAS PASSIVAS -->
-      <div class="card glass" style="border-left:4px solid var(--primary)">
-        <h3>Heart Good</h3>
-        <span class="badge b-blue">Suporte</span>
-        <p style="font-size:12px; color:var(--text-dim); margin-top:8px"><b>Dano Próprio:</b> <span style="color:var(--secondary)">Removido (0)</span><br><b>Buff p/ Aliados:</b> <span style="color:var(--primary)">+50% de Dano</span></p>
-      </div>
-      <div class="card glass" style="border-left:4px solid var(--accent)">
-        <h3>Golem</h3>
-        <span class="badge b-yellow">Pesado</span>
-        <p style="font-size:12px; color:var(--text-dim); margin-top:8px"><b>Dano Total:</b> <span style="color:var(--accent)">+60%</span><br><b>Atk Speed:</b> <span style="color:var(--secondary)">-35%</span></p>
-      </div>
-      <div class="card glass" style="border-left:4px solid var(--secondary)">
-        <h3>The Egoist</h3>
-        <span class="badge b-black">Solo</span>
-        <p style="font-size:12px; color:var(--text-dim); margin-top:8px"><b>Time:</b> <span style="color:var(--secondary)">-70% Dano de outros</span><br><b>Dano Próprio:</b> <span style="color:var(--primary)">+100%</span><br><b>Especial:</b> <span style="color:var(--accent)">+5x Multiplicador</span></p>
+
+    <!-- COMUM -->
+    <div class="rarity-group">
+      <div class="rarity-header"><span class="badge b-gray">Comum</span><h3>Estágio Inicial</h3></div>
+      <div class="card-grid">
+        <div class="card glass"><h3>Rich 1</h3><p style="font-size:12px; color:var(--text-dim)">+10% Gold extra por cada recurso coletado.</p></div>
       </div>
     </div>
+
+    <!-- RARO -->
+    <div class="rarity-group">
+      <div class="rarity-header"><span class="badge b-blue">Raro</span><h3>Especialização</h3></div>
+      <div class="card-grid">
+        <div class="card glass"><h3>Rich 2</h3><p style="font-size:12px; color:var(--text-dim)">+20% Gold extra por cada recurso coletado.</p></div>
+        <div class="card glass"><h3>Golem</h3><p style="font-size:12px; color:var(--text-dim)"><b>Dano:</b> <span style="color:var(--primary)">+60%</span><br><b>Atk Speed:</b> <span style="color:var(--secondary)">-35%</span></p></div>
+      </div>
+    </div>
+
+    <!-- EPICO -->
+    <div class="rarity-group">
+      <div class="rarity-header"><span class="badge b-purple">Épico</span><h3>Elite</h3></div>
+      <div class="card-grid">
+        <div class="card glass"><h3>Rich 3</h3><p style="font-size:12px; color:var(--text-dim)">+30% Gold extra por cada recurso coletado.</p></div>
+      </div>
+    </div>
+
+    <!-- LENDARIO -->
+    <div class="rarity-group">
+      <div class="rarity-header"><span class="badge b-yellow">Lendário</span><h3>Poder Supremo</h3></div>
+      <div class="card-grid">
+        <div class="card glass"><h3>Heart Good</h3><p style="font-size:12px; color:var(--text-dim)"><b>Dano:</b> <span style="color:var(--secondary)">Zero</span><br><b>Buff Aliados:</b> <span style="color:var(--primary)">+50% Dano Global</span></p></div>
+        <div class="card glass"><h3>The Egoist</h3><p style="font-size:12px; color:var(--text-dim)"><b>Aliados:</b> <span style="color:var(--secondary)">-70% Dano</span><br><b>Próprio:</b> <span style="color:var(--primary)">+100% Dano</span><br><b>Especial:</b> <span style="color:var(--accent)">+5x Multiplicador</span></p></div>
+      </div>
+    </div>
+
+    <!-- MITICO -->
+    <div class="rarity-group">
+      <div class="rarity-header"><span class="badge b-red">Mítico</span><h3>Divindade</h3></div>
+      <div class="card-grid">
+        <div class="card glass"><h3>Assassin</h3><p style="font-size:12px; color:var(--text-dim)">Dano -50% | Mult Ult +200% | Atk Speed +50% | Hits +5.</p></div>
+        <div class="card glass"><h3>Blessing</h3><p style="font-size:12px; color:var(--text-dim)">+50% em Todos os Stats | -1 Hit p/ Ult.</p></div>
+      </div>
+    </div>
+
+    <!-- SECRETO -->
+    <div class="rarity-group">
+      <div class="rarity-header"><span class="badge b-black">Secreto</span><h3>Mítico Desconhecido</h3></div>
+      <div class="card-grid">
+        <div class="card glass" style="text-align:center; padding: 3rem;">
+          <p style="color:var(--text-dim)">Nenhuma passiva secreta descoberta ainda...</p>
+        </div>
+      </div>
+    </div>
+
   </section>
 
   <!-- TOWER DEFENSE -->
   <section id="td" class="reveal">
     <div class="section-header"><h2>Defesa Principal</h2></div>
-    <div class="ctrl-box glass"><div class="ctrl-item"><select id="tdchar" onchange="renderTD()"><option value="0">Nami</option><option value="1">Koby</option><option value="2">Usopp</option><option value="3">Buggy</option><option value="4">Zoro</option><option value="5">Luffy</option><option value="6">Shanks</option></select></div></div>
-    <div id="td-body"></div>
+    <div id="td-body" class="card-grid"></div>
   </section>
-
-  <!-- SEÇÕES ADICIONAIS -->
-  <section id="raids" class="reveal"><div class="section-header"><h2>Raids</h2></div><div id="raids-body" class="card-grid"></div></section>
-  <section id="npcs" class="reveal"><div class="section-header"><h2>NPCs & Bosses</h2></div><div id="npcs-body" class="card-grid"></div></section>
-  <section id="asc" class="reveal"><div class="section-header"><h2>Ascensão</h2></div><div id="asc-body"></div></section>
-  <section id="pets" class="reveal"><div class="section-header"><h2>Pets</h2></div><div id="pets-body" class="card-grid"></div></section>
 </main>
 
 <footer><p>&copy; 2026 Anime Chaos Simulator.</p></footer>
 
 <script>
-// THEME LOGIC
 function toggleTheme() {
   const h=document.documentElement; const n=h.getAttribute('data-theme')==='dark'?'light':'dark';
   h.setAttribute('data-theme',n); localStorage.setItem('theme',n);
@@ -373,71 +285,28 @@ function toggleTheme() {
 const savedTheme = localStorage.getItem('theme') || 'dark';
 document.documentElement.setAttribute('data-theme', savedTheme);
 
-// REVEAL LOGIC
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => { if(entry.isIntersecting) entry.target.classList.add('active'); });
 }, { threshold: 0.1 });
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-// ===================== DADOS SIMULADOR =====================
+// ===================== SIMULADOR =====================
 const SIM = [
-  { name:'Nami',  rar:'Common',  rc:'b-gray',   arch:'Farmer/Air',   ac:'b-teal', col:'#85B7EB', ct:'#0C447C', base:{dmg:3,mult:3.5,hits:10},raid:{dmg:5,mult:4,hits:8}, growType:'exp', growBase:0.405, growRaid:0.6075 },
-  { name:'Koby',  rar:'Common',  rc:'b-gray',   arch:'Suporte/Canhão',ac:'b-blue', col:'#B5D4F4', ct:'#0C447C', base:{dmg:5,mult:2,hits:5},raid:{dmg:8,mult:3,hits:4}, growType:'exp', growBase:0.405, growRaid:0.6075 },
-  { name:'Usopp', rar:'Raro',    rc:'b-blue',   arch:'Assassino',    ac:'b-red',  col:'#9FE1CB', ct:'#085041', base:{dmg:1,mult:16,hits:3},raid:{dmg:1.5,mult:18,hits:3}, growType:'exp', growBase:0.675, growRaid:1.0125 },
-  { name:'Buggy', rar:'Épico',   rc:'b-purple', arch:'DPS Estável',  ac:'b-yellow',col:'#F5C4B3', ct:'#712B13', base:{dmg:8,mult:4.5,hits:10},raid:{dmg:12,mult:5,hits:8}, growType:'exp', growBase:1.08, growRaid:2.43 },
-  { name:'Zoro',  rar:'Lendário',rc:'b-yellow', arch:'Solo Bleed',   ac:'b-red',  col:'#EF9F27', ct:'#633806', base:{dmg:14,mult:3.5,hits:4},raid:{dmg:20,mult:5,hits:4}, growType:'exp', growBase:1.35, growRaid:4.05 },
-  { name:'Luffy', rar:'Mítico',  rc:'b-red',    arch:'Canhão Pesado', ac:'b-purple',col:'#CECBF6', ct:'#3C3489', base:{dmg:18,mult:12,hits:22},raid:{dmg:21,mult:15,hits:22}, growType:'exp', growBase:2.43, growRaid:4.2525 },
-  { name:'Shanks',rar:'Secreto', rc:'b-black',  arch:'O Mais Forte', ac:'b-red',  col:'#F0997B', ct:'#712B13', base:{dmg:25,mult:10,hits:8},raid:{dmg:50,mult:20,hits:14}, growType:'exp', growBase:3.375, growRaid:10.125 },
+  { name:'Shanks', rar:'Secreto', rc:'b-black', col:'#F0997B', base:{dmg:25,mult:10}, raid:{dmg:50,mult:20}, gB:3.375, gR:10.125 },
+  { name:'Luffy', rar:'Mítico', rc:'b-red', col:'#CECBF6', base:{dmg:18,mult:12}, raid:{dmg:21,mult:15}, gB:2.43, gR:4.2525 },
 ];
-
-function dmgLv(c,phase,lv){
-  const s=phase==='raid'?c.raid:c.base; const g=phase==='raid'?c.growRaid:c.growBase;
-  return +(s.dmg + g*Math.pow(lv-1,1.15)).toFixed(2);
-}
-function ultLv(c,phase,lv){ return +(dmgLv(c,phase,lv)*(phase==='raid'?c.raid.mult:c.base.mult)).toFixed(1); }
 
 function renderSim(){
   const lv=parseInt(document.getElementById('slv').value);
   const phase=document.getElementById('sph').value;
-  const isShiny=document.getElementById('sshiny').value === 'shiny';
-  const maxD=dmgLv(SIM[6],phase,lv) * (isShiny ? 1.5 : 1);
   let html='';
   SIM.forEach(c=>{
-    let d=dmgLv(c,phase,lv), u=ultLv(c,phase,lv); if(isShiny) { d *= 1.5; u *= 1.5; }
-    const dw=(d/maxD)*100, uw=(u/(maxD*10))*100;
-    html+=`<div class="card glass">
-      <div style="display:flex;justify-content:space-between;margin-bottom:12px"><span style="font-weight:700;">${c.name}</span><span class="badge ${c.rc}">${c.rar}</span></div>
-      <div class="row"><span class="rl">Dano base</span><div class="bwrap"><div class="bar" style="width:${dw}%;background:${c.col};"></div></div><span class="rv">${d.toFixed(1)}</span></div>
-      <div class="row"><span class="rl">Dano ult</span><div class="bwrap"><div class="bar" style="width:${uw}%;background:var(--accent);"></div></div><span class="rv">${u.toFixed(1)}</span></div>
-      <div style="display:flex; gap:6px; margin-top:12px"><span class="badge b-gray">${c.base.mult}x B</span><span class="badge b-blue">${c.raid.mult}x R</span></div>
-    </div>`;
+    const d=+( (phase==='raid'?c.raid.dmg:c.base.dmg) + (phase==='raid'?c.gR:c.gB)*Math.pow(lv-1,1.15) ).toFixed(2);
+    html+=`<div class="card glass"><b>${c.name}</b> <span class="badge ${c.rc}">${c.rar}</span><br><small>Dano: ${d}</small></div>`;
   });
   document.getElementById('sim-body').innerHTML=html;
 }
-
-// ===================== TOWER DEFENSE =====================
-const TD = [
-  { name:'Nami', rar:'Common', rc:'b-gray', col:'#85B7EB', qt:8, max_up:3, ups:[ { n:0, range:15, cd:1, dmg:50, price:300, e:'—', farm:60 }, { n:3, range:15, cd:1.5, dmg:120, price:1200, e:'Gold Extra', farm:150 } ] },
-  { name:'Shanks', rar:'Secreto', rc:'b-black', col:'#F0997B', qt:1, max_up:6, ups:[ { n:6, range:50, cd:8, dmg:3100, price:10000, e:'Haki do Rei' } ] },
-];
-
-function renderTD(){
-  const ci=parseInt(document.getElementById('tdchar').value); const c=TD[ci]||TD[0];
-  let html=`<div class="card glass" style="margin-bottom:1.5rem"><div style="display:flex;justify-content:space-between;align-items:center;"><h3>${c.name}</h3><div style="display:flex;gap:6px"><span class="badge ${c.rc}">${c.rar}</span></div></div></div><div class="card-grid">`;
-  c.ups.forEach(u=>{ html+=`<div class="card glass"><div style="font-weight:800; font-size:11px; margin-bottom:8px">UPGRADE ${u.n}</div><div style="display:flex; gap:5px; flex-wrap:wrap"><span class="badge b-gray">R ${u.range}</span><span class="badge b-blue">CD ${u.cd}s</span><span class="badge b-green">D ${u.dmg}</span></div></div>`; });
-  document.getElementById('td-body').innerHTML=html+`</div>`;
-}
-
-// ===================== PETS =====================
-const PETS = [ { name: 'Nami', buff: { 'Money': 5 }, asc: { 'Money': 7.5 } }, { name: 'Shanks', buff: { 'Sword': 4 }, asc: { 'Sword Def': -8 } } ];
-function renderPets() {
-  const lv = parseInt(document.getElementById('plv').value); let html = '';
-  PETS.forEach(p => { html += `<div class="card glass"><div style="display:flex;justify-content:space-between;margin-bottom:1rem"><b>${p.name}</b><span class="badge b-purple">Lv ${lv}</span></div><div style="display:flex;gap:5px;flex-wrap:wrap"><span class="badge b-green">${(p.buff.Money||p.buff.Sword/10*lv).toFixed(1)}% Buff</span></div></div>`; });
-  document.getElementById('pets-body').innerHTML = html;
-}
-
-function init() { renderSim(); renderTD(); renderPets(); }
-init();
+renderSim();
 </script>
 </body>
 </html>
