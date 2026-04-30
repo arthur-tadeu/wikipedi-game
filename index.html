@@ -13,11 +13,11 @@
       --primary-glow: rgba(99, 102, 241, 0.5);
       --secondary: #f43f5e;
       --accent: #fbbf24;
-      --bg-dark: #0f172a;
-      --bg-card: rgba(30, 41, 59, 0.7);
+      --bg-dark: #000000;
+      --bg-card: rgba(15, 15, 20, 0.9);
       --text-main: #f8fafc;
       --text-dim: #94a3b8;
-      --border: rgba(255, 255, 255, 0.1);
+      --border: rgba(255, 255, 255, 0.08);
       --radius: 12px;
       --font-main: 'Inter', sans-serif;
       --font-title: 'Outfit', sans-serif;
@@ -29,8 +29,8 @@
     body {
       background-color: var(--bg-dark);
       background-image: 
-        radial-gradient(circle at 0% 0%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
-        radial-gradient(circle at 100% 100%, rgba(244, 63, 94, 0.15) 0%, transparent 50%);
+        radial-gradient(circle at 0% 0%, rgba(99, 102, 241, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 100% 100%, rgba(244, 63, 94, 0.05) 0%, transparent 50%);
       background-attachment: fixed;
       color: var(--text-main);
       font-family: var(--font-main);
@@ -119,10 +119,10 @@
       line-height: 0.9;
       margin-bottom: 1.5rem;
       text-transform: uppercase;
-      background: linear-gradient(to bottom, #fff, #94a3b8);
+      background: linear-gradient(to bottom, #fff, #475569);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      filter: drop-shadow(0 0 30px var(--primary-glow));
+      filter: drop-shadow(0 0 30px rgba(255,255,255,0.1));
     }
 
     .hero p {
@@ -197,13 +197,13 @@
       letter-spacing: 0.5px;
       display: inline-block;
     }
-    .b-gray { background: #334155; color: #cbd5e1; }
-    .b-blue { background: rgba(37, 99, 235, 0.2); color: #60a5fa; border: 1px solid rgba(37, 99, 235, 0.3); }
-    .b-coral { background: rgba(244, 63, 94, 0.2); color: #fb7185; border: 1px solid rgba(244, 63, 94, 0.3); }
-    .b-green { background: rgba(34, 197, 94, 0.2); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.3); }
-    .b-purple { background: rgba(147, 51, 234, 0.2); color: #c084fc; border: 1px solid rgba(147, 51, 234, 0.3); }
-    .b-w { background: rgba(251, 191, 36, 0.2); color: #fbbf24; border: 1px solid rgba(251, 191, 36, 0.3); }
-    .b-e { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3); }
+    .b-gray { background: #1e293b; color: #94a3b8; }
+    .b-blue { background: rgba(37, 99, 235, 0.1); color: #60a5fa; border: 1px solid rgba(37, 99, 235, 0.2); }
+    .b-coral { background: rgba(244, 63, 94, 0.1); color: #fb7185; border: 1px solid rgba(244, 63, 94, 0.2); }
+    .b-green { background: rgba(34, 197, 94, 0.1); color: #4ade80; border: 1px solid rgba(34, 197, 94, 0.2); }
+    .b-purple { background: rgba(147, 51, 234, 0.1); color: #c084fc; border: 1px solid rgba(147, 51, 234, 0.2); }
+    .b-w { background: rgba(251, 191, 36, 0.1); color: #fbbf24; border: 1px solid rgba(251, 191, 36, 0.2); }
+    .b-e { background: rgba(239, 68, 68, 0.1); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.2); }
 
     /* CONTROLS */
     .ctrl-box {
@@ -211,7 +211,7 @@
       display: flex;
       gap: 1rem;
       flex-wrap: wrap;
-      background: rgba(0,0,0,0.2);
+      background: rgba(0,0,0,0.4);
       padding: 1rem;
       border-radius: var(--radius);
     }
@@ -219,7 +219,7 @@
     .ctrl-item label { display: block; font-size: 11px; color: var(--text-dim); margin-bottom: 5px; text-transform: uppercase; }
     select {
       width: 100%;
-      background: #1e293b;
+      background: #000;
       border: 1px solid var(--border);
       color: #fff;
       padding: 10px;
@@ -231,19 +231,19 @@
     /* STATS BARS */
     .row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
     .rl { width: 90px; font-size: 11px; color: var(--text-dim); }
-    .bwrap { flex: 1; height: 12px; background: #0f172a; border-radius: 6px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05); }
-    .bar { height: 100%; border-radius: 6px; transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+    .bwrap { flex: 1; height: 10px; background: #000; border-radius: 5px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05); }
+    .bar { height: 100%; border-radius: 5px; transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
     .rv { width: 45px; text-align: right; font-size: 11px; font-weight: 700; color: #fff; }
 
     /* TABLES */
     .tbl-container { overflow-x: auto; margin-top: 1rem; border-radius: 8px; border: 1px solid var(--border); }
-    table { width: 100%; border-collapse: collapse; font-size: 13px; background: rgba(0,0,0,0.1); }
-    th { text-align: left; padding: 12px; background: rgba(255,255,255,0.03); color: var(--text-dim); font-size: 11px; text-transform: uppercase; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; background: rgba(0,0,0,0.3); }
+    th { text-align: left; padding: 12px; background: rgba(255,255,255,0.02); color: var(--text-dim); font-size: 11px; text-transform: uppercase; }
     td { padding: 12px; border-top: 1px solid var(--border); }
 
     /* SPECIALS */
-    .obs { padding: 1rem; border-radius: 8px; border-left: 4px solid var(--accent); background: rgba(251, 191, 36, 0.05); color: var(--accent); font-size: 12px; margin: 1rem 0; }
-    .info { padding: 1rem; border-radius: 8px; border-left: 4px solid var(--primary); background: rgba(99, 102, 241, 0.05); color: var(--primary); font-size: 12px; margin: 1rem 0; }
+    .obs { padding: 1rem; border-radius: 8px; border-left: 4px solid var(--accent); background: rgba(251, 191, 36, 0.02); color: var(--accent); font-size: 12px; margin: 1rem 0; }
+    .info { padding: 1rem; border-radius: 8px; border-left: 4px solid var(--primary); background: rgba(99, 102, 241, 0.02); color: var(--primary); font-size: 12px; margin: 1rem 0; }
 
     footer { padding: 4rem 2rem; text-align: center; border-top: 1px solid var(--border); color: var(--text-dim); font-size: 0.9rem; }
 
@@ -464,13 +464,13 @@
 <script>
 // ===================== DADOS SIMULADOR =====================
 const SIM = [
-  { name:'Nami',  rar:'Common',  rc:'b-gray',  arch:'Farmer/Air',   ac:'b-teal', col:'#85B7EB', ct:'#0C447C', base:{dmg:3,mult:3.5,hits:10},raid:{dmg:5,mult:4,hits:8}, growType:'exp', growBase:0.3, growRaid:0.3, note:'Crescimento exponencial — fraca, mas escala.' },
-  { name:'Koby',  rar:'Common',  rc:'b-gray',  arch:'Suporte/Canhão',ac:'b-blue', col:'#B5D4F4', ct:'#0C447C', base:{dmg:5,mult:2,hits:5},raid:{dmg:8,mult:3,hits:4}, growType:'exp', growBase:0.3, growRaid:0.3, note:'Canhão no simulador.' },
-  { name:'Usopp', rar:'Raro',    rc:'b-blue',  arch:'Assassino',    ac:'b-e', col:'#9FE1CB', ct:'#085041', base:{dmg:1,mult:16,hits:3},raid:{dmg:1.5,mult:18,hits:3}, growType:'exp', growBase:0.5, growRaid:0.5, note:'Dano base mínimo. Ult absurda.' },
-  { name:'Buggy', rar:'Épico',   rc:'b-coral', arch:'DPS Estável',  ac:'b-w', col:'#F5C4B3', ct:'#712B13', base:{dmg:8,mult:4.5,hits:10},raid:{dmg:12,mult:5,hits:8}, growType:'exp', growBase:0.8, growRaid:1.2, note:'DPS constante.' },
-  { name:'Zoro',  rar:'Lendário',rc:'b-w',     arch:'Solo Bleed',   ac:'b-coral', col:'#EF9F27', ct:'#633806', base:{dmg:14,mult:3.5,hits:4},raid:{dmg:20,mult:5,hits:4}, growType:'exp', growBase:1.0, growRaid:2.0, note:'Bleed contínuo.' },
-  { name:'Luffy', rar:'Mítico',  rc:'b-purple',arch:'Canhão Pesado', ac:'b-purple', col:'#CECBF6', ct:'#3C3489', base:{dmg:18,mult:12,hits:22},raid:{dmg:21,mult:15,hits:22}, growType:'exp', growBase:1.8, growRaid:2.1, note:'22 hits para ultar.' },
-  { name:'Shanks',rar:'Secreto', rc:'b-e',     arch:'O Mais Forte', ac:'b-e', col:'#F0997B', ct:'#712B13', base:{dmg:25,mult:10,hits:8},raid:{dmg:50,mult:20,hits:14}, growType:'exp', growBase:2.5, growRaid:5.0, note:'Bleed + Stun.' },
+  { name:'Nami',  rar:'Common',  rc:'b-gray',  arch:'Farmer/Air',   ac:'b-teal', col:'#85B7EB', ct:'#0C447C', base:{dmg:3,mult:3.5,hits:10},raid:{dmg:5,mult:4,hits:8}, growType:'exp', growBase:0.3, growRaid:0.3 },
+  { name:'Koby',  rar:'Common',  rc:'b-gray',  arch:'Suporte/Canhão',ac:'b-blue', col:'#B5D4F4', ct:'#0C447C', base:{dmg:5,mult:2,hits:5},raid:{dmg:8,mult:3,hits:4}, growType:'exp', growBase:0.3, growRaid:0.3 },
+  { name:'Usopp', rar:'Raro',    rc:'b-blue',  arch:'Assassino',    ac:'b-e', col:'#9FE1CB', ct:'#085041', base:{dmg:1,mult:16,hits:3},raid:{dmg:1.5,mult:18,hits:3}, growType:'exp', growBase:0.5, growRaid:0.5 },
+  { name:'Buggy', rar:'Épico',   rc:'b-coral', arch:'DPS Estável',  ac:'b-w', col:'#F5C4B3', ct:'#712B13', base:{dmg:8,mult:4.5,hits:10},raid:{dmg:12,mult:5,hits:8}, growType:'exp', growBase:0.8, growRaid:1.2 },
+  { name:'Zoro',  rar:'Lendário',rc:'b-w',     arch:'Solo Bleed',   ac:'b-coral', col:'#EF9F27', ct:'#633806', base:{dmg:14,mult:3.5,hits:4},raid:{dmg:20,mult:5,hits:4}, growType:'exp', growBase:1.0, growRaid:2.0 },
+  { name:'Luffy', rar:'Mítico',  rc:'b-purple',arch:'Canhão Pesado', ac:'b-purple', col:'#CECBF6', ct:'#3C3489', base:{dmg:18,mult:12,hits:22},raid:{dmg:21,mult:15,hits:22}, growType:'exp', growBase:1.8, growRaid:2.1 },
+  { name:'Shanks',rar:'Secreto', rc:'b-e',     arch:'O Mais Forte', ac:'b-e', col:'#F0997B', ct:'#712B13', base:{dmg:25,mult:10,hits:8},raid:{dmg:50,mult:20,hits:14}, growType:'exp', growBase:2.5, growRaid:5.0 },
 ];
 
 function dmgLv(c,phase,lv){
@@ -498,7 +498,10 @@ function renderSim(){
       </div>
       <div class="row"><span class="rl">Dano base</span><div class="bwrap"><div class="bar" style="width:${dw}%;background:${c.col};"></div></div><span class="rv">${d.toFixed(1)}</span></div>
       <div class="row"><span class="rl">Dano ult</span><div class="bwrap"><div class="bar" style="width:${uw}%;background:var(--accent);"></div></div><span class="rv">${u.toFixed(1)}</span></div>
-      <div style="font-size:11px;color:var(--text-dim);margin-top:10px">${c.note}</div>
+      <div style="display:flex; gap:6px; margin-top:12px">
+        <span class="badge b-gray">Mult Base: ${c.base.mult}x</span>
+        <span class="badge b-blue">Mult Raid: ${c.raid.mult}x</span>
+      </div>
     </div>`;
   });
   document.getElementById('sim-body').innerHTML=html;
@@ -506,27 +509,26 @@ function renderSim(){
 
 // ===================== TOWER DEFENSE =====================
 const TD = [
-  { name:'Nami', rar:'Common', rc:'b-gray', ac:'b-teal', arch:'Farmer / Air', col:'#85B7EB', qt:8, max_up:3, ups:[ { n:0, range:15, cd:1, dmg:50, price:300, e:'—', farm:60 }, { n:1, range:17, cd:1, dmg:70, price:450, e:'—', farm:80 }, { n:2, range:20, cd:2, dmg:100, price:800, e:'—', farm:110 }, { n:3, range:15, cd:1.5, dmg:120, price:1200, e:'Gold Extra', farm:150 } ], note:'Única fonte de gold extra.' },
-  { name:'Koby', rar:'Common', rc:'b-gray', ac:'b-blue', arch:'Suporte / Ground', col:'#B5D4F4', qt:5, max_up:3, ups:[ { n:0, range:20, cd:5, dmg:40, price:600, e:'Buff +5%' }, { n:1, range:20, cd:4, dmg:60, price:850, e:'Buff +8%' }, { n:2, range:22, cd:4.5, dmg:85, price:1100, e:'Buff +12%' }, { n:3, range:25, cd:3.5, dmg:90, price:1500, e:'Buff +15%' } ], note:'Buff escala com o nível.' },
-  { name:'Usopp', rar:'Raro', rc:'b-blue', ac:'b-e', arch:'Assassin / Air+Ground', col:'#9FE1CB', qt:8, max_up:3, ups:[ { n:0, range:35, cd:1, dmg:110, price:500, e:'Bleed 25%' }, { n:1, range:40, cd:2, dmg:150, price:750, e:'Burn 40%' }, { n:2, range:50, cd:3, dmg:350, price:1000, e:'Slow' }, { n:3, range:60, cd:2, dmg:120, price:1700, e:'Triple Effect' } ], note:'Maior range do jogo.' },
-  { name:'Buggy', rar:'Épico', rc:'b-coral', ac:'b-w', arch:'DPS / Ground', col:'#F5C4B3', qt:6, max_up:3, ups:[ { n:0, range:30, cd:3, dmg:150, price:600, e:'Bleed' }, { n:1, range:35, cd:4, dmg:120, price:1000, e:'Bleed+' }, { n:2, range:40, cd:5, dmg:120, price:1400, e:'Bleed++' }, { n:3, range:10, cd:1.5, dmg:190, price:2200, e:'Cone Barrage' } ], note:'Ideal para chokepoints.' },
-  { name:'Zoro', rar:'Lendário', rc:'b-w', ac:'b-coral', arch:'Solo Bleed', col:'#EF9F27', qt:4, max_up:4, ups:[ { n:0, range:20, cd:2, dmg:110, price:750, e:'Bleed 100%' }, { n:1, range:25, Tree:2.5, dmg:150, price:1000, e:'Bleed 100%' }, { n:2, range:25, cd:2, dmg:150, price:1800, e:'Bleed 200%' }, { n:3, range:28, cd:2.5, dmg:165, price:2200, e:'Bleed 200%' }, { n:4, range:35, cd:3, dmg:200, price:3200, e:'3-Sword Dash' } ], note:'Bleed acumulativo único.' },
-  { name:'Luffy', rar:'Mítico', rc:'b-purple', ac:'b-purple', arch:'Heavy Cannon', col:'#CECBF6', qt:3, max_up:5, ups:[ { n:0, range:35, cd:4, dmg:250, price:500, e:'—' }, { n:1, range:35, cd:4, dmg:330, price:1400, e:'—' }, { n:2, range:30, cd:3.5, dmg:500, price:2100, e:'—' }, { n:3, range:30, cd:3, dmg:600, price:2900, e:'—' }, { n:4, range:20, cd:2.5, dmg:800, price:3500, e:'—' }, { n:5, range:25, cd:2.5, dmg:950, price:4100, e:'Pure DPS' } ], note:'Maior dano bruto.' },
-  { name:'Shanks', rar:'Secreto', rc:'b-e', ac:'b-e', arch:'The Strongest', col:'#F0997B', qt:1, max_up:6, ups:[ { n:0, range:35, cd:3, dmg:650, price:1000, e:'Bleed' }, { n:1, range:40, cd:3, dmg:800, price:2000, e:'Bleed' }, { n:2, range:45, cd:3.5, dmg:1000, price:3000, e:'Area Smash' }, { n:3, range:45, cd:2, dmg:1000, price:4000, e:'Area Smash' }, { n:4, range:50, cd:2.5, dmg:1300, price:5000, e:'Dash' }, { n:5, range:50, cd:3, dmg:2500, price:6000, e:'Massive Dmg' }, { n:6, range:50, cd:8, dmg:3100, price:10000, e:'Haki do Rei' } ], note:'Haki atordoa o mapa inteiro.' },
+  { name:'Nami', rar:'Common', rc:'b-gray', ac:'b-teal', arch:'Farmer / Air', col:'#85B7EB', qt:8, max_up:3, ups:[ { n:0, range:15, cd:1, dmg:50, price:300, e:'—', farm:60 }, { n:1, range:17, cd:1, dmg:70, price:450, e:'—', farm:80 }, { n:2, range:20, cd:2, dmg:100, price:800, e:'—', farm:110 }, { n:3, range:15, cd:1.5, dmg:120, price:1200, e:'Gold Extra', farm:150 } ] },
+  { name:'Koby', rar:'Common', rc:'b-gray', ac:'b-blue', arch:'Suporte / Ground', col:'#B5D4F4', qt:5, max_up:3, ups:[ { n:0, range:20, cd:5, dmg:40, price:600, e:'Buff +5%' }, { n:1, range:20, cd:4, dmg:60, price:850, e:'Buff +8%' }, { n:2, range:22, cd:4.5, dmg:85, price:1100, e:'Buff +12%' }, { n:3, range:25, cd:3.5, dmg:90, price:1500, e:'Buff +15%' } ] },
+  { name:'Usopp', rar:'Raro', rc:'b-blue', ac:'b-e', arch:'Assassin / Air+Ground', col:'#9FE1CB', qt:8, max_up:3, ups:[ { n:0, range:35, cd:1, dmg:110, price:500, e:'Bleed 25%' }, { n:1, range:40, cd:2, dmg:150, price:750, e:'Burn 40%' }, { n:2, range:50, cd:3, dmg:350, price:1000, e:'Slow' }, { n:3, range:60, cd:2, dmg:120, price:1700, e:'Triple Effect' } ] },
+  { name:'Buggy', rar:'Épico', rc:'b-coral', ac:'b-w', arch:'DPS / Ground', col:'#F5C4B3', qt:6, max_up:3, ups:[ { n:0, range:30, cd:3, dmg:150, price:600, e:'Bleed' }, { n:1, range:35, cd:4, dmg:120, price:1000, e:'Bleed+' }, { n:2, range:40, cd:5, dmg:120, price:1400, e:'Bleed++' }, { n:3, range:10, cd:1.5, dmg:190, price:2200, e:'Cone Barrage' } ] },
+  { name:'Zoro', rar:'Lendário', rc:'b-w', ac:'b-coral', arch:'Solo Bleed', col:'#EF9F27', qt:4, max_up:4, ups:[ { n:0, range:20, cd:2, dmg:110, price:750, e:'Bleed 100%' }, { n:1, range:25, cd:2.5, dmg:150, price:1000, e:'Bleed 100%' }, { n:2, range:25, cd:2, dmg:150, price:1800, e:'Bleed 200%' }, { n:3, range:28, cd:2.5, dmg:165, price:2200, e:'Bleed 200%' }, { n:4, range:35, cd:3, dmg:200, price:3200, e:'3-Sword Dash' } ] },
+  { name:'Luffy', rar:'Mítico', rc:'b-purple', ac:'b-purple', arch:'Heavy Cannon', col:'#CECBF6', qt:3, max_up:5, ups:[ { n:0, range:35, cd:4, dmg:250, price:500, e:'—' }, { n:1, range:35, cd:4, dmg:330, price:1400, e:'—' }, { n:2, range:30, cd:3.5, dmg:500, price:2100, e:'—' }, { n:3, range:30, cd:3, dmg:600, price:2900, e:'—' }, { n:4, range:20, cd:2.5, dmg:800, price:3500, e:'—' }, { n:5, range:25, cd:2.5, dmg:950, price:4100, e:'Pure DPS' } ] },
+  { name:'Shanks', rar:'Secreto', rc:'b-e', ac:'b-e', arch:'The Strongest', col:'#F0997B', qt:1, max_up:6, ups:[ { n:0, range:35, cd:3, dmg:650, price:1000, e:'Bleed' }, { n:1, range:40, cd:3, dmg:800, price:2000, e:'Bleed' }, { n:2, range:45, cd:3.5, dmg:1000, price:3000, e:'Area Smash' }, { n:3, range:45, cd:2, dmg:1000, price:4000, e:'Area Smash' }, { n:4, range:50, cd:2.5, dmg:1300, price:5000, e:'Dash' }, { n:5, range:50, cd:3, dmg:2500, price:6000, e:'Massive Dmg' }, { n:6, range:50, cd:8, dmg:3100, price:10000, e:'Haki do Rei' } ] },
 ];
 
 function renderTD(){
   const ci=parseInt(document.getElementById('tdchar').value);
   const c=TD[ci];
   let html=`<div class="card glass" style="margin-bottom:1.5rem">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem">
+    <div style="display:flex;justify-content:space-between;align-items:center;">
       <h3 style="font-family:var(--font-title)">${c.name}</h3>
       <div style="display:flex;gap:6px">
         <span class="badge ${c.rc}">${c.rar}</span>
         <span class="badge b-blue">Máx ${c.qt}</span>
       </div>
     </div>
-    <p style="font-size:12px;color:var(--text-dim)">${c.note}</p>
   </div>
   <div class="card-grid">`;
   c.ups.forEach(u=>{
