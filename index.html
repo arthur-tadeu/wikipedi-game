@@ -3,33 +3,38 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Anime Chaos Simulator — Oficial</title>
+  <title>Mar dos Piratas — Oficial</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@500;700;900&display=swap" rel="stylesheet">
   <style>
     :root { --primary: #6366f1; --secondary: #f43f5e; --accent: #fbbf24; --radius: 12px; --font-main: 'Inter', sans-serif; --font-title: 'Outfit', sans-serif; }
-    [data-theme="dark"] { --bg-dark: #000; --bg-card: rgba(15, 15, 20, 0.9); --text-main: #f8fafc; --text-dim: #94a3b8; --border: rgba(255, 255, 255, 0.08); --nav-bg: rgba(0, 0, 0, 0.85); --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8); }
-    [data-theme="light"] { --bg-dark: #f8fafc; --bg-card: rgba(255, 255, 255, 0.9); --text-main: #0f172a; --text-dim: #475569; --border: rgba(0, 0, 0, 0.1); --nav-bg: rgba(255, 255, 255, 0.9); --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1); }
+    [data-theme="dark"] { --bg-dark: #000; --bg-card: rgba(15, 15, 20, 0.85); --text-main: #f8fafc; --text-dim: #94a3b8; --border: rgba(255, 255, 255, 0.1); --nav-bg: rgba(0, 0, 0, 0.9); --shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8); }
+    [data-theme="light"] { --bg-dark: #f8fafc; --bg-card: rgba(255, 255, 255, 0.85); --text-main: #0f172a; --text-dim: #475569; --border: rgba(0, 0, 0, 0.1); --nav-bg: rgba(255, 255, 255, 0.9); --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1); }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
-    body { background-color: var(--bg-dark); color: var(--text-main); font-family: var(--font-main); line-height: 1.6; overflow-x: hidden; transition: background-color 0.3s, color 0.3s; }
+    body { background-color: var(--bg-dark); color: var(--text-main); font-family: var(--font-main); line-height: 1.6; overflow-x: hidden; transition: 0.3s; }
     .reveal { opacity: 0; transform: translateY(40px); transition: 1s cubic-bezier(0.1, 0, 0.3, 1); }
     .reveal.active { opacity: 1; transform: translateY(0); }
     .glass { background: var(--bg-card); backdrop-filter: blur(12px); border: 1px solid var(--border); box-shadow: var(--shadow); }
-    nav { position: fixed; top: 0; left: 0; right: 0; min-height: 70px; z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 0.5rem 1rem; border-bottom: 1px solid var(--border); background: var(--nav-bg); backdrop-filter: blur(15px); }
-    .nav-inner { width: 100%; max-width: 1200px; display: flex; flex-direction: column; align-items: center; gap: 0.5rem; }
-    .nav-top { display: flex; justify-content: space-between; align-items: center; width: 100%; }
-    .logo { font-family: var(--font-title); font-weight: 900; font-size: 1.2rem; background: linear-gradient(to right, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    .nav-links { display: flex; gap: 1.5rem; justify-content: center; width: 100%; flex-wrap: wrap; }
+    nav { position: fixed; top: 0; left: 0; right: 0; min-height: 60px; z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 0 1.5rem; border-bottom: 1px solid var(--border); background: var(--nav-bg); backdrop-filter: blur(15px); }
+    .nav-inner { width: 100%; max-width: 1200px; display: flex; flex-direction: row; align-items: center; justify-content: space-between; gap: 1rem; }
+    .logo { font-family: var(--font-title); font-weight: 900; font-size: 1.2rem; background: linear-gradient(to right, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; white-space: nowrap; }
+    .nav-links { display: flex; gap: 1.5rem; justify-content: center; align-items: center; flex-wrap: wrap; }
+    @keyframes glitch { 0% { text-shadow: 0.05em 0 0 rgba(255,0,0,0.75), -0.05em -0.025em 0 rgba(0,255,0,0.75), -0.025em 0.05em 0 rgba(0,0,255,0.75); } 14% { text-shadow: 0.05em 0 0 rgba(255,0,0,0.75), -0.05em -0.025em 0 rgba(0,255,0,0.75), -0.025em 0.05em 0 rgba(0,0,255,0.75); } 15% { text-shadow: -0.05em -0.025em 0 rgba(255,0,0,0.75), 0.025em 0.025em 0 rgba(0,255,0,0.75), -0.05em -0.05em 0 rgba(0,0,255,0.75); } 49% { text-shadow: -0.05em -0.025em 0 rgba(255,0,0,0.75), 0.025em 0.025em 0 rgba(0,255,0,0.75), -0.05em -0.05em 0 rgba(0,0,255,0.75); } 50% { text-shadow: 0.025em 0.05em 0 rgba(255,0,0,0.75), 0.05em 0 0 rgba(0,255,0,0.75), 0 -0.05em 0 rgba(0,0,255,0.75); } 99% { text-shadow: 0.025em 0.05em 0 rgba(255,0,0,0.75), 0.05em 0 0 rgba(0,255,0,0.75), 0 -0.05em 0 rgba(0,0,255,0.75); } 100% { text-shadow: -0.025em 0 0 rgba(255,0,0,0.75), -0.025em -0.025em 0 rgba(0,255,0,0.75), -0.025em -0.05em 0 rgba(0,0,255,0.75); } }
+    .glitch { animation: glitch 1s linear infinite; position: relative; display: inline-block; }
+    .typing { display: inline-block; overflow: hidden; white-space: nowrap; border-right: 0.1em solid var(--primary); animation: typing 4s steps(20, end) infinite, blink-caret .75s step-end infinite; vertical-align: bottom; }
+    @keyframes typing { 0% { max-width: 0 } 50%, 100% { max-width: 25ch } }
+    @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: var(--primary); } }
     .nav-item { position: relative; }
     .nav-link { text-decoration: none; color: var(--text-dim); font-size: 0.85rem; font-weight: 700; transition: 0.2s; padding: 8px 0; display: block; cursor: pointer; text-transform: uppercase; }
     .sub-nav { position: absolute; top: 100%; left: 50%; transform: translateX(-50%) translateY(10px); background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 8px; min-width: 180px; display: flex; flex-direction: column; opacity: 0; visibility: hidden; transition: 0.25s ease; }
     .nav-item:hover .sub-nav { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
     .sub-nav a { text-decoration: none; color: var(--text-dim); font-size: 0.75rem; font-weight: 600; padding: 10px 15px; border-radius: 6px; transition: 0.2s; }
     .sub-nav a:hover { background: var(--primary); color: #fff; }
-    .hero { height: 70vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 2rem; padding-top: 100px; }
-    .hero h1 { font-family: var(--font-title); font-size: clamp(2rem, 7vw, 4.5rem); font-weight: 900; line-height: 1; margin-bottom: 1rem; text-transform: uppercase; background: linear-gradient(to bottom, var(--text-main), var(--text-dim)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .hero { height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 2rem; background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), url('background.png/image.png'); background-size: 100% 100%; background-position: center top; position: relative; }
+    .hero::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 200px; background: linear-gradient(to top, var(--bg-dark), transparent); z-index: 1; pointer-events: none; }
+    .hero h1 { font-family: var(--font-title); font-size: clamp(2.5rem, 8vw, 5.5rem); font-weight: 900; line-height: 1.1; margin-bottom: 1rem; text-transform: uppercase; color: #fff; text-shadow: 0 5px 15px rgba(0,0,0,0.8); z-index: 10; display:flex; flex-direction:column; align-items:center; }
     section { padding: 40px 1.5rem; max-width: 1100px; margin: 0 auto; }
     .section-header { margin-bottom: 2rem; text-align: center; }
     .section-header h2 { font-family: var(--font-title); font-size: 2rem; font-weight: 900; text-transform: uppercase; }
@@ -59,7 +64,8 @@
     footer { padding: 4rem 2rem; text-align: center; border-top: 1px solid var(--border); color: var(--text-dim); font-size: 0.8rem; }
     .lang-btn { background: none; border: 1px solid var(--border); color: var(--text-dim); padding: 4px 10px; border-radius: 5px; cursor: pointer; font-size: 10px; font-weight: 700; }
     .lang-btn.active { color: var(--primary); border-color: var(--primary); }
-    @media (max-width: 600px) { .nav-links { gap: 0.8rem; } .nav-link { font-size: 0.7rem; } .card-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 850px) { .nav-inner { flex-direction: column; gap: 0.8rem; padding: 10px 0; } nav { padding: 0.5rem; } }
+    @media (max-width: 600px) { .nav-links { gap: 0.8rem; } .nav-link { font-size: 0.7rem; } .card-grid { grid-template-columns: 1fr; } .hero h1 { font-size: 2.2rem; } }
   </style>
 </head>
 <body>
@@ -68,25 +74,30 @@
 
 <nav class="glass">
   <div class="nav-inner">
-    <div class="nav-top">
-      <div class="logo">ANIME CHAOS SIMULATOR</div>
-      <div style="display:flex; gap:10px; align-items:center;">
-        <button class="lang-btn active" id="btn-pt" onclick="setLang('pt')">PT</button>
-        <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
-        <button onclick="toggleTheme()" style="background:none; border:1px solid var(--border); color:var(--text-main); padding:8px; border-radius:50%; cursor:pointer">🌓</button>
-      </div>
-    </div>
+    <div class="logo">MAR DOS PIRATAS</div>
     <div class="nav-links">
+      <div class="nav-item"><span class="nav-link" id="nav-worlds">Worlds</span><div class="sub-nav"><a href="#!">Mar dos Piratas</a><a href="#!">Vila dos Ninjas</a><a href="#!">Mundo dos Sayajins</a></div></div>
       <div class="nav-item"><span class="nav-link" id="nav-sim">Simulador</span><div class="sub-nav"><a href="#sim">Estatísticas</a><a href="#passives">Passivas</a><a href="#roll">Roll</a></div></div>
       <div class="nav-item"><span class="nav-link" id="nav-td">Tower Defense</span><div class="sub-nav"><a href="#td">Defesa</a><a href="#raids">Raids</a></div></div>
       <div class="nav-item"><span class="nav-link" id="nav-rpg">RPG</span><div class="sub-nav"><a href="#pets">Pets</a><a href="#npcs">Bosses</a></div></div>
+    </div>
+    <div style="display:flex; gap:10px; align-items:center;">
+      <button class="lang-btn active" id="btn-pt" onclick="setLang('pt')">PT</button>
+      <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
+      <button onclick="toggleTheme()" style="background:none; border:1px solid var(--border); color:var(--text-main); padding:8px; border-radius:50%; cursor:pointer">🌓</button>
     </div>
   </div>
 </nav>
 
 <header class="hero">
-  <h1 class="reveal" id="hero-title">ANIME CHAOS</h1>
-  <p class="reveal" id="hero-desc">Multiverso definitivo de balanceamento e estratégia.</p>
+  <h1 id="hero-title" style="position:relative;">
+    <span class="reveal glitch">MAR DOS PIRATAS:</span>
+    <span class="reveal" style="color:var(--primary); font-size:0.85em; margin-top:-10px; display:flex; align-items:center;">
+      <span style="color:#fff; margin-right:15px; font-size:0.8em; opacity:0.8;">ARCO:</span>
+      <span class="typing glitch">ILHA DO MENTIROSO</span>
+    </span>
+    <span class="reveal" style="position:absolute; bottom:-20px; right:-20px; background:var(--accent); color:#000; padding:8px 16px; transform:rotate(-15deg); font-size:0.35em; font-family:var(--font-main); border-radius:6px; font-weight:900; box-shadow:0 10px 20px rgba(0,0,0,0.6); border:3px solid #fff; letter-spacing:1px; white-space:nowrap; z-index:20;">UPDATE 1</span>
+  </h1>
 </header>
 
 <main>
@@ -94,8 +105,8 @@
   <section id="sim" class="reveal">
     <div class="section-header"><h2 id="title-sim">Estatísticas</h2></div>
     <div class="ctrl-box glass">
-      <div class="ctrl-item"><label id="lbl-lv">Nível</label><select id="slv" onchange="renderSim()"><option value="1">Lv 1</option><option value="10">Lv 10</option><option value="50">Lv 50</option><option value="100">Lv 100</option></select></div>
-      <div class="ctrl-item"><label id="lbl-ph">Fase</label><select id="sph" onchange="renderSim()"><option value="base">Base</option><option value="raid">Ascensão</option></select></div>
+      <div class="ctrl-item"><label id="lbl-lv">Nível</label><select id="slv" onchange="renderSim()"><option value="1">Lv 1</option><option value="5">Lv 5</option><option value="10">Lv 10</option></select></div>
+      <div class="ctrl-item"><label id="lbl-ph">Fase</label><select id="sph" onchange="renderSim()"><option value="base">Base</option><option value="raid">Pós-Raid</option></select></div>
       <div class="ctrl-item"><label id="lbl-sh">Shiny</label><select id="sshiny" onchange="renderSim()"><option value="normal">Normal</option><option value="shiny">Shiny (+50%)</option></select></div>
       <div class="ctrl-item" style="display:flex; align-items:flex-end;"><button class="btn" onclick="openTester()" id="btn-tester">🧪 Testar Passiva</button></div>
     </div>
@@ -144,24 +155,24 @@
   </div>
 </div>
 
-<footer><p>&copy; 2026 Anime Chaos Simulator.</p></footer>
+<footer><p>&copy; 2026 Mar dos Piratas.</p></footer>
 
 <script>
 let lang = 'pt';
 const TXT = {
-  pt: { hero:'ANIME CHAOS', desc:'O multiverso de simulação definitiva.', sim:'Simulador', td:'Tower Defense', rpg:'RPG', l_lv:'Nível', l_ph:'Fase', l_sh:'Shiny', b_test:'🧪 Testar Passiva', t_pass:'Passivas', t_raids:'Raids', t_pets:'Pets', t_boss:'Bosses', m_solo:'Mín. Solo:', b_back:'🔄 Voltar', res_dmg:'Dano:' },
-  en: { hero:'ANIME CHAOS', desc:'The ultimate simulation multiverse.', sim:'Simulator', td:'Tower Defense', rpg:'RPG', l_lv:'Level', l_ph:'Phase', l_sh:'Shiny', b_test:'🧪 Test Passive', t_pass:'Passives', t_raids:'Raids', t_pets:'Pets', t_boss:'Bosses', m_solo:'Min. Solo:', b_back:'🔄 Back', res_dmg:'Damage:' }
+  pt: { worlds:'Mundos', sim:'Simulador', td:'Tower Defense', rpg:'RPG', l_lv:'Nível', l_ph:'Fase', l_sh:'Shiny', b_test:'🧪 Testar Passiva', t_pass:'Passivas', t_raids:'Raids', t_pets:'Pets', t_boss:'Bosses', m_solo:'Mín. Solo:', b_back:'🔄 Voltar', res_dmg:'Dano:' },
+  en: { worlds:'Worlds', sim:'Simulator', td:'Tower Defense', rpg:'RPG', l_lv:'Level', l_ph:'Phase', l_sh:'Shiny', b_test:'🧪 Test Passive', t_pass:'Passives', t_raids:'Raids', t_pets:'Pets', t_boss:'Bosses', m_solo:'Min. Solo:', b_back:'🔄 Back', res_dmg:'Damage:' }
 };
 
 // ===================== DATA =====================
 const SIM = [
-  { name:'Nami', rar:'Common', rc:'b-gray', col:'#85B7EB', base:{dmg:3,mult:3.5},raid:{dmg:5,mult:4}, gB:0.405, gR:0.6075 },
-  { name:'Koby', rar:'Common', rc:'b-gray', col:'#B5D4F4', base:{dmg:5,mult:2},raid:{dmg:8,mult:3}, gB:0.405, gR:0.6075 },
-  { name:'Usopp', rar:'Raro', rc:'b-blue', col:'#9FE1CB', base:{dmg:1,mult:16},raid:{dmg:1.5,mult:18}, gB:0.675, gR:1.0125 },
-  { name:'Buggy', rar:'Épico', rc:'b-purple', col:'#F5C4B3', base:{dmg:8,mult:4.5},raid:{dmg:12,mult:5}, gB:1.08, gR:2.43 },
-  { name:'Zoro', rar:'Lendário', rc:'b-yellow', col:'#EF9F27', base:{dmg:14,mult:3.5},raid:{dmg:20,mult:5}, gB:1.35, gR:4.05 },
-  { name:'Luffy', rar:'Mítico', rc:'b-red', col:'#CECBF6', base:{dmg:18,mult:12},raid:{dmg:21,mult:15}, gB:2.43, gR:4.2525 },
-  { name:'Shanks', rar:'Secreto', rc:'b-black', col:'#F0997B', base:{dmg:25,mult:10},raid:{dmg:50,mult:20}, gB:3.375, gR:10.125 },
+  { name:'Nami', rar:'Common', rc:'b-gray', col:'#85B7EB', tag:'Farmer/Air', base:{dmg:4.1, ult:14.2, hits:10, mult:3.5, grow:0.41}, raid:{dmg:6.8, ult:27.0, hits:8, mult:4, grow:0.68}, desc:'' },
+  { name:'Koby', rar:'Common', rc:'b-gray', col:'#B5D4F4', tag:'Suporte/Canhão', base:{dmg:6.8, ult:13.5, hits:5, mult:2, grow:0.41}, raid:{dmg:10.8, ult:32.4, hits:4, mult:3, grow:0.81}, desc:'Canhão no simulador. No TD vira suporte buff.' },
+  { name:'Usopp', rar:'Raro', rc:'b-blue', col:'#9FE1CB', tag:'Assassino', base:{dmg:1.4, ult:10.8, hits:3, mult:8, grow:0.34}, raid:{dmg:2.0, ult:20.3, hits:3, mult:10, grow:0.47}, desc:'Dano base mínimo. Ult absurda. 3 hits = ulta rápido mas faz pouco dano sem ultar.' },
+  { name:'Buggy', rar:'Épico', rc:'b-purple', col:'#F5C4B3', tag:'DPS Estável', base:{dmg:10.8, ult:48.6, hits:10, mult:4.5, grow:1.08}, raid:{dmg:16.2, ult:81.0, hits:8, mult:5, grow:1.62}, desc:'DPS constante. Hits pra ultar aumentaram pra 10 — ult mais rara mas mais impactante.' },
+  { name:'Zoro', rar:'Lendário', rc:'b-yellow', col:'#EF9F27', tag:'Solo Bleed', base:{dmg:18.9, ult:66.2, hits:4, mult:3.5, grow:1.35}, raid:{dmg:27.0, ult:135.0, hits:4, mult:5, grow:2.7}, desc:'Bleed contínuo. Ult rápida (4 hits). Sem ult no TD.' },
+  { name:'Luffy', rar:'Mítico', rc:'b-red', col:'#CECBF6', tag:'Canhão Pesado', base:{dmg:24.3, ult:291.6, hits:22, mult:12, grow:2.43}, raid:{dmg:28.4, ult:425.3, hits:22, mult:15, grow:2.84}, desc:'22 hits pra ultar — muito difícil. Quando ulta, devastação total.' },
+  { name:'Shanks', rar:'Secreto', rc:'b-black', col:'#F0997B', tag:'O Mais Forte', base:{dmg:33.8, ult:337.5, hits:8, mult:10, grow:3.38}, raid:{dmg:67.5, ult:1350.0, hits:14, mult:20, grow:6.75}, desc:'Bleed+Stun. Pós-raid monstruoso mas 14 hits o equilibra.' },
 ];
 
 const PASSIVES = [
@@ -173,22 +184,115 @@ const PASSIVES = [
 ];
 
 const TD = [
-  { name:'Nami', rc:'b-gray', ups:[{n:0,d:50,r:15,c:1,e:'—'},{n:1,d:80,r:15,c:1,e:'—'},{n:3,d:120,r:15,c:1.5,e:'Gold'}] },
-  { name:'Usopp', rc:'b-blue', ups:[{n:0,d:110,r:35,c:1,e:'Bleed'},{n:1,d:150,r:40,c:1,e:'Bleed'},{n:3,d:220,r:60,c:2,e:'Triple'}] },
-  { name:'Shanks', rc:'b-black', ups:[{n:0,d:650,r:35,c:3,e:'Bleed'},{n:6,d:3100,r:50,c:8,e:'Haki Rei'}] }
+  { name:'Nami', rar:'Common', rc:'b-gray', tag:'Farmer / Aérea+Terrestre', max:8, ups:[
+    { c:300, r:15, cd:1, d:50, dps:50, e:'—', a:'Área / Bastão', f:60 },
+    { c:450, r:17, cd:1, d:70, dps:70, e:'—', a:'Área / Bastão', f:80 },
+    { c:800, r:20, cd:2, d:100, dps:50, e:'—', a:'Área / Bastão', f:110 },
+    { c:1200, r:15, cd:1.5, d:120, dps:80, e:'—', a:'Jogar moedas + Bastão Baseball', f:150 }
+  ]},
+  { name:'Koby', rar:'Common', rc:'b-gray', tag:'Suporte / Terrestre', max:5, ups:[
+    { c:600, r:20, cd:5, d:40, dps:8, e:'Buff aliados +3~5%', a:'Cone / Vassoura' },
+    { c:850, r:20, cd:4, d:60, dps:15, e:'Buff aliados +5~8%', a:'Cone / Vassoura' },
+    { c:1100, r:22, cd:4.5, d:85, dps:18.9, e:'Buff aliados +8~12%', a:'Cone / Vassoura' },
+    { c:1500, r:25, cd:3.5, d:90, dps:25.7, e:'Buff aliados +12~15%', a:'Cone / Vassoura' }
+  ]},
+  { name:'Usopp', rar:'Raro', rc:'b-blue', tag:'Assassino / Aérea+Terrestre', max:8, ups:[
+    { c:500, r:35, cd:1, d:110, dps:110, e:'Bleed: 3 ticks de 25% (3s total)', a:'Single / Estrelas ninja' },
+    { c:750, r:40, cd:2, d:150, dps:75, e:'Burn: 3 ticks de 40% (4s total)', a:'Área / Saquinho explosivo' },
+    { c:1000, r:50, cd:3, d:350, dps:116.7, e:'Slow: -X% velocidade (10s)', a:'Single / Bolinha branca' },
+    { c:1700, r:60, cd:2, d:120, dps:60, e:'Bleed 30% + Burn 30% + Slow', a:'Área / Garrafa' }
+  ]},
+  { name:'Buggy', rar:'Épico', rc:'b-purple', tag:'DPS Estável / Terrestre', max:6, ups:[
+    { c:600, r:30, cd:3, d:150, dps:50, e:'Bleed: 3 ticks de 30% (3s total)', a:'Reto / Lançar mão com faca' },
+    { c:1000, r:35, cd:4, d:120, dps:30, e:'Bleed: 4 ticks de 40% (4s total)', a:'Reto / Lançar mão com faca' },
+    { c:1400, r:40, cd:5, d:120, dps:24, e:'Bleed: 5 ticks de 30% (5s total)', a:'Reto / Lançar mão com faca' },
+    { c:2200, r:10, cd:1.5, d:190, dps:126.7, e:'Bleed: 2 ticks de 50% (2s total)', a:'Cone / Barrage com faca' }
+  ]},
+  { name:'Zoro', rar:'Lendário', rc:'b-yellow', tag:'Solo Bleed / Terrestre', max:4, ups:[
+    { c:750, r:20, cd:2, d:110, dps:55, e:'Bleed: 1 tick de 100% (1s)', a:'Cone / 2 espadas diagonal' },
+    { c:1000, r:25, cd:2.5, d:150, dps:60, e:'Bleed: 1 tick de 100% (1s)', a:'Cone / 2 espadas diagonal' },
+    { c:1800, r:25, cd:2, d:150, dps:75, e:'Bleed: 2 ticks de 100% (2s total)', a:'Cone / 2 espadas diagonal' },
+    { c:2200, r:28, cd:2.5, d:165, dps:66, e:'Bleed: 2 ticks de 100% (2s total)', a:'Cone / 2 espadas diagonal' },
+    { c:3200, r:35, cd:3, d:200, dps:66.7, e:'Bleed: 3 ticks de 100% (3s total)', a:'Reto / Dash com 3 espadas' }
+  ]},
+  { name:'Luffy', rar:'Mítico', rc:'b-red', tag:'Canhão Pesado / Terrestre', max:3, desc:'DPS puro. Sem efeito — o dano fala por si. Up5 Lv10 é o maior DPS sustentado entre os míticos.', ups:[
+    { c:500, r:35, cd:4, d:250, dps:62.5, e:'—', a:'Reto / Gomu Gomu Pistol' },
+    { c:1400, r:35, cd:4, d:330, dps:82.5, e:'—', a:'Reto / Gomu Gomu Pistol' },
+    { c:2100, r:30, cd:3.5, d:500, dps:142.9, e:'—', a:'Área / Esticar perna' },
+    { c:2900, r:30, cd:3, d:600, dps:200.0, e:'—', a:'Área / Esticar perna' },
+    { c:3500, r:20, cd:2.5, d:800, dps:320.0, e:'—', a:'Área / Barragem de socos' },
+    { c:4100, r:25, cd:2.5, d:950, dps:380.0, e:'—', a:'Área / Barragem de socos' }
+  ]},
+  { name:'Shanks', rar:'Secreto', rc:'b-black', tag:'O Mais Forte / Terrestre', max:1, desc:'Up6 = Haki do Rei. Lv1: 0.5s atordoado + 5s slow. Lv10: 5s atordoado + 50s slow. CD 120s.', ups:[
+    { c:1000, r:35, cd:3, d:650, dps:216.7, e:'Bleed: 1 tick 40% dano base (1s)', a:'Reto / 2 cortes em X' },
+    { c:2000, r:40, cd:3, d:800, dps:266.7, e:'Bleed: 1 tick 45% dano base (1s)', a:'Reto / 2 cortes em X' },
+    { c:3000, r:45, cd:3.5, d:1000, dps:285.7, e:'Bleed: 1 tick 50% dano base (1s)', a:'Área / Pular e bater espada no chão' },
+    { c:4000, r:45, cd:2, d:1000, dps:500.0, e:'Bleed: 2 ticks 50% dano base (1s cada)', a:'Área / Pular e bater espada no chão' },
+    { c:5000, r:50, cd:2.5, d:1300, dps:520.0, e:'Bleed: 2 ticks 40% dano base (1s cada)', a:'Cone / Dash e corte' },
+    { c:6000, r:50, cd:3, d:2500, dps:833.3, e:'Bleed removido', a:'Cone / Dash e corte' },
+    { c:10000, r:50, cd:8, d:3100, dps:387.5, e:'Haki do Rei (CD 120s): atordoa TODOS 0.5s/nível + slow 50% por 5s+5s/nível', a:'Full AOE / Haki em raio' }
+  ]}
 ];
 
-const RAIDS = [ { n:'Grand Line', hp:55000, solo:20 }, { n:'Paraíso', hp:100000, solo:50 }, { n:'Novo Mundo', hp:250000, solo:90 } ];
+const RAIDS = [
+  { n: 'Grand Line', players: '2-3', waves: 15, limitador: 'Só personagens com efeito especial (bleed/burn/slow)', boss: 'Drops raros: Eternal Pose, Capa Marinha, Óculos Atirador', chance: '33% de chance em qualquer item. Modo difícil.' },
+  { n: 'Paraíso', players: '3-4', waves: 20, limitador: 'Apenas personagens aéreos (boss pode ser solo)', boss: 'Drops raros: Espada Zoro, Chapéu de Palha, Chapéu de Palhaço', chance: 'Mínimo 3-4 pessoas. Aéreos também atacam personagens solo.' },
+  { n: 'Novo Mundo', players: '6-8', waves: 25, limitador: 'Não-míticos recebem -15% de nerf. Boss aplica slow (20% chance, +50% cooldown por 50s)', boss: 'Drops raros: Espada Shanks', chance: '15% de chance acumulativo. Sem pity. O mais difícil do jogo.' }
+];
 const PETS = [ { n:'Nami', b:5 }, { n:'Zoro', b:5 }, { n:'Shanks', b:4 } ];
 const NPCS = [ { n:'Alvida', hp:8000 }, { n:'Boss Secreto', hp:150000 } ];
 
 // RENDERS
 function renderSim(){
   const lv=parseInt(document.getElementById('slv').value); const ph=document.getElementById('sph').value; const s=document.getElementById('sshiny').value==='shiny';
-  const mD=( (SIM[6].raid.dmg) + (SIM[6].gR)*Math.pow(lv-1,1.15) ) * (s?1.5:1);
-  let h=''; SIM.forEach(c=>{
-    const d=( (ph==='raid'?c.raid.dmg:c.base.dmg) + (ph==='raid'?c.gR:c.gB)*Math.pow(lv-1,1.15) ) * (s?1.5:1);
-    h+=`<div class="card glass"><b>${c.name}</b> <span class="badge ${c.rc}">${c.rar}</span><br><small>${d.toFixed(1)} DMG</small><div class="bwrap" style="margin-top:8px"><div class="bar" style="width:${(d/mD)*100}%; background:${c.col}"></div></div></div>`;
+  const dataKey = ph === 'raid' ? 'raid' : 'base';
+  
+  // Find max values for bars
+  let maxDmg = 0; let maxUlt = 0;
+  SIM.forEach(c => {
+    const d = (c[dataKey].dmg + c[dataKey].grow * Math.pow(lv-1, 1.15)) * (s?1.5:1);
+    const u = (c[dataKey].ult + (c[dataKey].grow * c[dataKey].mult) * Math.pow(lv-1, 1.15)) * (s?1.5:1);
+    if(d > maxDmg) maxDmg = d;
+    if(u > maxUlt) maxUlt = u;
+  });
+
+  let h=''; 
+  SIM.forEach(c=>{
+    const stat = c[dataKey];
+    const d = (stat.dmg + stat.grow * Math.pow(lv-1, 1.15)) * (s?1.5:1);
+    const u = (stat.ult + (stat.grow * stat.mult) * Math.pow(lv-1, 1.15)) * (s?1.5:1);
+    
+    h+=`
+    <div class="card glass" style="grid-column: 1 / -1; margin-bottom: 10px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px">
+        <div><b>${c.name}</b> <span style="font-size:10px; color:var(--text-dim)">${c.rar}</span></div>
+        <div style="display:flex; gap:8px">
+          <span class="badge ${c.rc}">${c.rar}</span>
+          <span class="badge" style="background:rgba(255,255,255,0.1); color:var(--primary); border:1px solid var(--primary)">${c.tag}</span>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="rl">Dano base</div>
+        <div class="bwrap"><div class="bar" style="width:${(d/maxDmg)*100}%; background:${c.col}"></div></div>
+        <div class="rv">${d.toFixed(1)}</div>
+      </div>
+      
+      <div class="row">
+        <div class="rl">Dano ult</div>
+        <div class="bwrap"><div class="bar" style="width:${(u/maxUlt)*100}%; background:linear-gradient(to right, ${c.col}, var(--accent))"></div></div>
+        <div class="rv">${u.toFixed(1)}</div>
+      </div>
+      
+      <div style="font-size:10px; color:var(--text-dim); margin-top:10px; font-weight:600">
+        Hits ult: <b>${stat.hits}</b> &nbsp; Mult: <b>${stat.mult}x</b> &nbsp; 
+        Crescimento: <span style="color:var(--text-main)">exp +${stat.grow}/nível</span>
+      </div>
+      
+      <div style="margin-top:10px; font-size:11px; color:var(--text-dim); font-style:italic; border-top:1px solid var(--border); padding-top:8px">
+        ${c.desc}
+      </div>
+    </div>`;
   });
   document.getElementById('sim-body').innerHTML=h;
 }
@@ -208,12 +312,58 @@ function renderPassives(){
 
 function renderTD(){
   const ci=document.getElementById('tdchar').value; const c=TD[ci]||TD[0];
-  let h=''; c.ups.forEach(u=>{ h+=`<div class="card glass"><b>UP ${u.n}</b><br><small>D: ${u.d} | R: ${u.r}</small><br><span class="badge b-blue" style="margin-top:5px">${u.e}</span></div>`; });
+  let h=`<div class="card glass" style="grid-column: 1 / -1; margin-bottom: 20px; background: rgba(0,0,0,0.4)">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px">
+      <h3 style="font-family:var(--font-title); font-size:1.5rem">${c.name}</h3>
+      <div style="display:flex; gap:10px">
+        <span class="badge ${c.rc}">${c.rar}</span>
+        <span class="badge" style="background:rgba(255,255,255,0.1); border:1px solid var(--primary); color:var(--primary)">${c.tag}</span>
+        <span class="badge b-blue">Máx ${c.max} no mapa</span>
+        <span class="badge" style="background:var(--bg-card); border:1px solid var(--primary); color:var(--text-main);">${c.ups.length} upgrades</span>
+      </div>
+    </div>
+    ${c.desc ? `<div style="font-size:12px; color:var(--text-dim); margin-top:5px;">${c.desc}</div>` : ''}
+  </div>`;
+  
+  c.ups.forEach((u, i)=>{ 
+    h+=`<div class="card glass" style="grid-column: 1 / -1; border-left: 4px solid ${c.rc==='b-gray'?'#64748b':c.rc==='b-blue'?'#3b82f6':c.rc==='b-purple'?'#a855f7':'#eab308'}">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px">
+        <b style="color:var(--text-dim)">Upgrade ${i} <span style="font-weight:400"> — ${u.c} gold (${i===0?'colocar':'upar'})</span></b>
+      </div>
+      <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:10px">
+        <span class="badge b-blue">Range ${u.r}</span>
+        <span class="badge b-gray">CD ${u.cd}s</span>
+        <span class="badge b-yellow">Dano ${u.d}</span>
+        <span class="badge b-green">DPS ${u.dps}</span>
+        ${u.f ? `<span class="badge b-purple">Farm ${u.f}$/wave</span>` : ''}
+      </div>
+      <div style="font-size:11px; color:var(--text-dim)">
+        <div><b>Efeito:</b> ${u.e}</div>
+        <div style="margin-top:4px"><b>Animação:</b> ${u.a}</div>
+      </div>
+    </div>`; 
+  });
   document.getElementById('td-body').innerHTML=h;
 }
 
 function renderRaids(){
-  let h=''; RAIDS.forEach(r=>{ h+=`<div class="card glass"><b>${r.n}</b><br><small>${r.hp.toLocaleString()} HP</small><br><span class="badge b-purple" style="margin-top:5px">${TXT[lang].m_solo} ${r.solo}</span></div>`; });
+  let h='';
+  RAIDS.forEach(r=>{
+    h+=`<div class="card glass">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border-bottom: 1px solid var(--border); padding-bottom:10px;">
+        <h3 style="color:var(--secondary); font-family:var(--font-title); font-size:1.3rem; text-transform:uppercase;">${r.n}</h3>
+        <div style="display:flex; gap:8px">
+          <span class="badge b-purple">${r.players} Jogadores</span>
+          <span class="badge b-blue">${r.waves} Waves</span>
+        </div>
+      </div>
+      <div style="font-size:12px; color:var(--text-dim); margin-top:10px; display:flex; flex-direction:column; gap:8px;">
+        <div><b style="color:var(--text-main)">Limitador:</b> ${r.limitador}</div>
+        <div><b style="color:var(--text-main)">Boss:</b> <span style="color:var(--accent)">${r.boss}</span></div>
+        <div><b style="color:var(--text-main)">Detalhes:</b> ${r.chance}</div>
+      </div>
+    </div>`;
+  });
   document.getElementById('raids-body').innerHTML=h;
 }
 
@@ -245,7 +395,8 @@ function showResults(p){
 
 function setLang(l){ lang=l; localStorage.setItem('lang',l); updateUI(); }
 function updateUI(){
-  const t=TXT[lang]; document.getElementById('hero-title').innerText=t.hero; document.getElementById('hero-desc').innerText=t.desc;
+  const t=TXT[lang]; 
+  document.getElementById('nav-worlds').innerText=t.worlds;
   document.getElementById('nav-sim').innerText=t.sim; document.getElementById('nav-td').innerText=t.td; document.getElementById('nav-rpg').innerText=t.rpg;
   document.getElementById('lbl-lv').innerText=t.l_lv; document.getElementById('lbl-ph').innerText=t.l_ph; document.getElementById('lbl-sh').innerText=t.l_sh;
   document.getElementById('btn-tester').innerText=t.b_test; document.getElementById('title-sim').innerText=t.sim; document.getElementById('title-pass').innerText=t.t_pass;
